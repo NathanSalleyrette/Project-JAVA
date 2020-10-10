@@ -3,13 +3,21 @@ import java.util.StringJoiner;
 public class Carte {
 	private int nbLignes;
 	private int nbColonnes;
-	private int tailleCases;
+	private int tailleCases; //distance à parcourir que représente une case
 	private Case[][] m;
 	
+	//variables globales
 	
+	public static int tailleCasesDefault = 2;
 	//constructeurs
+	
+	/**
+	 * creer une carte avec nbLignes lignes, nbColonnes colonnes, longueur de la case tailleCases, terrains libres
+	 * @param nbLignes
+	 * @param nbColonnes
+	 * @param tailleCases
+	 */
 	public Carte(int nbLignes, int nbColonnes, int tailleCases) {
-		//rempli la carte avec des terrain libre, le coté et la dimension sont donnée
 		this.nbLignes = nbLignes;
 		this.nbColonnes = nbColonnes;
 		this.tailleCases = tailleCases;
@@ -24,16 +32,26 @@ public class Carte {
 		}
 	}
 	
+	
+	/**
+	 * creer une carte avec nbLignes lignes, nbColonnes colonnes et coté par default, terrains libres
+	 * @param nbLignes
+	 * @param nbColonnes
+	 */
 	public Carte(int nbLignes, int nbColonnes) {
-		//rempli la carte avec des terrain libre, la dimension est donnée
-		this(nbLignes, nbColonnes, 2);
+		this(nbLignes, nbColonnes, tailleCasesDefault);
 	}
 	
-	public Carte(NatureTerrain t[][]) {
-		//faire une carte à partir d'une matrice de terrain, coté par defaut de 2
+	
+	/**
+	 * creer une carte à partir d'une matrice de terrain (meme dim que la carte) , cote tailleCases
+	 * @param t
+	 * @param tailleCases
+	 */
+	public Carte(NatureTerrain t[][], int tailleCases) {
 		this.nbLignes = t.length;
 		this.nbColonnes = t[0].length;
-		this.tailleCases = 2;
+		this.tailleCases = tailleCases;
 		this.m = new Case[t.length][t[0].length];
 		
 		for (int i = 0; i < t.length; i++) {
@@ -44,8 +62,19 @@ public class Carte {
 	}
 	
 	
+	/**
+	 * creer une carte à partir d'une matrice de terrain (meme dim que la carte) , cote par defaut de 2
+	 * @param t
+	 */
+	public Carte(NatureTerrain t[][]) {
+		this(t, tailleCasesDefault);
+	}
+	
+	/**
+	 * remplace la matrice de terrain d'une carte dejà existante. OBSOLETE ?
+	 * @param t
+	 */
 	public void copie_terrain(NatureTerrain t[][]) {
-		// on copie un terrain dans une matrice deja existante, peut-etre OBSOLETE
 		if (t.length != this.m.length || t[0].length != this.m.length) {
 			throw new IllegalArgumentException("la matrice proposée n'a pas les bonne dimension");
 		}
@@ -76,6 +105,12 @@ public class Carte {
 	}
 	
 	
+	/**
+	 * renvoie true si la cases src possède un voisin dans la direction  dir
+	 * @param src
+	 * @param dir
+	 * @return la case possède une voisin ?
+	 */
 	public Boolean voisinExiste(Case src, Direction dir) {
 		switch (dir) {
 		case NORD:
@@ -91,7 +126,12 @@ public class Carte {
 		}
 	}
 	
-	
+	/**
+	 * renvoie la case voisine de src dans la direction dir, "pas de voisin" s'il n'y en a pas
+	 * @param src
+	 * @param dir
+	 * @return case voisine
+	 */
 	public Case getVoisin(Case src, Direction dir) {
 		//axe y inversé !!
 		if (!(this.voisinExiste(src, dir))) throw new IllegalArgumentException("pas de voisin");
@@ -116,7 +156,15 @@ public class Carte {
 		return this.m[src.getLigne() + y][src.getColonne() + x];
 	}
 	
-	//fonction pour print
+	
+	
+	/**
+	 * exemple:
+	 * dim: 2x3, coté: 2
+	 * (
+	 * Libre, Libre, Libre,
+	 * Roche, Libre, Eau)
+	 */
 	public String toString() {
 		StringJoiner stringJoiner2 =  new StringJoiner(", ",  "(",  ")") ;
 		System.out.println(this.m.length + "x" + this.m[0].length);
