@@ -1,3 +1,4 @@
+package briques;
 
 public enum Direction {
 	NORD, 

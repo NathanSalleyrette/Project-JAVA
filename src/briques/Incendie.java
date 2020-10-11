@@ -1,7 +1,8 @@
+package briques;
 
 public class Incendie {
 	private Case position;
-	private int litre;
+	private int intensite;
 	private Incendie suivant; // pour faire une liste d'incendie
 
 	
@@ -16,28 +17,29 @@ public class Incendie {
 	}
 	
 	/**
-	 * Incendie en position "position", terrain libre, il faut "litre" litres pour l'éteindre
+	 * Incendie en position "position", terrain libre, il faut "intensite" litres pour l'éteindre
 	 * @param position
 	 * @param litre
 	 */
-	public Incendie(Case position, int litre) {
+	public Incendie(Case position, int intensite) {
 		// copie legère pour pouvoir pointer sur une case de la carte
 		// pas de suivant
 		this.position = position;
-		this.setLitre(litre);
+		this.setIntensite(intensite);
 	}
+	
 	
 	//accès aux données
 	public Case getCase() {
 		return this.position;
 	}
 	
-	public int getLitre() {
-		return this.litre;
+	public int getIntensite() {
+		return this.intensite;
 	}
 	
-	public void setLitre(int litre) {
-		this.litre = Math.max(0, litre);
+	public void setIntensite(int intensite) {
+		this.intensite = Math.max(0, intensite);
 	}
 	
 	public Incendie getSuivant() {
@@ -70,7 +72,7 @@ public class Incendie {
 	
 	
 	public void eteindre(int vol) {
-		this.setLitre(this.litre - Math.max(0,vol));
+		this.setIntensite(this.intensite - Math.max(0,vol));
 	}
 	
 	/**
@@ -78,7 +80,7 @@ public class Incendie {
 	 * Incendie taille 4, (2,3) TERRAIN_LIBRE
 	 */
 	public String toString() {
-		return "Incendie taille " + this.litre + ", " + this.position.toString();
+		return "Incendie taille " + this.intensite + ", " + this.position.toString();
 	}
 	
 	/**

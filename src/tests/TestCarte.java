@@ -1,3 +1,8 @@
+package tests;
+
+import briques.Carte;
+import briques.Case;
+import briques.NatureTerrain;
 
 public class TestCarte {
 

@@ -1,3 +1,4 @@
+package briques;
 
 public class Roues extends Robot{
 

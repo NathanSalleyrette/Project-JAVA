@@ -1,3 +1,4 @@
+package briques;
 
 public class Drone extends Robot{
 	private Type type = Type.DRONE;

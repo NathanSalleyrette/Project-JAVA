@@ -1,3 +1,4 @@
+package briques;
 import java.util.StringJoiner;
 
 public class Carte {
@@ -10,6 +11,10 @@ public class Carte {
 	
 	public static int tailleCasesDefault = 2;
 	//constructeurs
+	
+	public Carte() {
+		this(1, 1, 1);
+	}
 	
 	/**
 	 * creer une carte avec nbLignes lignes, nbColonnes colonnes, longueur de la case tailleCases, terrains libres

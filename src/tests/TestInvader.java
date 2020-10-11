@@ -1,3 +1,4 @@
+package tests;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -68,8 +69,8 @@ class Invader implements Simulable {
     private void planCoordinates() {
         // panel must be large enough... unchecked here!
         // total invader size: height == 120, width == 80
-        int xMin = 60;
-        int yMin = 40;
+        int xMin = 0; //60;
+        int yMin = 0; //40;
         int xMax = gui.getWidth() - xMin - 80;
         xMax -= xMax % 10;
         int yMax = gui.getHeight() - yMin - 120;

@@ -4,6 +4,7 @@ package io;
 import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
+import briques.*;
 
 
 
@@ -37,15 +38,21 @@ public class LecteurDonnees {
      * LecteurDonnees.lire(fichierDonnees)
      * @param fichierDonnees nom du fichier à lire
      */
-    public static void lire(String fichierDonnees)
+    public static DonneesSimulation lire(String fichierDonnees)
         throws FileNotFoundException, DataFormatException {
+    	
         System.out.println("\n == Lecture du fichier" + fichierDonnees);
         LecteurDonnees lecteur = new LecteurDonnees(fichierDonnees);
-        lecteur.lireCarte();
-        lecteur.lireIncendies();
-        lecteur.lireRobots();
+        Carte carte = lecteur.lireCarte();
+        Incendie incendies = lecteur.lireIncendies(carte);
+        Robot robots = lecteur.lireRobots(carte);
         scanner.close();
         System.out.println("\n == Lecture terminee");
+        DonneesSimulation donnees = new DonneesSimulation();
+        donnees.setCarte(carte);
+        donnees.setIncendies(incendies);
+        donnees.setRobots(robots);
+        return donnees;
     }
 
 
@@ -69,26 +76,29 @@ public class LecteurDonnees {
      * Lit et affiche les donnees de la carte.
      * @throws ExceptionFormatDonnees
      */
-    private void lireCarte() throws DataFormatException {
+    private Carte lireCarte() throws DataFormatException {
         ignorerCommentaires();
         try {
             int nbLignes = scanner.nextInt();
             int nbColonnes = scanner.nextInt();
-            int tailleCases = scanner.nextInt();	// en m
+            int tailleCases = scanner.nextInt()/150;	// en m
+            NatureTerrain[][] m = new NatureTerrain[nbLignes][nbColonnes];
             System.out.println("Carte " + nbLignes + "x" + nbColonnes
                     + "; taille des cases = " + tailleCases);
 
             for (int lig = 0; lig < nbLignes; lig++) {
                 for (int col = 0; col < nbColonnes; col++) {
-                    lireCase(lig, col);
+                    m[lig][col] = lireCase(lig, col);
                 }
             }
+            return new Carte(m, tailleCases);
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("Format invalide. "
                     + "Attendu: nbLignes nbColonnes tailleCases");
         }
         // une ExceptionFormat levee depuis lireCase est remontee telle quelle
+        
     }
 
 
@@ -97,7 +107,7 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees d'une case.
      */
-    private void lireCase(int lig, int col) throws DataFormatException {
+    private NatureTerrain lireCase(int lig, int col) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Case (" + lig + "," + col + "): ");
         String chaineNature = new String();
@@ -119,20 +129,23 @@ public class LecteurDonnees {
         }
 
         System.out.println();
+        return NatureTerrain.valueOf(chaineNature);
     }
 
 
     /**
      * Lit et affiche les donnees des incendies.
      */
-    private void lireIncendies() throws DataFormatException {
+    private Incendie lireIncendies(Carte carte) throws DataFormatException {
         ignorerCommentaires();
         try {
             int nbIncendies = scanner.nextInt();
             System.out.println("Nb d'incendies = " + nbIncendies);
-            for (int i = 0; i < nbIncendies; i++) {
-                lireIncendie(i);
+            Incendie incendies = lireIncendie(carte, 0);
+            for (int i = 1; i < nbIncendies; i++) {
+                incendies.pushQueue(lireIncendie(carte, i));
             }
+            return incendies;
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("Format invalide. "
@@ -145,7 +158,7 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme incendie.
      * @param i
      */
-    private void lireIncendie(int i) throws DataFormatException {
+    private Incendie lireIncendie(Carte carte, int i) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Incendie " + i + ": ");
 
@@ -161,6 +174,8 @@ public class LecteurDonnees {
 
             System.out.println("position = (" + lig + "," + col
                     + ");\t intensite = " + intensite);
+            
+            return new Incendie(carte.getCase(lig, col), intensite);
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format d'incendie invalide. "
@@ -172,14 +187,16 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des robots.
      */
-    private void lireRobots() throws DataFormatException {
+    private Robot lireRobots(Carte carte) throws DataFormatException {
         ignorerCommentaires();
         try {
             int nbRobots = scanner.nextInt();
             System.out.println("Nb de robots = " + nbRobots);
-            for (int i = 0; i < nbRobots; i++) {
-                lireRobot(i);
+            Robot robots = lireRobot(carte, 0);
+            for (int i = 1; i < nbRobots; i++) {
+                robots.pushQueue(lireRobot(carte, i));
             }
+            return robots;
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("Format invalide. "
@@ -192,17 +209,19 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme robot.
      * @param i
      */
-    private void lireRobot(int i) throws DataFormatException {
+    private Robot lireRobot(Carte carte,int i) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Robot " + i + ": ");
 
         try {
+        	Robot robot;
             int lig = scanner.nextInt();
             int col = scanner.nextInt();
             System.out.print("position = (" + lig + "," + col + ");");
-            String type = scanner.next();
+            String chainType = scanner.next();
+            Type type = Type.valueOf(chainType);
 
-            System.out.print("\t type = " + type);
+            System.out.print("\t type = " + chainType);
 
 
             // lecture eventuelle d'une vitesse du robot (entier)
@@ -212,13 +231,51 @@ public class LecteurDonnees {
 
             if (s == null) {
                 System.out.print("valeur par defaut");
+                switch(type) {
+                case DRONE: {
+                	robot = new Drone(carte.getCase(lig, col));
+                	break;
+                }
+                case ROUES: {
+                	robot = new Roues(carte.getCase(lig, col));
+                	break;
+                }
+                case PATTES: {
+                	robot = new Pattes(carte.getCase(lig, col));
+                	break;
+                }
+                //case CHENILLES: robot = new Chenilles(carte.getCase(lig, col));
+                default: throw new DataFormatException("format de robot invalide. "
+                        + "type inconnu");
+                
+                }
+                
             } else {
                 int vitesse = Integer.parseInt(s);
                 System.out.print(vitesse);
+                switch(type) {
+                case DRONE: {
+                	robot = new Drone(carte.getCase(lig, col), vitesse);
+                	break;
+                }
+                case ROUES: {
+                	robot = new Roues(carte.getCase(lig, col), vitesse);
+                	break;
+                }
+                case PATTES: {
+                	robot = new Pattes(carte.getCase(lig, col), vitesse);
+                	break;
+                }
+                //case CHENILLES: robot = new Chenilles(carte.getCase(lig, col), vitesse);
+                default: throw new DataFormatException("format de robot invalide. "
+                        + "type inconnu");
+                
+                }
             }
             verifieLigneTerminee();
 
             System.out.println();
+            return robot;
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format de robot invalide. "
