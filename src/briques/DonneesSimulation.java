@@ -1,7 +1,20 @@
 package briques;
 
+import java.util.NoSuchElementException;
 
+import robots.Drone;
+import robots.Robot;
+
+
+/**
+ * Les données d'une simulation sont :
+ * une carte (avec des terrains),
+ * une chaine d'incendies,
+ * une chaine de robots (de toutes sortes)
+ */
 public class DonneesSimulation {
+	
+	
 	private Carte carte;
 	private Incendie incendies;
 	private Robot robots;
@@ -46,15 +59,47 @@ public class DonneesSimulation {
 	}
 	
 	
+	/**
+	 * action d'éteindre un incendie, enlève l'eau du réservoir du robot
+	 * pour la déverser sur le feu
+	 * @param robot
+	 * @param incendie
+	 * @param vol
+	 */
 	public void eteindreIncendie(Robot robot, Incendie incendie, int vol) {
-		robot.deverserEau(vol); // BOOL ou INT ??? s'il ne reste pas assez d'eau
+		vol = robot.deverserEau(vol);
 		incendie.eteindre(vol);
+		if (incendie.getIntensite() == 0) {
+			incendie = incendie.getSuivant();
+		}
 	}
 	
+	
+	/**
+	 * si la nouvelle position est voisine de la case du robot, ainsi que compatible avec le 
+	 * robot, ce dernier va sur la nouvelle case
+	 * @param newPosition
+	 * @param robot
+	 */
 	public void bougerRobot(Case newPosition, Robot robot) {
-		
+		robot.deplacer(newPosition);
 	}
 	
+	
+	/**
+	 * si la case voisine dans la direction dir de celle du robot est compatible avec le 
+	 * robot, ce dernier va sur la nouvelle case
+	 * @param newPosition
+	 * @param robot
+	 */
+	public void bougerRobot(Direction dir, Robot robot) {
+		try {
+		Case newPosition = this.carte.getVoisin(robot.getPosition(), dir);
+		bougerRobot(newPosition, robot);
+		} catch (IllegalArgumentException e) {
+			
+		}
+	}
 	
 	public String toString() {
 		return carte + "\n" + incendies.allToString() + "\n" + robots.allToString(); 

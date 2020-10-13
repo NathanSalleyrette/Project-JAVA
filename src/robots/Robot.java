@@ -1,6 +1,11 @@
-package briques;
+package robots;
+
+import briques.Case;
+import briques.NatureTerrain;
+import briques.Type;
 
 public abstract class Robot {
+	private Type type;
 	private Case position;
 	private int capacity; // quantité qu'il peut porter au max
 	private int reserve; // quantité courante
@@ -55,6 +60,18 @@ public abstract class Robot {
 		return this.reserve;
 	}
 	
+	public Type getType() {
+		return this.type;
+	}
+	
+	public void setType(Type type) {
+		this.type = type;
+	}
+	
+	/**
+	 * rempli le reservoir du robot avec volume positive, sans dépasser la capacity
+	 * @param vol
+	 */
 	public void remplirReserve(int vol) {
 		//si vol <0 alors vol = 0
 		
@@ -67,11 +84,13 @@ public abstract class Robot {
 	/**
 	 * le robot deverse une partie de l'eau qu'il a en reserve sur le feu
 	 * @param vol
+	 * return volume déversé réellement
 	 */
-	public void deverserEau(int vol) {
-		//si vol <0 alors vol = 0
-		this.reserve = Math.max(this.reserve - Math.max(0, vol), 0);
-		// TODO éteindre incendie 
+	public int deverserEau(int vol) {
+		vol = Math.min(this.getReserve(), Math.max(0, vol)); // on ne peut pas deverser plus que ce su'il y a dans le réservoir
+		this.reserve = this.reserve - vol ;
+		return vol;
+		
 	}
 	
 	/**
@@ -79,7 +98,6 @@ public abstract class Robot {
 	 * @param nature
 	 * @return
 	 */
-	
 	public double getVitesse(NatureTerrain nature) {
 		if (this.isCompatible(nature)) return this.getVitesse();
 		return 0.0;

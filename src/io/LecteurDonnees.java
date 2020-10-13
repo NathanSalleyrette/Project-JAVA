@@ -5,6 +5,10 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
 import briques.*;
+import robots.Drone;
+import robots.Pattes;
+import robots.Robot;
+import robots.Roues;
 
 
 
@@ -81,7 +85,7 @@ public class LecteurDonnees {
         try {
             int nbLignes = scanner.nextInt();
             int nbColonnes = scanner.nextInt();
-            int tailleCases = scanner.nextInt()/150;	// en m
+            int tailleCases = scanner.nextInt();	// en m
             NatureTerrain[][] m = new NatureTerrain[nbLignes][nbColonnes];
             System.out.println("Carte " + nbLignes + "x" + nbColonnes
                     + "; taille des cases = " + tailleCases);
@@ -260,10 +264,6 @@ public class LecteurDonnees {
                 }
                 case ROUES: {
                 	robot = new Roues(carte.getCase(lig, col), vitesse);
-                	break;
-                }
-                case PATTES: {
-                	robot = new Pattes(carte.getCase(lig, col), vitesse);
                 	break;
                 }
                 //case CHENILLES: robot = new Chenilles(carte.getCase(lig, col), vitesse);

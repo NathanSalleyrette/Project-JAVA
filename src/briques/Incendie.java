@@ -1,5 +1,11 @@
 package briques;
 
+
+/**
+ * un incendie est determiner par sa position, son intensite,
+ * l'incendie qui le suit dans la chaine des incendies
+ *
+ */
 public class Incendie {
 	private Case position;
 	private int intensite;
@@ -30,7 +36,7 @@ public class Incendie {
 	
 	
 	//accès aux données
-	public Case getCase() {
+	public Case getPosition() {
 		return this.position;
 	}
 	
@@ -71,8 +77,12 @@ public class Incendie {
 	}
 	
 	
+	/**
+	 * diminue l'intensité de vol, mais l'intensité ne peut etre négative
+	 * @param vol
+	 */
 	public void eteindre(int vol) {
-		this.setIntensite(this.intensite - Math.max(0,vol));
+		this.setIntensite(this.intensite - Math.max(0,vol)); //Math.max(0,vol) gere le cas ou vol est <0
 	}
 	
 	/**
