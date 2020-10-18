@@ -63,7 +63,7 @@ public class TestCarte {
 		System.out.println();
 		System.out.println();
 		DonneesSimulation donnees = new DonneesSimulation(ct2, incendie1, drone);
-		donnees.bougerRobot(Direction.EST, drone);
+		//donnees.bougerRobot(Direction.EST, drone);
 		donnees.bougerRobot(Direction.SUD, drone);
 		donnees.eteindreIncendie(drone, incendie2, 2);
 		System.out.println(donnees);

@@ -44,7 +44,7 @@ public class Case {
 	
 	
 	/**
-	 * cahange le terrain de la case
+	 * change le terrain de la case
 	 * @param terrain
 	 */
 	public void setTerrain(NatureTerrain terrain) {
