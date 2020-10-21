@@ -2,7 +2,7 @@ package briques;
 
 
 /**
- * un incendie est determiner par sa position, son intensite,
+ * un incendie est determinÃ© par sa position, son intensite,
  * l'incendie qui le suit dans la chaine des incendies
  *
  */
@@ -16,26 +16,26 @@ public class Incendie {
 	//constructeurs
 	
 	/**
-	 * Incendie par defaut en position 0, 0, terrain libre, il faut 1 litre pour l'éteindre
+	 * Incendie par defaut en position 0, 0, terrain libre, il faut 1 litre pour l'ï¿½teindre
 	 */
 	public Incendie() {
 		this(new Case(), 1);
 	}
 	
 	/**
-	 * Incendie en position "position", terrain libre, il faut "intensite" litres pour l'éteindre
+	 * Incendie en position "position", terrain libre, il faut "intensite" litres pour l'ï¿½teindre
 	 * @param position
 	 * @param litre
 	 */
 	public Incendie(Case position, int intensite) {
-		// copie legère pour pouvoir pointer sur une case de la carte
+		// copie legï¿½re pour pouvoir pointer sur une case de la carte
 		// pas de suivant
 		this.position = position;
 		this.setIntensite(intensite);
 	}
 	
 	
-	//accès aux données
+	//accï¿½s aux donnï¿½es
 	public Case getPosition() {
 		return this.position;
 	}
@@ -48,21 +48,14 @@ public class Incendie {
 		this.intensite = Math.max(0, intensite);
 	}
 	
-	public Incendie getSuivant() {
-		return this.suivant;
-	}
-	
-	private void setSuivant(Incendie next) {
-		this.suivant = next;
-	}
-	
+
 	
 	/**
 	 * met nvxIncendie en fin de la liste dont this est la tete
 	 * @param nvxIncendie
 	 */
-	public void pushQueue(Incendie nvxIncendie) {
-		//met l'incendie à la fin de la liste d'incendie
+/*	public void pushQueue(Incendie nvxIncendie) {
+		//met l'incendie ï¿½ la fin de la liste d'incendie
 		Incendie next = this.getSuivant();
 		Incendie suiv;
 		if (next == null) this.setSuivant(nvxIncendie); // un seul incendie dans la liste
@@ -74,15 +67,15 @@ public class Incendie {
 			}
 			next.setSuivant(nvxIncendie);
 		}
-	}
+	} */
 	
 	
 	/**
-	 * diminue l'intensité de vol, mais l'intensité ne peut etre négative
+	 * diminue l'intensitï¿½ de vol, mais l'intensitï¿½ ne peut etre nï¿½gative
 	 * @param vol
 	 */
 	public void eteindre(int vol) {
-		this.setIntensite(this.intensite - Math.max(0,vol)); //Math.max(0,vol) gere le cas ou vol est <0
+		this.setIntensite(Math.max(this.intensite - Math.max(0,vol),0)); //Math.max(0,vol) gere le cas ou vol est <0
 	}
 	
 	/**

@@ -4,21 +4,22 @@ import briques.Case;
 import briques.NatureTerrain;
 import briques.Type;
 
+
 public abstract class Robot {
 	private Type type;
 	private Case position;
-	private int capacity; // quantité qu'il peut porter au max
-	private int reserve; // quantité courante
+	private int capacity; // quantitï¿½ qu'il peut porter au max
+	private int reserve; // quantitï¿½ courante
 	private double vitesse; //vitesse par default en km/h
 	private double vitesseRemplissage; // en minute
 	private double vitesseExtinction; // en seconde
-	private int interventionUnitaire; // quantité libéré (remplissage complet pour tout les robot)
-	private Robot suivant;
+	private int interventionUnitaire; // quantitï¿½ libï¿½rï¿½ (remplissage complet pour tout les robot)
+
 	
 	
 	//Constructeurs du robot
 	/**
-	 * cree un robot situé en position, transporte reserve litres, peut transporter jusqu'à capacity litres
+	 * cree un robot situï¿½ en position, transporte reserve litres, peut transporter jusqu'ï¿½ capacity litres
 	 * @param position
 	 * @param capacity
 	 * @param reserve
@@ -43,7 +44,7 @@ public abstract class Robot {
 	
 	
 	
-	//accès aux données du robot
+	//accï¿½s aux donnï¿½es du robot
 	public Case getPosition() {
 		return this.position;
 	}
@@ -69,7 +70,7 @@ public abstract class Robot {
 	}
 	
 	/**
-	 * rempli le reservoir du robot avec volume positive, sans dépasser la capacity
+	 * rempli le reservoir du robot avec volume positive, sans dï¿½passer la capacity
 	 * @param vol
 	 */
 	public void remplirReserve(int vol) {
@@ -84,10 +85,10 @@ public abstract class Robot {
 	/**
 	 * le robot deverse une partie de l'eau qu'il a en reserve sur le feu
 	 * @param vol
-	 * return volume déversé réellement
+	 * return volume dï¿½versï¿½ rï¿½ellement
 	 */
 	public int deverserEau(int vol) {
-		vol = Math.min(this.getReserve(), Math.max(0, vol)); // on ne peut pas deverser plus que ce su'il y a dans le réservoir
+		vol = Math.min(this.getReserve(), Math.max(0, vol)); // on ne peut pas deverser plus que ce su'il y a dans le rï¿½servoir
 		this.reserve = this.reserve - vol ;
 		return vol;
 		
@@ -130,7 +131,7 @@ public abstract class Robot {
 	
 	
 	/**
-	 * le robot ne peut pas forcement marcher n'importe où
+	 * le robot ne peut pas forcement marcher n'importe oï¿½
 	 * @param nature
 	 * @return Le robot peut aller sur une case de nature "nature"
 	 */
@@ -148,7 +149,7 @@ public abstract class Robot {
 	}
 	
 	/**
-	 * verifie si une autre case est voisine de la case du robot, cela peut etre un voisin latéral ou vertical
+	 * verifie si une autre case est voisine de la case du robot, cela peut etre un voisin latï¿½ral ou vertical
 	 * @param autre_case
 	 * @return true si la case est voisine du robot
 	 */
@@ -163,7 +164,7 @@ public abstract class Robot {
 	}
 	
 	/**
-	 * déplace le robot uniquement si la nouvelle case est voisine de celle du robot et accessible
+	 * dï¿½place le robot uniquement si la nouvelle case est voisine de celle du robot et accessible
 	 * @param nouvelle_position
 	 */
 	public void deplacer(Case nouvelle_position) {
@@ -174,20 +175,20 @@ public abstract class Robot {
 	
 	
 	// les robots sont en listes
-	public Robot getSuivant() {
+/*	public Robot getSuivant() {
 		return this.suivant;
 	}
 	
 	private void setSuivant(Robot next) {
 		this.suivant = next;
-	}
+	}*/
 	
 	/**
 	 * met le nvxrobot en fin de liste dont this est la tete
 	 * @param nvxRobot
 	 */
-	public void pushQueue(Robot nvxRobot) {
-		//met le robot à la fin de la liste de robot
+/*	public void pushQueue(Robot nvxRobot) {
+		//met le robot ï¿½ la fin de la liste de robot
 		Robot next = this.getSuivant();
 		Robot suiv;
 		if (next == null) this.setSuivant(nvxRobot); // un seul robot dans la liste
@@ -199,10 +200,12 @@ public abstract class Robot {
 			}
 			next.setSuivant(nvxRobot);
 		}
-	}
+		
+	
+	}*/
 	
 	
-	//les robots printés
+	//les robots printï¿½s
 	/**
 	 * exemple: 
 	 * (2,3) TERRAIN_LIBRE, 4/6 litres, vitesse 6
@@ -214,14 +217,14 @@ public abstract class Robot {
 	
 	
 	/**
-	 * to string generalisé pour afficher toute la liste à partir de this
+	 * to string generalisï¿½ pour afficher toute la liste ï¿½ partir de this
 	 * exemple :
 	 * (0,9) ROCHE, 1/9 litres
 	 * (2,3) TERRAIN_LIBRE, 4/6 litres
 	 */
-	public String allToString() {
+/*	public String allToString() {
 		if (this.suivant != null) return this.toString() + "\n" + this.suivant.allToString();
 		return this.toString();
-	}
+	}*/
 
 }

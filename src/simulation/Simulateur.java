@@ -9,6 +9,7 @@ import gui.GUISimulator;
 import gui.Rectangle;
 import gui.Simulable;
 import robots.Robot;
+import java.util.LinkedList;
 
 
 
@@ -64,11 +65,11 @@ public class Simulateur implements Simulable {
 	}
 	
 	public void draw() {
-		//attention, un rectangle tracé est déjà décalé par raport au coin, d'ou les calculs un peu zarbi dans les paramètre
+		//attention, un rectangle tracï¿½ est dï¿½jï¿½ dï¿½calï¿½ par raport au coin, d'ou les calculs un peu zarbi dans les paramï¿½tre
 		gui.reset();	// clear the window
 		Carte carte = this.donnees.getCarte();
-		Incendie incendies = this.donnees.getIncendies();
-		Robot robots = this.donnees.getRobots();
+		LinkedList<Incendie> incendies = this.donnees.getIncendies();
+		LinkedList<Robot> robots = this.donnees.getRobots();
 		int taille = Math.min(750,  550)/Math.max(carte.getNbColonnes(), carte.getNbLignes());
 		int xMin = taille/2 + 10;
 		int yMin = taille/2 + 10;
@@ -81,7 +82,7 @@ public class Simulateur implements Simulable {
         	}
         }
         
-        while (incendies != null) {
+ /*       while (incendies != null) {
         	
         	gui.addGraphicalElement(new Rectangle(incendies.getPosition().getColonne()*taille +xMin,
         											incendies.getPosition().getLigne()*taille + yMin,
@@ -89,9 +90,17 @@ public class Simulateur implements Simulable {
         											Color.decode("#ff0000"),
         											taille/2));
         	incendies = incendies.getSuivant();
+        }*/
+        
+        for (Incendie i : incendies) {
+        	gui.addGraphicalElement(new Rectangle(i.getPosition().getColonne()*taille +xMin,
+					i.getPosition().getLigne()*taille + yMin,
+					this.contourColor,
+					Color.decode("#ff0000"),
+					taille/2));
         }
         
-        while (robots != null) {
+  /*      while (robots != null) {
         	
         	gui.addGraphicalElement(new Rectangle(robots.getPosition().getColonne()*taille +xMin,
         											robots.getPosition().getLigne()*taille + yMin,
@@ -99,6 +108,14 @@ public class Simulateur implements Simulable {
         											this.getColorRobot(robots.getType()),
         											taille/3));
         	robots = robots.getSuivant();
+        }*/
+        
+        for (Robot r : robots) {
+        	gui.addGraphicalElement(new Rectangle(r.getPosition().getColonne()*taille +xMin,
+					r.getPosition().getLigne()*taille + yMin,
+					this.contourColor,
+					this.getColorRobot(r.getType()),
+					taille/3));
         }
         //System.out.println("DONNEES : "+this.donnees.getRobots().allToString());
 	}

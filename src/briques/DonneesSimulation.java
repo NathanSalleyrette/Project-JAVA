@@ -1,13 +1,14 @@
 package briques;
 
 import java.util.NoSuchElementException;
+import java.util.LinkedList;
 
 import robots.Drone;
 import robots.Robot;
 
 
 /**
- * Les données d'une simulation sont :
+ * Les donnï¿½es d'une simulation sont :
  * une carte (avec des terrains),
  * une chaine d'incendies,
  * une chaine de robots (de toutes sortes)
@@ -16,31 +17,35 @@ public class DonneesSimulation {
 	
 	
 	private Carte carte;
-	private Incendie incendies;
-	private Robot robots;
+	private LinkedList<Incendie> incendies;
+	private LinkedList<Robot> robots;
 	
-	public DonneesSimulation(Carte carte, Incendie incendies, Robot robots) {
+	
+	public DonneesSimulation(Carte carte, LinkedList<Incendie> incendies, LinkedList<Robot> robots) {
 		this.carte = carte;
 		this.incendies = incendies;
 		this.robots = robots;
+	
 	}
 	
 	public DonneesSimulation() {
-		this(new Carte(), new Incendie(), new Drone());
+		this(new Carte(), new LinkedList<Incendie>(), new LinkedList<Robot>());
 	}
 	
 	
 	
 	//get
+
+	
 	public Carte getCarte() {
 		return this.carte;
 	}
 	
-	public Incendie getIncendies() {
+	public LinkedList<Incendie> getIncendies() {
 		return this.incendies;
 	}
 	
-	public Robot getRobots() {
+	public LinkedList<Robot> getRobots() {
 		return this.robots;
 	}
 	
@@ -50,18 +55,19 @@ public class DonneesSimulation {
 		this.carte = carte;
 	}
 	
-	public void setIncendies(Incendie incendies) {
+	public void setIncendies(LinkedList<Incendie> incendies) {
 		this.incendies = incendies;
 	}
 	
-	public void setRobots(Robot robots) {
+	public void setRobots(LinkedList<Robot> robots) {
 		this.robots = robots;
+
 	}
 	
 	
 	/**
-	 * action d'éteindre un incendie, enlève l'eau du réservoir du robot
-	 * pour la déverser sur le feu
+	 * action d'ï¿½teindre un incendie, enlï¿½ve l'eau du rï¿½servoir du robot
+	 * pour la dï¿½verser sur le feu
 	 * @param robot
 	 * @param incendie
 	 * @param vol
@@ -70,7 +76,7 @@ public class DonneesSimulation {
 		vol = robot.deverserEau(vol);
 		incendie.eteindre(vol);
 		if (incendie.getIntensite() == 0) {
-			incendie = incendie.getSuivant();
+			this.incendies.remove(incendie);
 		}
 	}
 	
@@ -100,9 +106,10 @@ public class DonneesSimulation {
 			
 		}
 	}
-	
+	/* Ne pas oublier l'affichage des robots*/
 	public String toString() {
-		return carte + "\n" + incendies.allToString() + "\n" + robots.allToString(); 
+		//return carte + "\n" + incendies.allToString() + robots.allToString();
+		return "coucou";
 	}
 	
 	

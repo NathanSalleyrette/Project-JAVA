@@ -6,9 +6,10 @@ import briques.Type;
 
 
 /**
- * class de robots à roues
+ * class de robots ï¿½ roues
  */
 public class Roues extends Robot{
+	
 	
 	
 	public Roues() {
@@ -38,7 +39,7 @@ public class Roues extends Robot{
 	
 	
 	/**
-	 * le robot à roues ne se deplace que sur
+	 * le robot ï¿½ roues ne se deplace que sur
 	 * terrain libre et habitat
 	 */
 	@Override

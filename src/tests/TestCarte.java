@@ -7,6 +7,7 @@ import gui.GUISimulator;
 import io.LecteurDonnees;
 import robots.*;
 import simulation.Simulateur;
+import java.util.LinkedList;
 
 public class TestCarte {
 
@@ -30,13 +31,16 @@ public class TestCarte {
 		//System.out.println("case_1 : " + c);
 		//c = ct2.getCase(0, 0);
 		//System.out.println("case_1 : " + c);
-	
 		
+		LinkedList<Robot> robots = new LinkedList<Robot>();
+		LinkedList<Incendie> incendies = new LinkedList<Incendie>();
 		Drone drone = new Drone(c);
 		//c.setTerrain(NatureTerrain.EAU);
 		c = ct2.getCase(1, 0);
 		Roues roues = new Roues(c);
-		drone.pushQueue(roues);
+		robots.add(drone);
+		robots.add(roues);
+		//drone.pushQueue(roues);
 		//c.setTerrain(NatureTerrain.FORET);
 		roues.remplirReserve(30000);
 		drone.remplirReserve(10);
@@ -48,9 +52,11 @@ public class TestCarte {
 		
 		c = ct2.getCase(0, 2);
 		Incendie incendie1 = new Incendie(c, 50);
+		incendies.add(incendie1);
 		c = ct2.getCase(0, 0);
 		Incendie incendie2 = new Incendie(c, 10);
-		incendie1.pushQueue(incendie2);
+		incendies.add(incendie2);
+		//incendie1.pushQueue(incendie2);
 		//System.out.println(incendie1.allToString());
 		incendie1.eteindre(60);
 		incendie2.eteindre(8);
@@ -62,9 +68,10 @@ public class TestCarte {
 		
 		System.out.println();
 		System.out.println();
-		DonneesSimulation donnees = new DonneesSimulation(ct2, incendie1, drone);
-		//donnees.bougerRobot(Direction.EST, drone);
-		donnees.bougerRobot(Direction.SUD, drone);
+		DonneesSimulation donnees = new DonneesSimulation(ct2, incendies, robots);
+		donnees.bougerRobot(Direction.EST, drone);
+		donnees.bougerRobot(Direction.EST, drone);
+		//donnees.bougerRobot(Direction.SUD, drone);
 		donnees.eteindreIncendie(drone, incendie2, 2);
 		System.out.println(donnees);
 		

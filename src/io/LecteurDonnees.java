@@ -48,8 +48,8 @@ public class LecteurDonnees {
         System.out.println("\n == Lecture du fichier" + fichierDonnees);
         LecteurDonnees lecteur = new LecteurDonnees(fichierDonnees);
         Carte carte = lecteur.lireCarte();
-        Incendie incendies = lecteur.lireIncendies(carte);
-        Robot robots = lecteur.lireRobots(carte);
+        LinkedList<Incendie> incendies = lecteur.lireIncendies(carte);
+        LinkedList<Robot> robots = lecteur.lireRobots(carte);
         scanner.close();
         System.out.println("\n == Lecture terminee");
         DonneesSimulation donnees = new DonneesSimulation();
@@ -140,7 +140,7 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des incendies.
      */
-    private Incendie lireIncendies(Carte carte) throws DataFormatException {
+ /*   private Incendie lireIncendies(Carte carte) throws DataFormatException {
         ignorerCommentaires();
         try {
             int nbIncendies = scanner.nextInt();
@@ -155,6 +155,24 @@ public class LecteurDonnees {
             throw new DataFormatException("Format invalide. "
                     + "Attendu: nbIncendies");
         }
+    }*/
+    
+    private LinkedList<Incendie> lireIncendies(Carte carte) throws DataFormatException {
+    	ignorerCommentaires();
+    	LinkedList<Incendie> incendies = new LinkedList<Incendie>();
+    	try {
+    		int nbIncendies = scanner.nextInt();
+    		System.out.println("Nb d'incendies = " + nbIncendies);
+    		for (int i = 1; i < nbIncendies; i++) {
+    			incendies.add(lireIncendie(carte, i));
+    		}
+    	
+    		return incendies;
+    	} catch (NoSuchElementException e) {
+    		throw new DataFormatException("Format invalide. "
+                + "Attendu: nbIncendies");
+    	
+    	}
     }
 
 
@@ -191,7 +209,7 @@ public class LecteurDonnees {
     /**
      * Lit et affiche les donnees des robots.
      */
-    private Robot lireRobots(Carte carte) throws DataFormatException {
+   /* private Robot lireRobots(Carte carte) throws DataFormatException {
         ignorerCommentaires();
         try {
             int nbRobots = scanner.nextInt();
@@ -199,6 +217,7 @@ public class LecteurDonnees {
             Robot robots = lireRobot(carte, 0);
             for (int i = 1; i < nbRobots; i++) {
                 robots.pushQueue(lireRobot(carte, i));
+                
             }
             return robots;
 
@@ -207,7 +226,23 @@ public class LecteurDonnees {
                     + "Attendu: nbRobots");
         }
     }
-
+    */
+    private LinkedList<Robot> lireRobots(Carte carte) throws DataFormatException {
+    	ignorerCommentaires();
+    	LinkedList<Robot> robots = new LinkedList<Robot>();
+    	try {
+    		int nbRobots = scanner.nextInt();
+    		System.out.println("Nb de robots = " + nbRobots);
+    		for (int i = 1; i < nbRobots; i++) {
+    			robots.add(lireRobot(carte, i));
+    		}
+    	
+    		return robots;
+    	} catch (NoSuchElementException e) {
+    		throw new DataFormatException("Format invalide. "
+                + "Attendu: nbRobots");
+    	}
+}
 
     /**
      * Lit et affiche les donnees du i-eme robot.
