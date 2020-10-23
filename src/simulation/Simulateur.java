@@ -10,7 +10,7 @@ import gui.Rectangle;
 import gui.Simulable;
 import robots.Robot;
 import java.util.LinkedList;
-
+import evenements.Evenement;
 
 
 
@@ -24,25 +24,46 @@ public class Simulateur implements Simulable {
     
     private DonneesSimulation donnees;
     
-
+    private long DateSimulation; 
+    private LinkedList<Evenement> evenements;
     
 	public Simulateur(GUISimulator gui, Color contourColor, DonneesSimulation donnees) {
 		this.gui = gui;
         gui.setSimulable(this);				// association a la gui!
         this.contourColor = contourColor;
         this.donnees = donnees;
+        this.evenements = new LinkedList<Evenement>();
+        this.DateSimulation = 0;
         //planCoordinates();
         draw();
 	}
 	
 	public void next() {
-		
+		IncrementeDate();
+		int flag = 0;
+		for (Evenement e : evenements) {
+			if (e.getDate() == this.DateSimulation) {
+				flag = 1;
+				e.execute();
+			}
+		}
+		if (flag == 1) {
+			draw();
+		}
 	}
 	
+	// Restart pas encore fini, il faut réinitialiser la map
 	public void restart() {
-		
+		this.DateSimulation = 0;
 	}
 	
+	public void ajouteEvenement(Evenement e) {
+		evenements.add(e);
+	}
+	
+	public void IncrementeDate() {
+		DateSimulation += 1;
+	}
 	
 	public Color getColorTerrain(NatureTerrain nature) {
 		switch (nature) {

@@ -9,7 +9,7 @@ package briques;
 public class Incendie {
 	private Case position;
 	private int intensite;
-	private Incendie suivant; // pour faire une liste d'incendie
+	
 
 	
 	
@@ -93,8 +93,8 @@ public class Incendie {
 	 * Incendie taille 10, (0,0) EAU
 	 * ...
 	 */
-	public String allToString() {
+/*	public String allToString() {
 		if (this.suivant != null) return this.toString() + "\n" + this.suivant.allToString();
 		return this.toString();
-	}
+	}*/
 }

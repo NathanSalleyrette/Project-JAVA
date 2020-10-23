@@ -8,6 +8,7 @@ import io.LecteurDonnees;
 import robots.*;
 import simulation.Simulateur;
 import java.util.LinkedList;
+import evenements.*;
 
 public class TestCarte {
 
@@ -71,14 +72,28 @@ public class TestCarte {
 		DonneesSimulation donnees = new DonneesSimulation(ct2, incendies, robots);
 		donnees.bougerRobot(Direction.EST, drone);
 		donnees.bougerRobot(Direction.EST, drone);
-		//donnees.bougerRobot(Direction.SUD, drone);
+		donnees.bougerRobot(Direction.SUD, drone);
 		donnees.eteindreIncendie(drone, incendie2, 2);
 		System.out.println(donnees);
 		
 		GUISimulator gui = new GUISimulator(800, 600, Color.BLACK);
 		Simulateur simulateur = new Simulateur(gui, Color.decode("#ffffff"), donnees);
 		
-		
+		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(2, Direction.EST, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(3, Direction.EST, drone, ct2));
+		//simulateur.ajouteEvenement(new BougerRobot(4, Direction.EST, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(4, Direction.NORD, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(5, Direction.OUEST, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(6, Direction.OUEST, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(7, Direction.SUD, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(8, Direction.EST, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(9, Direction.EST, drone, ct2));
+		//simulateur.ajouteEvenement(new BougerRobot(3, Direction.EST, drone, ct2));
+		//simulateur.ajouteEvenement(new BougerRobot(4, Direction.EST, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(10, Direction.NORD, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(11, Direction.OUEST, drone, ct2));
+		simulateur.ajouteEvenement(new BougerRobot(12, Direction.OUEST, drone, ct2));
 		
 		
 		

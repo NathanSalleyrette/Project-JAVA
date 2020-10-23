@@ -12,6 +12,9 @@ import robots.Robot;
  * une carte (avec des terrains),
  * une chaine d'incendies,
  * une chaine de robots (de toutes sortes)
+ * Pour les chaines on utilise les LinkedList, il y a toute sorte de collection dans Java
+ * j'ai choisi celle la car elle me semble être la plus simple d'utilisation
+ * De nombreuses fonctions sont implementées dans ces listes comme add, remove, firstadd etc
  */
 public class DonneesSimulation {
 	
