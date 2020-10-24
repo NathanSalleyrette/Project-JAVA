@@ -34,7 +34,7 @@ public class Roues extends Robot{
 	 * @param vitesse
 	 */
 	public Roues(Case position, int vitesse) {
-		super(position, 5000, 0, vitesse, 10, 5, 100);	
+		super(position, 5000, 5000, vitesse, 10, 5, 100);	
 		super.setType(Type.ROUES);
 	}
 	

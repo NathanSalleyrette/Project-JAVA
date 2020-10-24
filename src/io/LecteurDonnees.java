@@ -5,11 +5,7 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
 import briques.*;
-import robots.Drone;
-import robots.Pattes;
-import robots.Robot;
-import robots.Roues;
-
+import robots.*;
 
 
 /**
@@ -284,7 +280,10 @@ public class LecteurDonnees {
                 	robot = new Pattes(carte.getCase(lig, col));
                 	break;
                 }
-                //case CHENILLES: robot = new Chenilles(carte.getCase(lig, col));
+                case CHENILLES: {
+                	robot = new Chenilles(carte.getCase(lig, col));
+                	break;
+                }
                 default: throw new DataFormatException("format de robot invalide. "
                         + "type inconnu");
                 
@@ -302,7 +301,10 @@ public class LecteurDonnees {
                 	robot = new Roues(carte.getCase(lig, col), vitesse);
                 	break;
                 }
-                //case CHENILLES: robot = new Chenilles(carte.getCase(lig, col), vitesse);
+                case CHENILLES: {
+                	robot = new Chenilles(carte.getCase(lig, col), vitesse);
+                	break;
+                }
                 default: throw new DataFormatException("format de robot invalide. "
                         + "type inconnu");
                 

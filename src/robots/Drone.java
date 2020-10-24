@@ -31,7 +31,7 @@ public class Drone extends Robot{
 	 * @param vitesse
 	 */
 	public Drone(Case position, int vitesse) {
-		super(position, 10000, 0, Math.min(150, vitesse), 30, 30, 10000);
+		super(position, 10000, 10000, Math.min(150, vitesse), 30, 30, 10000);
 		super.setType(Type.DRONE);
 		
 	}

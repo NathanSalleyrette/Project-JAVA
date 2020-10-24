@@ -9,7 +9,7 @@ import java.util.zip.DataFormatException;
 
 import briques.Direction;
 import briques.DonneesSimulation;
-import evenements.BougerRobot;
+import evenements.*;
 import gui.GUISimulator;
 
 public class TestLecteurDonnees {
@@ -30,10 +30,13 @@ public class TestLecteurDonnees {
             Simulateur simulateur = new Simulateur(gui, Color.decode("#ffffff"), LecteurDonnees.lire(args[0]));
     		
     		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
-    		simulateur.ajouteEvenement(new BougerRobot(2, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
-    		simulateur.ajouteEvenement(new BougerRobot(3, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
-    		simulateur.ajouteEvenement(new BougerRobot(4, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
-            
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new EteindreIncendie(1, simulateur.getDonnees().getIncendies().get(4), simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, simulateur.getDonnees().getRobots().get(1)));
             
         } catch (FileNotFoundException e) {
             System.out.println("fichier " + args[0] + " inconnu ou illisible");

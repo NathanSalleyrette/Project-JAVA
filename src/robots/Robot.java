@@ -69,6 +69,10 @@ public abstract class Robot {
 		return this.type;
 	}
 	
+	public int getInterventionUnitaire() {
+		return this.interventionUnitaire;
+	}
+	
 	public long getDateDisponible() {
 		return this.dateDisponible;
 	}

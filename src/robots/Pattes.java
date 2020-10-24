@@ -33,7 +33,7 @@ public class Pattes extends Robot {
 	 * @param vitesse
 	 */
 	public Pattes(Case position, int vitesse) {
-		super(position, 42, 0, 30, 10, 5, 100);	
+		super(position, 42, 42, 30, 10, 5, 100);	
 		super.setType(Type.PATTES);
 	}
 	

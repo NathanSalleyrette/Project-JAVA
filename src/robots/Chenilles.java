@@ -33,7 +33,7 @@ public class Chenilles extends Robot {
 	 * @param vitesse
 	 */
 	public Chenilles(Case position, int vitesse) {
-		super(position, 2000, 0, Math.min(80, vitesse), 5, 8, 100);	
+		super(position, 2000, 2000, Math.min(80, vitesse), 5, 8, 100);	
 		super.setType(Type.CHENILLES);
 	}
 	
