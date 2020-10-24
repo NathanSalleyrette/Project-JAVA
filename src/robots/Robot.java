@@ -38,9 +38,11 @@ public abstract class Robot {
 	/**
 	 * robot en (0,0) terrain libre, capacity de 0, vitesse 0
 	 */
+	/*
 	public Robot() {
 		this(new Case(), 0, 0, 0.0, 0.0, 0.0, 0);
 	}
+	 */
 	
 	
 	

@@ -33,9 +33,10 @@ public class Carte {
 		this.m = new Case[nbLignes][nbColonnes];
 		for (int i = 0; i < m.length; i++) {
 			for(int j = 0; j <m[0].length; j++) {
-				this.m[i][j] = new Case(i, j);
+				this.m[i][j] = new Case(i, j, this);
 			}
 		}
+		//Case.setCarte(this);
 	}
 	
 	
@@ -62,7 +63,7 @@ public class Carte {
 		
 		for (int i = 0; i < t.length; i++) {
 			for(int j = 0; j <t[0].length; j++) {
-				this.m[i][j] = new Case(i, j, t[i][j]);
+				this.m[i][j] = new Case(i, j, t[i][j], this);
 			}
 		}
 	}

@@ -10,10 +10,11 @@ import briques.Type;
  * classe de robots à pattes
  */
 public class Pattes extends Robot {
-	
+	/*
 	public Pattes() {
 		this(new Case());	
 	}
+	*/
 	
 	/**
 	 * fonction inutile mais notée par soucis d'harmonisation avec les autres classes de robots

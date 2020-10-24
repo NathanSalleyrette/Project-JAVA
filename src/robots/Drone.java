@@ -9,10 +9,11 @@ import briques.Type;
  */
 public class Drone extends Robot{
 
-
+/*
 	public Drone() {
 		this(new Case());	
 	}
+	*/
 	
 	/**
 	 * vitesse de base 100 km/h

@@ -6,31 +6,35 @@ package briques;
  * Une case represente un terrain, cd NatureTerrain
  *
  */
-public class Case {
+public class Case{
 	private int ligne;
 	private int colonne;
 	private NatureTerrain nature;
+	private Carte carte;
+	
 	
 	/**
 	 * case par defaut en 0,0, terrain libre
 	 */
+	/*
 	public Case() {
 		this(0,0);
 	}
-	
+	*/
 	/**
 	 * Case en position ligne et colonne, elle est de nature terrain
 	 * @param ligne
 	 * @param colonne
 	 * @param terrain
 	 */
-	public Case(int ligne, int colonne, NatureTerrain terrain) {
+	public Case(int ligne, int colonne, NatureTerrain terrain, Carte carte) {
 		if (ligne < 0 || colonne < 0) {
 			throw new IllegalArgumentException("dimension invalide");
 		}
 		this.ligne = ligne;
 		this.colonne = colonne;
 		this.nature = terrain;
+		this.carte = carte;
 	}
 	
 	/**
@@ -38,8 +42,8 @@ public class Case {
 	 * @param ligne
 	 * @param colonne
 	 */
-	public Case(int ligne, int colonne) {
-		this(ligne, colonne, NatureTerrain.TERRAIN_LIBRE);
+	public Case(int ligne, int colonne, Carte carte) {
+		this(ligne, colonne, NatureTerrain.TERRAIN_LIBRE, carte);
 	}
 	
 	
@@ -63,6 +67,10 @@ public class Case {
 	
 	public NatureTerrain getNature() {
 		return this.nature;
+	}
+	
+	public Carte getCarte() {
+		return this.carte;
 	}
 	
 	

@@ -164,7 +164,7 @@ public class LecteurDonnees {
     		int nbIncendies = scanner.nextInt();
     		System.out.println("Nb d'incendies = " + nbIncendies);
     		for (int i = 1; i < nbIncendies; i++) {
-    			incendies.add(lireIncendie(carte, i));
+    			lireIncendie(carte, i, incendies);
     		}
     	
     		return incendies;
@@ -180,7 +180,7 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme incendie.
      * @param i
      */
-    private Incendie lireIncendie(Carte carte, int i) throws DataFormatException {
+    private void lireIncendie(Carte carte, int i, LinkedList<Incendie> incendies) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Incendie " + i + ": ");
 
@@ -197,7 +197,7 @@ public class LecteurDonnees {
             System.out.println("position = (" + lig + "," + col
                     + ");\t intensite = " + intensite);
             
-            return new Incendie(carte.getCase(lig, col), intensite);
+            new Incendie(carte.getCase(lig, col), intensite, incendies);
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format d'incendie invalide. "

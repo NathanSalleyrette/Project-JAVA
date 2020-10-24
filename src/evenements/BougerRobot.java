@@ -30,7 +30,7 @@ public class BougerRobot extends Evenement {
 			Case newPosition = this.carte.getVoisin(this.robot.getPosition(), this.direction);
 			this.robot.deplacer(newPosition);
 			} catch (Exception e) {
-				System.out.println("On ne peut pas déplacer le robot par la :" + direction.toString() + robot.toString() + super.getDate());
+				System.out.println("On ne peut pas déplacer le robot par l� : " + direction.toString() + robot.toString() + " " + super.getDate());
 			}
 	}
 

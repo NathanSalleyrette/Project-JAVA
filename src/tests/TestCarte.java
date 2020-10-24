@@ -14,7 +14,8 @@ public class TestCarte {
 
 	public static void main(String[] args) {
 		// Test pour la carte et les cases
-		Case c = new Case(9,5);
+		//Case c = new Case(9,5);
+		Case c;
 		//System.out.println("case_1" + c);
 		Carte ct1 = new Carte(2, 4); //matrice 2x4
 		//System.out.println("carte_1" + ct1);
@@ -52,11 +53,9 @@ public class TestCarte {
 		
 		
 		c = ct2.getCase(0, 2);
-		Incendie incendie1 = new Incendie(c, 50);
-		incendies.add(incendie1);
+		Incendie incendie1 = new Incendie(c, 50, incendies);
 		c = ct2.getCase(0, 0);
-		Incendie incendie2 = new Incendie(c, 10);
-		incendies.add(incendie2);
+		Incendie incendie2 = new Incendie(c, 10, incendies);
 		//incendie1.pushQueue(incendie2);
 		//System.out.println(incendie1.allToString());
 		incendie1.eteindre(60);
@@ -66,6 +65,7 @@ public class TestCarte {
 		c = ct2.getCase(0, 2);
 		//System.out.println("case_1 : " + c);
 		//System.out.println("carte_2 " + ct2);
+		System.out.println("carte_2 " + ct2.getCase(0, 0).getCarte());
 		
 		System.out.println();
 		System.out.println();

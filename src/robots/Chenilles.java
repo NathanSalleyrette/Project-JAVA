@@ -10,10 +10,11 @@ import briques.Type;
  */
 public class Chenilles extends Robot {
 
-
+/*
 	public Chenilles() {
 		this(new Case());	
 	}
+	*/
 	
 	/**
 	 * vitesse de base 60 km/h

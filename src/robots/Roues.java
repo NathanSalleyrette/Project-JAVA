@@ -11,10 +11,11 @@ import briques.Type;
 public class Roues extends Robot{
 	
 	
-	
+	/*
 	public Roues() {
 		this(new Case());	
 	}
+	*/
 	
 	/**
 	 * vitesse de base 80 km/h
