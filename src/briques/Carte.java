@@ -121,9 +121,9 @@ public class Carte {
 	public Boolean voisinExiste(Case src, Direction dir) {
 		switch (dir) {
 		case NORD:
-			return !(src.getLigne() == this.nbLignes);
-		case SUD:
 			return !(src.getLigne() == 0);
+		case SUD:
+			return !(src.getLigne() == this.nbLignes);
 		case EST:
 			return !(src.getColonne() == this.nbColonnes);
 		case OUEST:
@@ -146,10 +146,10 @@ public class Carte {
 		int y = 0;
 		switch (dir) {
 		case NORD:
-			y = 1;
+			y = -1;
 			break;
 		case SUD:
-			y = -1;
+			y = 1;
 			break;
 		case EST:
 			x = 1;

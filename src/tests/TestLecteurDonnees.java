@@ -7,7 +7,9 @@ import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.util.zip.DataFormatException;
 
+import briques.Direction;
 import briques.DonneesSimulation;
+import evenements.BougerRobot;
 import gui.GUISimulator;
 
 public class TestLecteurDonnees {
@@ -26,6 +28,11 @@ public class TestLecteurDonnees {
             //GUISimulator gui = new GUISimulator(10000, 10000, Color.BLACK); //
             // cree la carte avec les incendies et les robots
             Simulateur simulateur = new Simulateur(gui, Color.decode("#ffffff"), LecteurDonnees.lire(args[0]));
+    		
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(2, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(3, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(4, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
             
             
         } catch (FileNotFoundException e) {

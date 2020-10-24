@@ -14,20 +14,36 @@ public class BougerRobot extends Evenement {
 
 	private Direction direction;
 	private Robot robot;
-	private Carte carte;
 	
-	public BougerRobot(long date, Direction direction, Robot robot,Carte carte) {
+	/**
+	 * peut etre appelé que sur une case accessible
+	 * @param date
+	 * @param direction
+	 * @param robot
+	 */
+	public BougerRobot(long date, Direction direction, Robot robot) {
 		super(date);
+		
+		if (robot.getVitesseCourante() != 0.0) { //sinon il n'y a pas de deplacement, pas besoin d'attendre pour le savoir
+			
+			int last = (int)Math.ceil(robot.getPosition().getCarte().getTailleCases()/robot.getVitesseCourante()); //--- partie entiere sup de la durée de l'action : t = d/v
+			
+			long nvlleDate = Math.max(date, robot.getDateDisponible()) + last;
+			
+			super.setDate(nvlleDate);
+			System.out.println(nvlleDate);
+			robot.setDateDisponible(nvlleDate);
+		}
 		this.direction = direction;
 		this.robot = robot;
-		this.carte = carte;
+		
 	}
 	
 	// le try ne fonctionne pas (alors que dans DonneesSimulation il fonctionne)
 	// Je catch toutes les exceptions qui arrivent, ca fonctionne
 	public void execute() {
 		try {
-			Case newPosition = this.carte.getVoisin(this.robot.getPosition(), this.direction);
+			Case newPosition = (this.robot.getPosition().getCarte()) . getVoisin(this.robot.getPosition(), this.direction);
 			this.robot.deplacer(newPosition);
 			} catch (Exception e) {
 				System.out.println("On ne peut pas dÃ©placer le robot par là : " + direction.toString() + robot.toString() + " " + super.getDate());

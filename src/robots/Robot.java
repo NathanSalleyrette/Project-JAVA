@@ -14,6 +14,7 @@ public abstract class Robot {
 	private double vitesseRemplissage; // en minute
 	private double vitesseExtinction; // en seconde
 	private int interventionUnitaire; // quantit� lib�r� (remplissage complet pour tout les robot)
+	private long dateDisponible;
 
 	
 	
@@ -32,6 +33,7 @@ public abstract class Robot {
 		this.vitesseRemplissage = rempli;
 		this.vitesseExtinction = vide;
 		this.interventionUnitaire = interventionUnitaire;
+		this.dateDisponible = 0;
 	}
 	
 	
@@ -65,6 +67,14 @@ public abstract class Robot {
 	
 	public Type getType() {
 		return this.type;
+	}
+	
+	public long getDateDisponible() {
+		return this.dateDisponible;
+	}
+	
+	public void setDateDisponible(long date) {
+		this.dateDisponible = date;
 	}
 	
 	public void setType(Type type) {
@@ -114,6 +124,10 @@ public abstract class Robot {
 		default: return 0.0; //HABITAT_LIBRE
 		}
 		*/
+	}
+	
+	public double getVitesseCourante() {
+		return this.getVitesse(this.getPosition().getNature());
 	}
 	
 	public double getVitesse() {
@@ -170,9 +184,13 @@ public abstract class Robot {
 	 * @param nouvelle_position
 	 */
 	public void deplacer(Case nouvelle_position) {
-		if (this.isCompatible(nouvelle_position.getNature()) && this.isVoisine(nouvelle_position)) {
+		if (this.deplacementPossible(nouvelle_position)) {
 			this.setPosition(nouvelle_position);
 		}	
+	}
+	
+	public Boolean deplacementPossible(Case nouvelle_position) {
+		return this.isCompatible(nouvelle_position.getNature()) && this.isVoisine(nouvelle_position);
 	}
 	
 	

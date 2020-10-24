@@ -1,9 +1,7 @@
 package briques;
 
-import java.util.NoSuchElementException;
 import java.util.LinkedList;
 
-import robots.Drone;
 import robots.Robot;
 
 
@@ -65,22 +63,6 @@ public class DonneesSimulation {
 	public void setRobots(LinkedList<Robot> robots) {
 		this.robots = robots;
 
-	}
-	
-	
-	/**
-	 * action d'�teindre un incendie, enl�ve l'eau du r�servoir du robot
-	 * pour la d�verser sur le feu
-	 * @param robot
-	 * @param incendie
-	 * @param vol
-	 */
-	public void eteindreIncendie(Robot robot, Incendie incendie, int vol) {
-		vol = robot.deverserEau(vol);
-		incendie.eteindre(vol);
-		if (incendie.getIntensite() == 0) {
-			this.incendies.remove(incendie);
-		}
 	}
 	
 	
