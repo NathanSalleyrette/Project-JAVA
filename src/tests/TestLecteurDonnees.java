@@ -37,6 +37,10 @@ public class TestLecteurDonnees {
     		simulateur.ajouteEvenement(new EteindreIncendie(1, simulateur.getDonnees().getIncendies().get(4), simulateur.getDonnees().getRobots().get(1)));
     		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, simulateur.getDonnees().getRobots().get(1)));
     		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new RemplirRobot(1, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new EteindreIncendie(1, simulateur.getDonnees().getIncendies().get(4), simulateur.getDonnees().getRobots().get(1)));
             
         } catch (FileNotFoundException e) {
             System.out.println("fichier " + args[0] + " inconnu ou illisible");

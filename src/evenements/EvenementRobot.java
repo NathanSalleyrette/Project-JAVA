@@ -22,6 +22,7 @@ public abstract class EvenementRobot extends Evenement{
 	 */
 	public void setDateActionRobot() {
 		int last = this.tempsActionRobot();
+		System.out.println("last " + last);
 		long nvlleDate = Math.max(super.getDate(), this.robot.getDateDisponible()) + last;
 		
 		super.setDate(nvlleDate);
