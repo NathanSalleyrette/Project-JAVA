@@ -1,8 +1,6 @@
 package robots;
 
-import briques.Case;
-import briques.NatureTerrain;
-import briques.Type;
+import briques.*;
 
 
 
@@ -10,10 +8,11 @@ import briques.Type;
  * classe de robots à pattes
  */
 public class Pattes extends Robot {
-	
+	/*
 	public Pattes() {
 		this(new Case());	
 	}
+	*/
 	
 	/**
 	 * fonction inutile mais notée par soucis d'harmonisation avec les autres classes de robots
@@ -21,8 +20,8 @@ public class Pattes extends Robot {
 	 * appelle du consutructeur plus complet
 	 * @param position
 	 */
-	public Pattes(Case position) {
-		this(position, 30);	
+	public Pattes(Case position, Carte carte) {
+		this(position, 30, carte);	
 	}
 
 	/**
@@ -31,8 +30,8 @@ public class Pattes extends Robot {
 	 * @param position
 	 * @param vitesse
 	 */
-	public Pattes(Case position, int vitesse) {
-		super(position, 42, 0, 30, 10, 5, 100);	
+	public Pattes(Case position, int vitesse, Carte carte) {
+		super(position, 42, 42, 30, 10, 5, 100, carte);	
 		super.setType(Type.PATTES);
 	}
 	

@@ -5,11 +5,7 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.DataFormatException;
 import briques.*;
-import robots.Drone;
-import robots.Pattes;
-import robots.Robot;
-import robots.Roues;
-
+import robots.*;
 
 
 /**
@@ -163,8 +159,8 @@ public class LecteurDonnees {
     	try {
     		int nbIncendies = scanner.nextInt();
     		System.out.println("Nb d'incendies = " + nbIncendies);
-    		for (int i = 1; i < nbIncendies; i++) {
-    			incendies.add(lireIncendie(carte, i));
+    		for (int i = 0; i < nbIncendies; i++) {
+    			lireIncendie(carte, i, incendies);
     		}
     	
     		return incendies;
@@ -180,7 +176,7 @@ public class LecteurDonnees {
      * Lit et affiche les donnees du i-eme incendie.
      * @param i
      */
-    private Incendie lireIncendie(Carte carte, int i) throws DataFormatException {
+    private void lireIncendie(Carte carte, int i, LinkedList<Incendie> incendies) throws DataFormatException {
         ignorerCommentaires();
         System.out.print("Incendie " + i + ": ");
 
@@ -197,7 +193,7 @@ public class LecteurDonnees {
             System.out.println("position = (" + lig + "," + col
                     + ");\t intensite = " + intensite);
             
-            return new Incendie(carte.getCase(lig, col), intensite);
+            new Incendie(carte.getCase(lig, col), intensite, incendies);
 
         } catch (NoSuchElementException e) {
             throw new DataFormatException("format d'incendie invalide. "
@@ -233,7 +229,7 @@ public class LecteurDonnees {
     	try {
     		int nbRobots = scanner.nextInt();
     		System.out.println("Nb de robots = " + nbRobots);
-    		for (int i = 1; i < nbRobots; i++) {
+    		for (int i = 0; i < nbRobots; i++) {
     			robots.add(lireRobot(carte, i));
     		}
     	
@@ -258,9 +254,10 @@ public class LecteurDonnees {
             int col = scanner.nextInt();
             System.out.print("position = (" + lig + "," + col + ");");
             String chainType = scanner.next();
+            System.out.print("\t type = " + chainType);
             Type type = Type.valueOf(chainType);
 
-            System.out.print("\t type = " + chainType);
+            
 
 
             // lecture eventuelle d'une vitesse du robot (entier)
@@ -272,18 +269,21 @@ public class LecteurDonnees {
                 System.out.print("valeur par defaut");
                 switch(type) {
                 case DRONE: {
-                	robot = new Drone(carte.getCase(lig, col));
+                	robot = new Drone(carte.getCase(lig, col), carte);
                 	break;
                 }
                 case ROUES: {
-                	robot = new Roues(carte.getCase(lig, col));
+                	robot = new Roues(carte.getCase(lig, col), carte);
                 	break;
                 }
                 case PATTES: {
-                	robot = new Pattes(carte.getCase(lig, col));
+                	robot = new Pattes(carte.getCase(lig, col), carte);
                 	break;
                 }
-                //case CHENILLES: robot = new Chenilles(carte.getCase(lig, col));
+                case CHENILLES: {
+                	robot = new Chenilles(carte.getCase(lig, col), carte);
+                	break;
+                }
                 default: throw new DataFormatException("format de robot invalide. "
                         + "type inconnu");
                 
@@ -294,15 +294,18 @@ public class LecteurDonnees {
                 System.out.print(vitesse);
                 switch(type) {
                 case DRONE: {
-                	robot = new Drone(carte.getCase(lig, col), vitesse);
+                	robot = new Drone(carte.getCase(lig, col), vitesse, carte);
                 	break;
                 }
                 case ROUES: {
-                	robot = new Roues(carte.getCase(lig, col), vitesse);
+                	robot = new Roues(carte.getCase(lig, col), vitesse, carte);
                 	break;
                 }
-                //case CHENILLES: robot = new Chenilles(carte.getCase(lig, col), vitesse);
-                default: throw new DataFormatException("format de robot invalide. "
+                case CHENILLES: {
+                	robot = new Chenilles(carte.getCase(lig, col), vitesse, carte);
+                	break;
+                }
+                default: throw new DataFormatException("format de robot invalide. " // on ne peut pas choisir la vitesse du robot à pattes
                         + "type inconnu");
                 
                 }

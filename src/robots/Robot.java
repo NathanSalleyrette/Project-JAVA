@@ -1,6 +1,8 @@
 package robots;
 
+import briques.Carte;
 import briques.Case;
+import briques.Direction;
 import briques.NatureTerrain;
 import briques.Type;
 
@@ -11,9 +13,11 @@ public abstract class Robot {
 	private int capacity; // quantitï¿½ qu'il peut porter au max
 	private int reserve; // quantitï¿½ courante
 	private double vitesse; //vitesse par default en km/h
-	private double vitesseRemplissage; // en minute
-	private double vitesseExtinction; // en seconde
+	private double tempsRemplissage; // en minute
+	private double tempsExtinctionUnitaire; // en seconde
 	private int interventionUnitaire; // quantitï¿½ libï¿½rï¿½ (remplissage complet pour tout les robot)
+	private long dateDisponible;
+	private Carte carte;
 
 	
 	
@@ -24,23 +28,27 @@ public abstract class Robot {
 	 * @param capacity
 	 * @param reserve
 	 */
-	public Robot(Case position, int capacity, int reserve, double vitesse, double rempli, double vide, int interventionUnitaire) {
+	public Robot(Case position, int capacity, int reserve, double vitesse, double rempli, double vide, int interventionUnitaire, Carte carte) {
 		this.position = position;
 		this.capacity = capacity;
 		this.reserve = reserve;
 		this.vitesse = vitesse;
-		this.vitesseRemplissage = rempli;
-		this.vitesseExtinction = vide;
+		this.tempsRemplissage = rempli;
+		this.tempsExtinctionUnitaire = vide;
 		this.interventionUnitaire = interventionUnitaire;
+		this.carte = carte;
+		this.dateDisponible = 0;
 	}
 	
 	
 	/**
 	 * robot en (0,0) terrain libre, capacity de 0, vitesse 0
 	 */
+	/*
 	public Robot() {
 		this(new Case(), 0, 0, 0.0, 0.0, 0.0, 0);
 	}
+	 */
 	
 	
 	
@@ -65,6 +73,23 @@ public abstract class Robot {
 		return this.type;
 	}
 	
+	public int getInterventionUnitaire() {
+		return this.interventionUnitaire;
+	}
+	
+	public long getDateDisponible() {
+		return this.dateDisponible;
+	}
+	
+	public Carte getCarte() {
+		return this.carte;
+	}
+	
+	
+	public void setDateDisponible(long date) {
+		this.dateDisponible = date;
+	}
+	
 	public void setType(Type type) {
 		this.type = type;
 	}
@@ -73,13 +98,14 @@ public abstract class Robot {
 	 * rempli le reservoir du robot avec volume positive, sans dï¿½passer la capacity
 	 * @param vol
 	 */
-	public void remplirReserve(int vol) {
-		//si vol <0 alors vol = 0
-		
-		if (position.getNature() == NatureTerrain.EAU) {
-			//this.reserve = this.capacity;
-			this.reserve = Math.min(Math.max(0, vol) + this.reserve, this.capacity);
+	public void remplirReserve() {
+		if (this.eauVoisine()) {
+		this.reserve = this.capacity;
 		}
+	}
+	
+	public Boolean eauVoisine() {
+		return this.getCarte().eauVoisine(this.getPosition());
 	}
 	
 	/**
@@ -96,6 +122,7 @@ public abstract class Robot {
 	
 	/**
 	 * vitesse du robot sur le terrain de nature "nature"
+	 * On considère que le robot bouge à la vitesse de sa case actuelle pour aller sur une autre case
 	 * @param nature
 	 * @return
 	 */
@@ -114,17 +141,28 @@ public abstract class Robot {
 		*/
 	}
 	
+	public double getVitesseCourante() {
+		return this.getVitesse(this.getPosition().getNature());
+	}
+	
 	public double getVitesse() {
 		return this.vitesse;
 	}
 	
-	public double getVitesseRemplissage() {
-		return this.vitesseRemplissage;
+	public double getTempsRemplissage() {
+		return this.tempsRemplissage;
 	}
 	
-	public double getVitesseExtinction() {
-		return this.vitesseExtinction;
+	public double getTempsExtinctionUnitaire() {
+		return this.tempsExtinctionUnitaire;
 	}
+	
+	public int getTempsExtinction(int vol) {
+		int nbVolUbitaire = (int)Math.ceil(vol/this.interventionUnitaire);
+		return nbVolUbitaire;
+	}
+	
+	
 	
 	
 
@@ -168,9 +206,31 @@ public abstract class Robot {
 	 * @param nouvelle_position
 	 */
 	public void deplacer(Case nouvelle_position) {
-		if (this.isCompatible(nouvelle_position.getNature()) && this.isVoisine(nouvelle_position)) {
+		if (this.deplacementPossible(nouvelle_position)) {
 			this.setPosition(nouvelle_position);
 		}	
+	}
+	
+	public Boolean deplacementPossible(Case nouvelle_position) {
+		return this.isCompatible(nouvelle_position.getNature()) && this.isVoisine(nouvelle_position);
+	}
+	
+	
+	/**
+	 * si la nouvelle position est voisine de la case du robot, ainsi que compatible avec le 
+	 * robot, ce dernier va sur la nouvelle case
+	 * @param newPosition
+	 * @param robot
+	 */
+	
+	
+	public void deplacer(Direction dir) {
+	    try {
+	    	Case newPosition = (this.getCarte()) . getVoisin(this.getPosition(), dir);
+	    	this.deplacer(newPosition);
+		} catch (Exception e) {
+			System.out.println("On ne peut pas dÃ©placer le robot par là : " + dir.toString() + this.toString());
+		}
 	}
 	
 	

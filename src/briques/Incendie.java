@@ -1,5 +1,6 @@
 package briques;
 
+import java.util.LinkedList;
 
 /**
  * un incendie est determiné par sa position, son intensite,
@@ -9,6 +10,7 @@ package briques;
 public class Incendie {
 	private Case position;
 	private int intensite;
+	private LinkedList<Incendie> incendies;
 	
 
 	
@@ -18,20 +20,24 @@ public class Incendie {
 	/**
 	 * Incendie par defaut en position 0, 0, terrain libre, il faut 1 litre pour l'�teindre
 	 */
+	/*
 	public Incendie() {
 		this(new Case(), 1);
 	}
+	*/
 	
 	/**
 	 * Incendie en position "position", terrain libre, il faut "intensite" litres pour l'�teindre
 	 * @param position
 	 * @param litre
 	 */
-	public Incendie(Case position, int intensite) {
+	public Incendie(Case position, int intensite, LinkedList<Incendie> incendies) {
 		// copie leg�re pour pouvoir pointer sur une case de la carte
 		// pas de suivant
 		this.position = position;
+		this.incendies = incendies;
 		this.setIntensite(intensite);
+		incendies.add(this);
 	}
 	
 	
@@ -46,6 +52,10 @@ public class Incendie {
 	
 	public void setIntensite(int intensite) {
 		this.intensite = Math.max(0, intensite);
+	}
+	
+	public LinkedList<Incendie> getIncendies(){
+		return this.incendies;
 	}
 	
 
@@ -77,6 +87,9 @@ public class Incendie {
 	public void eteindre(int vol) {
 		this.setIntensite(Math.max(this.intensite - Math.max(0,vol),0)); //Math.max(0,vol) gere le cas ou vol est <0
 	}
+	
+	
+	
 	
 	/**
 	 * exemple:

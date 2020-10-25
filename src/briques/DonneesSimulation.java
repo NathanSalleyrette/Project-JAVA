@@ -1,9 +1,7 @@
 package briques;
 
-import java.util.NoSuchElementException;
 import java.util.LinkedList;
 
-import robots.Drone;
 import robots.Robot;
 
 
@@ -69,31 +67,16 @@ public class DonneesSimulation {
 	
 	
 	/**
-	 * action d'�teindre un incendie, enl�ve l'eau du r�servoir du robot
-	 * pour la d�verser sur le feu
-	 * @param robot
-	 * @param incendie
-	 * @param vol
-	 */
-	public void eteindreIncendie(Robot robot, Incendie incendie, int vol) {
-		vol = robot.deverserEau(vol);
-		incendie.eteindre(vol);
-		if (incendie.getIntensite() == 0) {
-			this.incendies.remove(incendie);
-		}
-	}
-	
-	
-	/**
 	 * si la nouvelle position est voisine de la case du robot, ainsi que compatible avec le 
 	 * robot, ce dernier va sur la nouvelle case
 	 * @param newPosition
 	 * @param robot
 	 */
+	/*
 	public void bougerRobot(Case newPosition, Robot robot) {
 		robot.deplacer(newPosition);
 	}
-	
+	*/
 	
 	/**
 	 * si la case voisine dans la direction dir de celle du robot est compatible avec le 
@@ -101,6 +84,7 @@ public class DonneesSimulation {
 	 * @param newPosition
 	 * @param robot
 	 */
+	/*
 	public void bougerRobot(Direction dir, Robot robot) {
 		try {
 		Case newPosition = this.carte.getVoisin(robot.getPosition(), dir);
@@ -109,6 +93,8 @@ public class DonneesSimulation {
 			
 		}
 	}
+	*/
+	
 	/* Ne pas oublier l'affichage des robots*/
 	public String toString() {
 		//return carte + "\n" + incendies.allToString() + robots.allToString();

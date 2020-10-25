@@ -6,10 +6,10 @@ package evenements;
  * EvenementMessage est l'evenement qui envoie un message dans le terminal
  * c'est l'evenement "test" défini dans le sujet
  */
-public class EvenementMessage extends Evenement {
+public class SendMessage extends Evenement {
 	private String message;
 	
-	public EvenementMessage(long date, String message) {
+	public SendMessage(long date, String message) {
 		super(date);
 		this.message = message;
 	}

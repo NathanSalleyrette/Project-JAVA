@@ -6,18 +6,21 @@ package briques;
  * Une case represente un terrain, cd NatureTerrain
  *
  */
-public class Case {
+public class Case{
 	private int ligne;
 	private int colonne;
 	private NatureTerrain nature;
 	
+	
+	
 	/**
 	 * case par defaut en 0,0, terrain libre
 	 */
+	/*
 	public Case() {
 		this(0,0);
 	}
-	
+	*/
 	/**
 	 * Case en position ligne et colonne, elle est de nature terrain
 	 * @param ligne
@@ -38,7 +41,7 @@ public class Case {
 	 * @param ligne
 	 * @param colonne
 	 */
-	public Case(int ligne, int colonne) {
+	public Case(int ligne, int colonne, Carte carte) {
 		this(ligne, colonne, NatureTerrain.TERRAIN_LIBRE);
 	}
 	
