@@ -18,6 +18,7 @@ public abstract class Robot {
 	private int interventionUnitaire; // quantit� lib�r� (remplissage complet pour tout les robot)
 	private long dateDisponible;
 	private Carte carte;
+	private Case positionApresAction;
 
 	
 	
@@ -38,6 +39,7 @@ public abstract class Robot {
 		this.interventionUnitaire = interventionUnitaire;
 		this.carte = carte;
 		this.dateDisponible = 0;
+		this.positionApresAction = position;
 	}
 	
 	
@@ -61,6 +63,15 @@ public abstract class Robot {
 		this.position = nouvelle_position;
 	}
 	
+	public Case getPositionApresAction() {
+		return this.positionApresAction;
+	}
+	
+	public void setPositionApresAction(Case c) {
+		this.positionApresAction = c;
+	}
+	
+	
 	public int getCapacity() {
 		return this.capacity;
 	}
@@ -73,6 +84,10 @@ public abstract class Robot {
 		return this.type;
 	}
 	
+	public void setType(Type type) {
+		this.type = type;
+	}
+	
 	public int getInterventionUnitaire() {
 		return this.interventionUnitaire;
 	}
@@ -81,18 +96,15 @@ public abstract class Robot {
 		return this.dateDisponible;
 	}
 	
+	public void setDateDisponible(long date) {
+		this.dateDisponible = date;
+	}
+	
 	public Carte getCarte() {
 		return this.carte;
 	}
 	
 	
-	public void setDateDisponible(long date) {
-		this.dateDisponible = date;
-	}
-	
-	public void setType(Type type) {
-		this.type = type;
-	}
 	
 	/**
 	 * rempli le reservoir du robot avec volume positive, sans d�passer la capacity

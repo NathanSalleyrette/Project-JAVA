@@ -11,7 +11,8 @@ public abstract class EvenementRobot extends Evenement{
 	}
 	
 	public void setDateActionRobot() {
-		long nvlleDate = Math.max(super.getDate(), this.robot.getDateDisponible()) + this.tempsActionRobot();
+		int last = this.tempsActionRobot();
+		long nvlleDate = Math.max(super.getDate(), this.robot.getDateDisponible()) + last;
 		
 		super.setDate(nvlleDate);
 		this.robot.setDateDisponible(nvlleDate);

@@ -23,13 +23,16 @@ public class BougerRobot extends EvenementRobot {
 	public BougerRobot(long date, Direction dir, Robot robot) {
 		super(date, robot);
 		
-		NatureTerrain futurTerrain = robot.getCarte().getVoisin(robot.getPosition(), dir).getNature();
+		try {
+			Case futureCase = robot.getCarte().getVoisin(robot.getPositionApresAction(), dir);
+			NatureTerrain futurTerrain = futureCase.getNature();
 		
-		if (robot.isCompatible(futurTerrain)) { //sinon il n'y a pas de deplacement, pas besoin d'attendre pour le savoir
-			super.setDateActionRobot();
-		}
+			if (robot.isCompatible(futurTerrain)) { //sinon il n'y a pas de deplacement, pas besoin d'attendre pour le savoir
+				super.setDateActionRobot();
+				super.robot.setPositionApresAction(futureCase);
+			}	
+		} catch (Exception e){}
 		this.direction = dir;
-		this.robot = robot;
 		
 	}
 	
@@ -39,6 +42,11 @@ public class BougerRobot extends EvenementRobot {
 	
 	public void execute() {
 		this.robot.deplacer(this.direction);
+		System.out.println(robot.getPosition() + " " + this.getDate());
+	}
+	
+	public String toString() {
+		return this.getDate() + " " + "bouger robot vers : " + direction;
 	}
 
 }

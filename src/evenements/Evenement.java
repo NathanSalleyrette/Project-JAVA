@@ -24,6 +24,10 @@ public abstract class Evenement {
 		this.date = date;
 	}
 	
+	public String toString() {
+		return this.getDate() + " evenement : ";
+	}
+	
 	
 
 }

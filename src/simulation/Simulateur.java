@@ -49,6 +49,7 @@ public class Simulateur implements Simulable {
 			if (e.getDate() == this.DateSimulation) {
 				flag = 1;
 				e.execute();
+				System.out.println(e);
 			}
 		}
 		if (flag == 1) {
