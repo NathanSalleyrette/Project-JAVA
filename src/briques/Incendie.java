@@ -88,6 +88,9 @@ public class Incendie {
 		this.setIntensite(Math.max(this.intensite - Math.max(0,vol),0)); //Math.max(0,vol) gere le cas ou vol est <0
 	}
 	
+	
+	
+	
 	/**
 	 * exemple:
 	 * Incendie taille 4, (2,3) TERRAIN_LIBRE

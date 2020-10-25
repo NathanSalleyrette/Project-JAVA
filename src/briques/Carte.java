@@ -1,5 +1,9 @@
 package briques;
+import java.util.LinkedList;
 import java.util.StringJoiner;
+
+
+import robots.Robot;
 
 public class Carte {
 	private int nbLignes;
@@ -63,7 +67,7 @@ public class Carte {
 		
 		for (int i = 0; i < t.length; i++) {
 			for(int j = 0; j <t[0].length; j++) {
-				this.m[i][j] = new Case(i, j, t[i][j], this);
+				this.m[i][j] = new Case(i, j, t[i][j]);
 			}
 		}
 	}
@@ -141,7 +145,7 @@ public class Carte {
 	 */
 	public Case getVoisin(Case src, Direction dir) {
 		//axe y inversé !!
-		if (!(this.voisinExiste(src, dir))) throw new IllegalArgumentException("pas de voisin");
+		if (!(this.voisinExiste(src, dir))) throw new IllegalArgumentException("pas de voisin dans la direction : "+ dir);
 		int x = 0;
 		int y = 0;
 		switch (dir) {
@@ -161,6 +165,43 @@ public class Carte {
 			throw new IllegalArgumentException("euuuh quelle direction ?");
 		}
 		return this.m[src.getLigne() + y][src.getColonne() + x];
+	}
+
+	
+	public LinkedList<Case> getVoisins(Case src) {  //cases sera non null
+		LinkedList<Case> cases = new LinkedList<Case>();
+		try {
+		cases.add(this.getVoisin(src, Direction.NORD));
+		} catch (Exception e) {}
+		try {
+		cases.add(this.getVoisin(src, Direction.SUD));
+		} catch (Exception e) {}
+		try {
+		cases.add(this.getVoisin(src, Direction.EST));
+		} catch (Exception e) {}
+		try {
+		cases.add(this.getVoisin(src, Direction.OUEST));
+		} catch (Exception e) {}
+		return cases;
+	}
+	
+	public Boolean eauVoisine(Case src) {
+		for (Case c : this.getVoisins(src)) {
+			if (c.getNature() == NatureTerrain.EAU) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * On considère que le robot n'apparait pas sur une case qui n'est pas compatible avec lui, ie vitesse =0.0
+	 * @param robot
+	 * @param dir
+	 * @return
+	 */
+public int getTempsDeplacement(Robot robot, Direction dir){
+	return (int)Math.ceil(this.getTailleCases()/robot.getVitesseCourante());
 	}
 	
 	

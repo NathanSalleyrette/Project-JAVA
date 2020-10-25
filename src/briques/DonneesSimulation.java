@@ -72,10 +72,11 @@ public class DonneesSimulation {
 	 * @param newPosition
 	 * @param robot
 	 */
+	/*
 	public void bougerRobot(Case newPosition, Robot robot) {
 		robot.deplacer(newPosition);
 	}
-	
+	*/
 	
 	/**
 	 * si la case voisine dans la direction dir de celle du robot est compatible avec le 
@@ -83,6 +84,7 @@ public class DonneesSimulation {
 	 * @param newPosition
 	 * @param robot
 	 */
+	/*
 	public void bougerRobot(Direction dir, Robot robot) {
 		try {
 		Case newPosition = this.carte.getVoisin(robot.getPosition(), dir);
@@ -91,6 +93,8 @@ public class DonneesSimulation {
 			
 		}
 	}
+	*/
+	
 	/* Ne pas oublier l'affichage des robots*/
 	public String toString() {
 		//return carte + "\n" + incendies.allToString() + robots.allToString();

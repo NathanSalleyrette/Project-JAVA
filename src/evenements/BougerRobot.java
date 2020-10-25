@@ -10,10 +10,9 @@ import robots.*;
  * la direction dans laquelle il bouge et la carte 
  * sa fonction execute() fait bouger le robot
  */
-public class BougerRobot extends Evenement {
+public class BougerRobot extends EvenementRobot {
 
 	private Direction direction;
-	private Robot robot;
 	
 	/**
 	 * peut etre appelé que sur une case accessible
@@ -21,33 +20,25 @@ public class BougerRobot extends Evenement {
 	 * @param direction
 	 * @param robot
 	 */
-	public BougerRobot(long date, Direction direction, Robot robot) {
-		super(date);
+	public BougerRobot(long date, Direction dir, Robot robot) {
+		super(date, robot);
 		
-		if (robot.getVitesseCourante() != 0.0) { //sinon il n'y a pas de deplacement, pas besoin d'attendre pour le savoir
-			
-			int last = (int)Math.ceil(robot.getPosition().getCarte().getTailleCases()/robot.getVitesseCourante()); //--- partie entiere sup de la durée de l'action : t = d/v
-			
-			long nvlleDate = Math.max(date, robot.getDateDisponible()) + last;
-			
-			super.setDate(nvlleDate);
-			System.out.println(nvlleDate);
-			robot.setDateDisponible(nvlleDate);
+		NatureTerrain futurTerrain = robot.getCarte().getVoisin(robot.getPosition(), dir).getNature();
+		
+		if (robot.isCompatible(futurTerrain)) { //sinon il n'y a pas de deplacement, pas besoin d'attendre pour le savoir
+			super.setDateActionRobot();
 		}
-		this.direction = direction;
+		this.direction = dir;
 		this.robot = robot;
 		
 	}
 	
-	// le try ne fonctionne pas (alors que dans DonneesSimulation il fonctionne)
-	// Je catch toutes les exceptions qui arrivent, ca fonctionne
+	public int tempsActionRobot() {
+		return (int)Math.ceil(robot.getCarte().getTailleCases()/robot.getVitesseCourante()); //--- partie entiere sup de la durée de l'action : t = d/v;
+	}
+	
 	public void execute() {
-		try {
-			Case newPosition = (this.robot.getPosition().getCarte()) . getVoisin(this.robot.getPosition(), this.direction);
-			this.robot.deplacer(newPosition);
-			} catch (Exception e) {
-				System.out.println("On ne peut pas dÃ©placer le robot par là : " + direction.toString() + robot.toString() + " " + super.getDate());
-			}
+		this.robot.deplacer(this.direction);
 	}
 
 }

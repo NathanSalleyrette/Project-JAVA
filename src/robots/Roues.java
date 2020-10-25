@@ -1,8 +1,6 @@
 package robots;
 
-import briques.Case;
-import briques.NatureTerrain;
-import briques.Type;
+import briques.*;
 
 
 /**
@@ -21,8 +19,8 @@ public class Roues extends Robot{
 	 * vitesse de base 80 km/h
 	 * @param position
 	 */
-	public Roues(Case position) {
-		this(position, 80);	
+	public Roues(Case position, Carte carte) {
+		this(position, 80, carte);	
 	}
 
 	
@@ -33,8 +31,8 @@ public class Roues extends Robot{
 	 * @param position
 	 * @param vitesse
 	 */
-	public Roues(Case position, int vitesse) {
-		super(position, 5000, 5000, vitesse, 10, 5, 100);	
+	public Roues(Case position, int vitesse, Carte carte) {
+		super(position, 5000, 5000, vitesse, 10, 5, 100, carte);	
 		super.setType(Type.ROUES);
 	}
 	

@@ -23,5 +23,7 @@ public abstract class Evenement {
 	public void setDate(long date) {
 		this.date = date;
 	}
+	
+	
 
 }

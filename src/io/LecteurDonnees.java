@@ -269,19 +269,19 @@ public class LecteurDonnees {
                 System.out.print("valeur par defaut");
                 switch(type) {
                 case DRONE: {
-                	robot = new Drone(carte.getCase(lig, col));
+                	robot = new Drone(carte.getCase(lig, col), carte);
                 	break;
                 }
                 case ROUES: {
-                	robot = new Roues(carte.getCase(lig, col));
+                	robot = new Roues(carte.getCase(lig, col), carte);
                 	break;
                 }
                 case PATTES: {
-                	robot = new Pattes(carte.getCase(lig, col));
+                	robot = new Pattes(carte.getCase(lig, col), carte);
                 	break;
                 }
                 case CHENILLES: {
-                	robot = new Chenilles(carte.getCase(lig, col));
+                	robot = new Chenilles(carte.getCase(lig, col), carte);
                 	break;
                 }
                 default: throw new DataFormatException("format de robot invalide. "
@@ -294,18 +294,18 @@ public class LecteurDonnees {
                 System.out.print(vitesse);
                 switch(type) {
                 case DRONE: {
-                	robot = new Drone(carte.getCase(lig, col), vitesse);
+                	robot = new Drone(carte.getCase(lig, col), vitesse, carte);
                 	break;
                 }
                 case ROUES: {
-                	robot = new Roues(carte.getCase(lig, col), vitesse);
+                	robot = new Roues(carte.getCase(lig, col), vitesse, carte);
                 	break;
                 }
                 case CHENILLES: {
-                	robot = new Chenilles(carte.getCase(lig, col), vitesse);
+                	robot = new Chenilles(carte.getCase(lig, col), vitesse, carte);
                 	break;
                 }
-                default: throw new DataFormatException("format de robot invalide. "
+                default: throw new DataFormatException("format de robot invalide. " // on ne peut pas choisir la vitesse du robot à pattes
                         + "type inconnu");
                 
                 }

@@ -10,7 +10,7 @@ public class Case{
 	private int ligne;
 	private int colonne;
 	private NatureTerrain nature;
-	private Carte carte;
+	
 	
 	
 	/**
@@ -27,14 +27,13 @@ public class Case{
 	 * @param colonne
 	 * @param terrain
 	 */
-	public Case(int ligne, int colonne, NatureTerrain terrain, Carte carte) {
+	public Case(int ligne, int colonne, NatureTerrain terrain) {
 		if (ligne < 0 || colonne < 0) {
 			throw new IllegalArgumentException("dimension invalide");
 		}
 		this.ligne = ligne;
 		this.colonne = colonne;
 		this.nature = terrain;
-		this.carte = carte;
 	}
 	
 	/**
@@ -43,7 +42,7 @@ public class Case{
 	 * @param colonne
 	 */
 	public Case(int ligne, int colonne, Carte carte) {
-		this(ligne, colonne, NatureTerrain.TERRAIN_LIBRE, carte);
+		this(ligne, colonne, NatureTerrain.TERRAIN_LIBRE);
 	}
 	
 	
@@ -67,10 +66,6 @@ public class Case{
 	
 	public NatureTerrain getNature() {
 		return this.nature;
-	}
-	
-	public Carte getCarte() {
-		return this.carte;
 	}
 	
 	
