@@ -38,8 +38,8 @@ public abstract class Robot {
 		this.tempsExtinctionUnitaire = vide;
 		this.interventionUnitaire = interventionUnitaire;
 		this.carte = carte;
-		this.dateDisponible = 0;
-		this.positionApresAction = position;
+		this.dateDisponible = 0; // date à laquel le robot sera à nouveau disponible pour réaliser une action
+		this.positionApresAction = position; // position du robot une fois tous les évenement déjà definis terminés
 	}
 	
 	
@@ -116,6 +116,11 @@ public abstract class Robot {
 		}
 	}
 	
+	
+	/**
+	 * renvoie si le robot peut se réaprovisionner en eau (il faut que de l'eau lui soit adjacente)
+	 * @return
+	 */
 	public Boolean eauVoisine() {
 		return this.getCarte().eauVoisine(this.getPosition());
 	}
@@ -153,8 +158,14 @@ public abstract class Robot {
 		*/
 	}
 	
+	
+	/**
+	 * vitesse du robot sur laquelle il est après toutes les actions
+	 * permet d'avoir le temps pour bouger le robot 
+	 * @return
+	 */
 	public double getVitesseCourante() {
-		return this.getVitesse(this.getPosition().getNature());
+		return this.getVitesse(this.getPositionApresAction().getNature());
 	}
 	
 	public double getVitesse() {

@@ -168,6 +168,12 @@ public class Carte {
 	}
 
 	
+	
+	/**
+	 * renvoie l'ensemble des cases adjacentes à la case src
+	 * @param src
+	 * @return
+	 */
 	public LinkedList<Case> getVoisins(Case src) {  //cases sera non null
 		LinkedList<Case> cases = new LinkedList<Case>();
 		try {
@@ -185,6 +191,12 @@ public class Carte {
 		return cases;
 	}
 	
+	
+	/**
+	 * dit si de l'eau est adjacente à la case
+	 * @param src
+	 * @return
+	 */
 	public Boolean eauVoisine(Case src) {
 		for (Case c : this.getVoisins(src)) {
 			if (c.getNature() == NatureTerrain.EAU) {

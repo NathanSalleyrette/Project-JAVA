@@ -2,6 +2,12 @@ package evenements;
 
 import robots.Robot;
 
+
+/**
+ * 
+ * @author Lucie
+ *le robot se rempli près d'une case d'eau adjacente à lui
+ */
 public class RemplirRobot extends EvenementRobot {
 	int vol;
 
@@ -10,6 +16,9 @@ public class RemplirRobot extends EvenementRobot {
 		this.vol = vol;
 	}
 	
+	/**
+	 * temps d'un remplissage complet
+	 */
 	public int tempsActionRobot() {
 		return (int)Math.ceil(super.robot.getTempsRemplissage());
 	}

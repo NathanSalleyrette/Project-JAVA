@@ -36,9 +36,15 @@ public class BougerRobot extends EvenementRobot {
 		
 	}
 	
+	
+	/**
+	 * temps que met le robot pour realiser l'action de bouger
+	 */
 	public int tempsActionRobot() {
 		return (int)Math.ceil(robot.getCarte().getTailleCases()/robot.getVitesseCourante()); //--- partie entiere sup de la durée de l'action : t = d/v;
 	}
+	
+	
 	
 	public void execute() {
 		this.robot.deplacer(this.direction);
