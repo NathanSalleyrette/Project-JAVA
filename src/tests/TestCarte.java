@@ -1,7 +1,8 @@
 package tests;
 
 import java.awt.Color;
-
+import java.util.*;
+import pluscourtchemin.*;
 import briques.*;
 import gui.GUISimulator;
 import robots.*;
@@ -81,10 +82,76 @@ public class TestCarte {
 		GUISimulator gui = new GUISimulator(800, 600, Color.BLACK);
 		Simulateur simulateur = new Simulateur(gui, Color.decode("#ffffff"), donnees);
 		
-		/* ATTENTION : on ne peut pas definir plusieur bouger case pour un meme robot d'affili=ée : le robot n'a pas encore bouger au momem
-		 * ou le deuxième mouvement et defenit, ses voisins disponible ont changer
-		 * DONC le test suivant est faux, pour le faire marcher j'ai bidouillé les dates
+		/* ATTENTION : on ne peut pas definir plusieur bouger case pour un meme robot d'affili=ï¿½e : le robot n'a pas encore bouger au momem
+		 * ou le deuxiï¿½me mouvement et defenit, ses voisins disponible ont changer
+		 * DONC le test suivant est faux, pour le faire marcher j'ai bidouillï¿½ les dates
 		 */
+		
+		
+		
+		int V = 6; 
+        int source = 4; 
+  
+        // Adjacency list representation of the  
+        // connected edges 
+        List<List<Noeud> > adj = new ArrayList<List<Noeud> >(); 
+  
+        // Initialize list for every Noeud 
+        for (int i = 0; i < V; i++) { 
+            List<Noeud> item = new ArrayList<Noeud>(); 
+            adj.add(item); 
+        } 
+  
+        // Inputs for the DPQ graph 
+        adj.get(0).add(new Noeud(10, ct2.getCase(0, 1), 1)); 
+        adj.get(0).add(new Noeud(10, ct2.getCase(1, 0), 3)); 
+        
+        adj.get(1).add(new Noeud(20, ct2.getCase(0, 0), 0)); 
+        adj.get(1).add(new Noeud(20, ct2.getCase(1, 1), 4)); 
+        adj.get(1).add(new Noeud(20, ct2.getCase(0, 2), 2)); 
+       
+        adj.get(2).add(new Noeud(Integer.MAX_VALUE, ct2.getCase(0, 1), 1)); 
+        adj.get(2).add(new Noeud(Integer.MAX_VALUE, ct2.getCase(0, 1), 5)); 
+        
+        adj.get(3).add(new Noeud(5, ct2.getCase(0, 0), 0)); 
+        adj.get(3).add(new Noeud(5, ct2.getCase(1, 1), 4)); 
+        
+        adj.get(4).add(new Noeud(1, ct2.getCase(0, 1), 1)); 
+        adj.get(4).add(new Noeud(1, ct2.getCase(1, 0), 3)); 
+        adj.get(4).add(new Noeud(1, ct2.getCase(1, 2), 5)); 
+        
+        adj.get(5).add(new Noeud(100, ct2.getCase(0, 2), 2)); 
+        adj.get(5).add(new Noeud(100, ct2.getCase(1, 1), 4)); 
+        
+        // Calculate the single source shortest path 
+        Dijkstra dpq = new Dijkstra(new Noeud(0, ct2.getCase(1, 1), 4), adj); 
+        dpq.dijkstra(); 
+  
+        // Print the shortest path to all the Noeuds 
+        // from the source Noeud 
+        System.out.println("The shorted path from Noeud :"); 
+        for (int i = 0; i < dpq.getDist().length; i++) {
+            System.out.println(source + " to " + i + " is "
+                               + dpq.getDist()[i]); 
+			
+            dpq.printPath(i, dpq.getparents());
+            System.out.println("\n");
+        }
+        for (int e : dpq.getparents()) {
+        	System.out.println(e + " ");
+        }
+       
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, drone));
 		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, drone));
 		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, drone));
