@@ -1,8 +1,6 @@
 package robots;
 
-import briques.Case;
-import briques.NatureTerrain;
-import briques.Type;
+import briques.*;
 
 
 /**
@@ -20,9 +18,9 @@ public class Chenilles extends Robot {
 	 * vitesse de base 60 km/h
 	 * @param position
 	 */
-	public Chenilles(Case position) {
+	public Chenilles(Case position, Carte carte) {
 		
-		this(position, 60);	
+		this(position, 60, carte);	
 	}
 
 	/**
@@ -32,8 +30,8 @@ public class Chenilles extends Robot {
 	 * @param position
 	 * @param vitesse
 	 */
-	public Chenilles(Case position, int vitesse) {
-		super(position, 2000, 0, Math.min(80, vitesse), 5, 8, 100);	
+	public Chenilles(Case position, int vitesse, Carte carte) {
+		super(position, 2000, 2000, Math.min(80, vitesse), 5, 8, 100, carte);	
 		super.setType(Type.CHENILLES);
 	}
 	

@@ -19,5 +19,15 @@ public abstract class Evenement {
 	public long getDate() {
 		return date;
 	}
+	
+	public void setDate(long date) {
+		this.date = date;
+	}
+	
+	public String toString() {
+		return this.getDate() + " evenement : ";
+	}
+	
+	
 
 }

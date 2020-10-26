@@ -1,7 +1,6 @@
 package robots;
 
-import briques.Case;
-import briques.Type;
+import briques.*;
 
 
 /**
@@ -19,8 +18,8 @@ public class Drone extends Robot{
 	 * vitesse de base 100 km/h
 	 * @param position
 	 */
-	public Drone(Case position) {
-		this(position, 100);	
+	public Drone(Case position, Carte carte) {
+		this(position, 100, carte);	
 	}
 
 	/**
@@ -30,8 +29,8 @@ public class Drone extends Robot{
 	 * @param position
 	 * @param vitesse
 	 */
-	public Drone(Case position, int vitesse) {
-		super(position, 10000, 0, Math.min(150, vitesse), 30, 30, 10000);
+	public Drone(Case position, int vitesse, Carte carte) {
+		super(position, 10000, 10000, Math.min(150, vitesse), 30, 30, 10000, carte);
 		super.setType(Type.DRONE);
 		
 	}

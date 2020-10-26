@@ -38,6 +38,10 @@ public class Simulateur implements Simulable {
         draw();
 	}
 	
+	public DonneesSimulation getDonnees() {
+		return this.donnees;
+	}
+	
 	public void next() {
 		IncrementeDate();
 		int flag = 0;
@@ -45,6 +49,7 @@ public class Simulateur implements Simulable {
 			if (e.getDate() == this.DateSimulation) {
 				flag = 1;
 				e.execute();
+				System.out.println(e);
 			}
 		}
 		if (flag == 1) {
@@ -84,6 +89,7 @@ public class Simulateur implements Simulable {
 		default: return Color.decode("#ecc5ff");
 		}
 	}
+
 	
 	public void draw() {
 		//attention, un rectangle trac� est d�j� d�cal� par raport au coin, d'ou les calculs un peu zarbi dans les param�tre

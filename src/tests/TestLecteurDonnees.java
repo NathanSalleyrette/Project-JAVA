@@ -7,7 +7,9 @@ import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.util.zip.DataFormatException;
 
+import briques.Direction;
 import briques.DonneesSimulation;
+import evenements.*;
 import gui.GUISimulator;
 
 public class TestLecteurDonnees {
@@ -26,7 +28,19 @@ public class TestLecteurDonnees {
             //GUISimulator gui = new GUISimulator(10000, 10000, Color.BLACK); //
             // cree la carte avec les incendies et les robots
             Simulateur simulateur = new Simulateur(gui, Color.decode("#ffffff"), LecteurDonnees.lire(args[0]));
-            
+    		
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new EteindreIncendie(1, simulateur.getDonnees().getIncendies().get(4), simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new RemplirRobot(1, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.ajouteEvenement(new EteindreIncendie(1, simulateur.getDonnees().getIncendies().get(4), simulateur.getDonnees().getRobots().get(1)));
             
         } catch (FileNotFoundException e) {
             System.out.println("fichier " + args[0] + " inconnu ou illisible");

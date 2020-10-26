@@ -10,28 +10,49 @@ import robots.*;
  * la direction dans laquelle il bouge et la carte 
  * sa fonction execute() fait bouger le robot
  */
-public class BougerRobot extends Evenement {
+public class BougerRobot extends EvenementRobot {
 
 	private Direction direction;
-	private Robot robot;
-	private Carte carte;
 	
-	public BougerRobot(long date, Direction direction, Robot robot,Carte carte) {
-		super(date);
-		this.direction = direction;
-		this.robot = robot;
-		this.carte = carte;
+	/**
+	 * peut etre appelé que sur une case accessible
+	 * @param date
+	 * @param direction
+	 * @param robot
+	 */
+	public BougerRobot(long date, Direction dir, Robot robot) {
+		super(date, robot);
+		
+		try {
+			Case futureCase = robot.getCarte().getVoisin(robot.getPositionApresAction(), dir);
+			NatureTerrain futurTerrain = futureCase.getNature();
+		
+			if (robot.isCompatible(futurTerrain)) { //sinon il n'y a pas de deplacement, pas besoin d'attendre pour le savoir
+				super.setDateActionRobot();
+				super.robot.setPositionApresAction(futureCase);
+			}	
+		} catch (Exception e){}
+		this.direction = dir;
+		
 	}
 	
-	// le try ne fonctionne pas (alors que dans DonneesSimulation il fonctionne)
-	// Je catch toutes les exceptions qui arrivent, ca fonctionne
+	
+	/**
+	 * temps que met le robot pour realiser l'action de bouger
+	 */
+	public int tempsActionRobot() {
+		return (int)Math.ceil(robot.getCarte().getTailleCases()/robot.getVitesseCourante()); //--- partie entiere sup de la durée de l'action : t = d/v;
+	}
+	
+	
+	
 	public void execute() {
-		try {
-			Case newPosition = this.carte.getVoisin(this.robot.getPosition(), this.direction);
-			this.robot.deplacer(newPosition);
-			} catch (Exception e) {
-				System.out.println("On ne peut pas dÃ©placer le robot par là : " + direction.toString() + robot.toString() + " " + super.getDate());
-			}
+		this.robot.deplacer(this.direction);
+		System.out.println(robot.getPosition() + " " + this.getDate());
+	}
+	
+	public String toString() {
+		return this.getDate() + " " + "bouger robot vers : " + direction;
 	}
 
 }
