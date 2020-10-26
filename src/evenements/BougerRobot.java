@@ -27,11 +27,16 @@ public class BougerRobot extends EvenementRobot {
 			Case futureCase = robot.getCarte().getVoisin(robot.getPositionApresAction(), dir);
 			NatureTerrain futurTerrain = futureCase.getNature();
 		
-			if (robot.isCompatible(futurTerrain)) { //sinon il n'y a pas de deplacement, pas besoin d'attendre pour le savoir
+			if (robot.isCompatible(futurTerrain)) { //sinon il n'y a pas de deplacement + pas besoin d'attendre pour le savoir
 				super.setDateActionRobot();
 				super.robot.setPositionApresAction(futureCase);
-			}	
-		} catch (Exception e){}
+			} else {
+				super.setDateActionImpossible();
+			}
+		} catch (Exception e){
+			System.out.println("erreur");
+			super.setDateActionImpossible();
+		}
 		this.direction = dir;
 		
 	}

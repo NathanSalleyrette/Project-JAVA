@@ -29,5 +29,9 @@ public abstract class EvenementRobot extends Evenement{
 		this.robot.setDateDisponible(nvlleDate);
 	}
 	
+	public void setDateActionImpossible() {
+		super.setDate(super.getDate() - 1);
+	}
+	
 	public abstract int tempsActionRobot();
 }
