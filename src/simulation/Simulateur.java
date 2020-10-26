@@ -9,8 +9,6 @@ import gui.GUISimulator;
 import gui.Rectangle;
 import gui.Simulable;
 import robots.Robot;
-
-import java.util.Iterator;
 import java.util.LinkedList;
 import evenements.Evenement;
 
@@ -47,17 +45,12 @@ public class Simulateur implements Simulable {
 	public void next() {
 		IncrementeDate();
 		int flag = 0;
-		int index = 0;
-		Iterator<Evenement> it = evenements.iterator();
-		while (it.hasNext()) {
-			Evenement e = it.next();
+		for (Evenement e : evenements) {
 			if (e.getDate() == this.DateSimulation) {
 				flag = 1;
 				e.execute();
 				System.out.println(e);
-				this.evenements.remove(index);
 			}
-			index += 1;
 		}
 		if (flag == 1) {
 			draw();
