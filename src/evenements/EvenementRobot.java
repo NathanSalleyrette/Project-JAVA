@@ -2,6 +2,12 @@ package evenements;
 
 import robots.Robot;
 
+
+/**
+ * 
+ * @author Lucie
+ *evenement qui concerne les robots
+ */
 public abstract class EvenementRobot extends Evenement{
 	protected Robot robot;
 	
@@ -10,8 +16,14 @@ public abstract class EvenementRobot extends Evenement{
 		this.robot = robot;
 	}
 	
+	
+	/**
+	 * update la date de diponibilité du robot + met l'evenment au bon moment
+	 */
 	public void setDateActionRobot() {
-		long nvlleDate = Math.max(super.getDate(), this.robot.getDateDisponible()) + this.tempsActionRobot();
+		int last = this.tempsActionRobot();
+		System.out.println("last " + last);
+		long nvlleDate = Math.max(super.getDate(), this.robot.getDateDisponible()) + last;
 		
 		super.setDate(nvlleDate);
 		this.robot.setDateDisponible(nvlleDate);

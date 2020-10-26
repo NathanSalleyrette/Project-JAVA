@@ -24,17 +24,21 @@ public class EteindreIncendie extends EvenementRobot {
 	 */
 	public EteindreIncendie(long date, Incendie incendie, Robot robot, int vol) {
 		super(date, robot);
-		super.setDateActionRobot();
 		this.incendie = incendie;
 		this.vol = vol;
+		super.setDateActionRobot();
 	}
 	
 	public EteindreIncendie(long date, Incendie incendie, Robot robot) {
-		this(date, incendie, robot, robot.getInterventionUnitaire());
+		this(date, incendie, robot, robot.getReserve());
 	}
 	
+	
+	/**
+	 * temps pour réaliser l'action d'eteindre l'incendie d'une quantité vol (converti en intervention unitaire)
+	 */
 	public int tempsActionRobot() {
-		return this.robot.getTempsExtinction(vol);
+		return this.robot.getTempsExtinction(this.vol);
 	}
 	
 	
@@ -49,7 +53,7 @@ public class EteindreIncendie extends EvenementRobot {
 		this.eteindreIncendie();
 	}
 	
-	/*on peut mettre ce bloque dans incendie ou robot*/
+	/*on peut mettre ce block dans incendie ou robot*/
 	public void eteindreIncendie() {
 		this.vol = this.robot.deverserEau(this.vol);
 		this.incendie.eteindre(this.vol);
@@ -57,6 +61,10 @@ public class EteindreIncendie extends EvenementRobot {
 		if (this.incendie.getIntensite() == 0) {
 			this.incendie.getIncendies().remove(incendie);
 		}	
+	}
+	
+	public String toString() {
+		return this.getDate() + " eteindre incendie avec " + this.vol + " litres";
 	}
 	
 	

@@ -18,6 +18,7 @@ public abstract class Robot {
 	private int interventionUnitaire; // quantitï¿½ libï¿½rï¿½ (remplissage complet pour tout les robot)
 	private long dateDisponible;
 	private Carte carte;
+	private Case positionApresAction;
 
 	
 	
@@ -37,7 +38,8 @@ public abstract class Robot {
 		this.tempsExtinctionUnitaire = vide;
 		this.interventionUnitaire = interventionUnitaire;
 		this.carte = carte;
-		this.dateDisponible = 0;
+		this.dateDisponible = 0; // date à laquel le robot sera à nouveau disponible pour réaliser une action
+		this.positionApresAction = position; // position du robot une fois tous les évenement déjà definis terminés
 	}
 	
 	
@@ -61,6 +63,15 @@ public abstract class Robot {
 		this.position = nouvelle_position;
 	}
 	
+	public Case getPositionApresAction() {
+		return this.positionApresAction;
+	}
+	
+	public void setPositionApresAction(Case c) {
+		this.positionApresAction = c;
+	}
+	
+	
 	public int getCapacity() {
 		return this.capacity;
 	}
@@ -73,6 +84,10 @@ public abstract class Robot {
 		return this.type;
 	}
 	
+	public void setType(Type type) {
+		this.type = type;
+	}
+	
 	public int getInterventionUnitaire() {
 		return this.interventionUnitaire;
 	}
@@ -81,18 +96,15 @@ public abstract class Robot {
 		return this.dateDisponible;
 	}
 	
+	public void setDateDisponible(long date) {
+		this.dateDisponible = date;
+	}
+	
 	public Carte getCarte() {
 		return this.carte;
 	}
 	
 	
-	public void setDateDisponible(long date) {
-		this.dateDisponible = date;
-	}
-	
-	public void setType(Type type) {
-		this.type = type;
-	}
 	
 	/**
 	 * rempli le reservoir du robot avec volume positive, sans dï¿½passer la capacity
@@ -104,6 +116,11 @@ public abstract class Robot {
 		}
 	}
 	
+	
+	/**
+	 * renvoie si le robot peut se réaprovisionner en eau (il faut que de l'eau lui soit adjacente)
+	 * @return
+	 */
 	public Boolean eauVoisine() {
 		return this.getCarte().eauVoisine(this.getPosition());
 	}
@@ -141,8 +158,14 @@ public abstract class Robot {
 		*/
 	}
 	
+	
+	/**
+	 * vitesse du robot sur laquelle il est après toutes les actions
+	 * permet d'avoir le temps pour bouger le robot 
+	 * @return
+	 */
 	public double getVitesseCourante() {
-		return this.getVitesse(this.getPosition().getNature());
+		return this.getVitesse(this.getPositionApresAction().getNature());
 	}
 	
 	public double getVitesse() {
