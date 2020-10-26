@@ -11,7 +11,7 @@ public class Dijkstra {
 	    private Noeud depart;
 	    private int V;
 	    private List<List<Noeud> > graph; 
-	    private LinkedList<LinkedList<Case>> cases;
+	    //private LinkedList<LinkedList<Case>> cases;
 	    private int parents[];
 	  
 	    public Dijkstra(Noeud depart, List<List<Noeud>> graph) 
@@ -22,7 +22,7 @@ public class Dijkstra {
 	        settled = new HashSet<Integer>(); 
 	        pq = new PriorityQueue<Noeud>();
 	        this.graph = graph;
-	        this.cases = new LinkedList<LinkedList<Case>>();
+	        //this.cases = new LinkedList<LinkedList<Case>>();
 	        parents = new int[graph.size()];
 	        parents[depart.getNumberGraph()] = -1;
 	    } 
