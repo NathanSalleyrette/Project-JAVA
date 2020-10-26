@@ -31,7 +31,7 @@ public class EteindreIncendie extends EvenementRobot {
 	
 	public EteindreIncendie(long date, Incendie incendie, Robot robot) {
 		this(date, incendie, robot, robot.getReserve());
-	}
+	} 
 	
 	
 	/**
@@ -50,7 +50,11 @@ public class EteindreIncendie extends EvenementRobot {
 	 * @param vol
 	 */
 	public void execute() {
-		this.eteindreIncendie();
+		if( this.robot.getPositionApresAction() == this.incendie.getPosition()) {
+			this.eteindreIncendie();
+		} else {
+			System.out.println("le robot et l'incendie ne sont pas sur la même case");
+		}
 	}
 	
 	/*on peut mettre ce block dans incendie ou robot*/
