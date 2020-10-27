@@ -21,7 +21,7 @@ public class TestChemin {
 		//System.out.println("carte_1" + ct1);
 		NatureTerrain m[][] = {
 				{NatureTerrain.EAU, NatureTerrain.FORET, NatureTerrain.EAU},
-				{NatureTerrain.HABITAT, NatureTerrain.HABITAT, NatureTerrain.TERRAIN_LIBRE}
+				{NatureTerrain.HABITAT, NatureTerrain.EAU, NatureTerrain.TERRAIN_LIBRE}
 		};
 		Carte ct2 = new Carte(m);
 		//System.out.println("carte_2" + ct2);
@@ -106,6 +106,12 @@ public class TestChemin {
         for (int e : roues.getDijkstra().getparents()) {
         	System.out.println(e + " ");
         }
+        
+        System.out.println("Passons au choses sérieuses \n");
+        for (Case e : roues.getDijkstra().getChemins().get(2)) {
+        	System.out.println(e.toString());
+        }
+        
 	}
 }
        

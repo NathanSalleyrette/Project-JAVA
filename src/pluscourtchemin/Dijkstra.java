@@ -19,10 +19,13 @@ public class Dijkstra {
 	    private Noeud depart;
 	    private int V;
 	    private List<List<Noeud> > graph; 
-	    //private LinkedList<LinkedList<Case>> cases;
+	   
 	    private int parents[];
 	    private Carte carte;
-	  
+	    
+	    // Stockage des chemins
+	    private List<List<Case>> chemins;
+	    
 	    public Dijkstra(Noeud depart, List<List<Noeud>> graph, Carte carte) 
 	    { 
 	        this.depart = depart;
@@ -33,10 +36,16 @@ public class Dijkstra {
 	        this.graph = graph;
 	        //this.cases = new LinkedList<LinkedList<Case>>();
 	        parents = new int[graph.size()];
-	        for (int i = 0; i < parents.length; i++) 
+	        chemins = new ArrayList<List<Case>>();
+	        for (int i = 0; i < parents.length; i++) {
 	        	parents[i] = -2;
+	        	chemins.add(new ArrayList<Case>());
+	        }
 	        
 	        parents[depart.getNumberGraph()] = -1;
+	        
+	        
+	        
 	        
 	        this.carte = carte;
 	    } 
@@ -72,6 +81,10 @@ public class Dijkstra {
 	            // finalized 
 	           
 	        } 
+	        
+	        for (int i = 0; i < V; i++) {
+	        	this.stockchemin(chemins.get(i), i, this.parents);
+	        }
 	    } 
 	    
 	    private void e_Neighbours(int u) 
@@ -100,7 +113,7 @@ public class Dijkstra {
 	        } 
 	  
 	    } 
-	    
+	    // Fonction affiche chemin
 	    public void printPath(int v, int[] parents) {
 	    	if (v == -1) return;
 	    	if (parents[v] == -2) {
@@ -111,8 +124,12 @@ public class Dijkstra {
 	        System.out.print(this.tranformeNombreCase(v) + " "); 
 	    }
 	    
-	    public ArrayList<Case> trouvechemin(){
-	    	return new ArrayList<Case>();
+	    // Fonction stock chemin 
+	    public void stockchemin(List<Case> chemin, int v, int[] parents){
+	    	if (v == -1) return;
+	    	if (parents[v] == -2) return;
+	    	this.stockchemin(chemin, parents[v], parents);
+	    	chemin.add(this.tranformeNombreCase(v));
 	    }
 	    
 	    public Case tranformeNombreCase(int n) {
@@ -129,6 +146,8 @@ public class Dijkstra {
 	    	return parents;
 	    }
 	    
-
+	    public List<List<Case>> getChemins() {
+	    	return chemins;
+	    }
 	 
 }
