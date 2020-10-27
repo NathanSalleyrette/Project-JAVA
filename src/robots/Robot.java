@@ -125,6 +125,10 @@ public abstract class Robot {
 		return this.getCarte().eauVoisine(this.getPosition());
 	}
 	
+	public Boolean eauVoisineApresAction() {
+		return this.getCarte().eauVoisine(this.getPositionApresAction());
+	}
+	
 	/**
 	 * le robot deverse une partie de l'eau qu'il a en reserve sur le feu
 	 * @param vol
@@ -210,18 +214,16 @@ public abstract class Robot {
 	}
 	
 	/**
-	 * verifie si une autre case est voisine de la case du robot, cela peut etre un voisin lat�ral ou vertical
+	 * verifie si une autre case est voisine de la case actuelle du robot, cela peut etre un voisin lat�ral ou vertical
 	 * @param autre_case
 	 * @return true si la case est voisine du robot
 	 */
-	public Boolean isVoisine(Case autre_case) {
-		Boolean voisinLateral = Math.abs(this.position.getLigne() - autre_case.getLigne()) == 1
-						   && 
-						   this.position.getColonne() - autre_case.getColonne() == 0;
-		Boolean voisinHorizontal = (Math.abs(this.position.getColonne() - autre_case.getColonne()) == 1) 
-							&& 
-							(this.position.getLigne() - autre_case.getLigne() == 0);
-		return voisinLateral || voisinHorizontal;
+	public Boolean isVoisin(Case autre_case) {
+		return this.getPosition().isVoisine(autre_case);
+	}
+	
+	public Boolean isVoisinApresAction(Case autre_case) {
+		return this.getPositionApresAction().isVoisine(autre_case);
 	}
 	
 	/**
@@ -235,7 +237,9 @@ public abstract class Robot {
 	}
 	
 	public Boolean deplacementPossible(Case nouvelle_position) {
-		return this.isCompatible(nouvelle_position.getNature()) && this.isVoisine(nouvelle_position);
+		Boolean a = this.isCompatible(nouvelle_position.getNature());
+		Boolean b = this.isVoisin(nouvelle_position);
+		return this.isCompatible(nouvelle_position.getNature()) && this.isVoisin(nouvelle_position);
 	}
 	
 	

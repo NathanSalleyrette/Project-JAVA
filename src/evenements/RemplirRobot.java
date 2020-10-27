@@ -12,7 +12,11 @@ public class RemplirRobot extends EvenementRobot {
 
 	public RemplirRobot(long date, Robot robot) {
 		super(date, robot);
-		super.setDateActionRobot();
+		if (this.robot.eauVoisineApresAction()) {
+			super.setDateActionRobot();
+		} else {	
+			super.setDateActionImpossible();
+		}
 		System.out.println("remplir en " + this.getDate());
 	}
 	

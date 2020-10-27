@@ -9,6 +9,7 @@ import briques.DonneesSimulation;
 import briques.Incendie;
 import briques.NatureTerrain;
 import evenements.BougerRobot;
+import evenements.RemplirRobot;
 import gui.GUISimulator;
 import robots.*;
 import simulation.Simulateur;
@@ -56,10 +57,11 @@ public class TestVitesseDeplacement {
 		
 		for (int col = 1; col < longueur; col++) {
 			for (int lig = 0; lig < 5; lig++) {
-				simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, robots.get(0 + lig*4)));
+				//simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, robots.get(0 + lig*4)));
+				simulateur.ajouteEvenement(new RemplirRobot(1, robots.get(1 + lig*4)));
 				simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, robots.get(1 + lig*4)));
-				simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, robots.get(2 + lig*4)));
-				simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, robots.get(3 + lig*4)));
+				//simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, robots.get(2 + lig*4)));
+				//simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, robots.get(3 + lig*4)));
 			}
 		}
 	}

@@ -13,7 +13,7 @@ import robots.*;
  */
 public class BougerRobot extends EvenementRobot {
 
-	private Direction direction;
+	private Case position;
 	
 	/**
 	 * peut etre appel� que sur une case accessible
@@ -25,22 +25,34 @@ public class BougerRobot extends EvenementRobot {
 		super(date, robot);
 		
 		try {
-			Case futureCase = robot.getCarte().getVoisin(robot.getPositionApresAction(), dir);
-			NatureTerrain futurTerrain = futureCase.getNature();
-		
-			if (robot.isCompatible(futurTerrain)) { //sinon il n'y a pas de deplacement + pas besoin d'attendre pour le savoir
-				super.setDateActionRobot();
-				super.robot.setPositionApresAction(futureCase);
-			} else {
-				super.setDateActionImpossible();
-			}
+			Case futurePosition = robot.getCarte().getVoisin(robot.getPositionApresAction(), dir);
+			annexeConstrutor(futurePosition, robot);			
 		} catch (Exception e){
 			System.out.println("erreur");
 			super.setDateActionImpossible();
+		}	
+	}
+	
+	public BougerRobot(long date, Case futurePosition, Robot robot) {
+		super(date, robot);
+		annexeConstrutor(futurePosition, robot);
+	}
+	
+	//robot.isVoisine(futurePosition) &
+	
+	private void annexeConstrutor(Case futurePosition, Robot robot) {
+		NatureTerrain futurTerrain = futurePosition.getNature();
+		
+		if (robot.isVoisinApresAction(futurePosition) && robot.isCompatible(futurTerrain)) { //sinon il n'y a pas de deplacement + pas besoin d'attendre pour le savoir
+			super.setDateActionRobot();
+			super.robot.setPositionApresAction(futurePosition);
+		} else {
+			super.setDateActionImpossible();
 		}
-		this.direction = dir;
+		this.position = futurePosition;
 		
 	}
+	
 	
 	
 	/**
@@ -53,16 +65,13 @@ public class BougerRobot extends EvenementRobot {
 	
 	
 	public void execute() {
-		this.robot.deplacer(this.direction);
+		this.robot.deplacer(this.position);
 		System.out.println(robot.getPosition() + " " + this.getDate());
 	}
 	
-	public void BougerRobotCase(LinkedList<Case> cases, Robot robot) {
-		return;
-	}
 	
 	public String toString() {
-		return this.getDate() + " " + "bouger robot vers : " + direction;
+		return this.getDate() + " bouger robot vers : " + this.position;
 	}
 
 }
