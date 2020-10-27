@@ -1,5 +1,6 @@
 package evenements;
 import briques.*;
+import java.util.*;
 import robots.*;
 
 
@@ -15,7 +16,7 @@ public class BougerRobot extends EvenementRobot {
 	private Direction direction;
 	
 	/**
-	 * peut etre appelé que sur une case accessible
+	 * peut etre appelï¿½ que sur une case accessible
 	 * @param date
 	 * @param direction
 	 * @param robot
@@ -46,7 +47,7 @@ public class BougerRobot extends EvenementRobot {
 	 * temps que met le robot pour realiser l'action de bouger
 	 */
 	public int tempsActionRobot() {
-		return (int)Math.ceil(robot.getCarte().getTailleCases()/robot.getVitesseCourante()); //--- partie entiere sup de la durée de l'action : t = d/v;
+		return (int)Math.ceil(robot.getCarte().getTailleCases()/robot.getVitesseCourante()); //--- partie entiere sup de la durï¿½e de l'action : t = d/v;
 	}
 	
 	
@@ -54,6 +55,10 @@ public class BougerRobot extends EvenementRobot {
 	public void execute() {
 		this.robot.deplacer(this.direction);
 		System.out.println(robot.getPosition() + " " + this.getDate());
+	}
+	
+	public void BougerRobotCase(LinkedList<Case> cases, Robot robot) {
+		return;
 	}
 	
 	public String toString() {

@@ -55,7 +55,7 @@ public class Case{
 	}
 	
 	
-	// accéder aux valeur
+	// accï¿½der aux valeur
 	public int getLigne() {
 		return this.ligne;
 	}
@@ -68,6 +68,7 @@ public class Case{
 		return this.nature;
 	}
 	
+
 	
 	/**
 	 * exemple:
