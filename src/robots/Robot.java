@@ -5,7 +5,8 @@ import briques.Case;
 import briques.Direction;
 import briques.NatureTerrain;
 import briques.Type;
-
+import pluscourtchemin.*;
+import java.util.*;
 
 public abstract class Robot {
 	private Type type;
@@ -19,6 +20,8 @@ public abstract class Robot {
 	private long dateDisponible;
 	private Carte carte;
 	private Case positionApresAction;
+	private List<List<Noeud>> adj;
+	private Dijkstra dpq;
 
 	
 	
@@ -38,8 +41,10 @@ public abstract class Robot {
 		this.tempsExtinctionUnitaire = vide;
 		this.interventionUnitaire = interventionUnitaire;
 		this.carte = carte;
-		this.dateDisponible = 0; // date à laquel le robot sera à nouveau disponible pour réaliser une action
-		this.positionApresAction = position; // position du robot une fois tous les évenement déjà definis terminés
+		this.dateDisponible = 0; // date ï¿½ laquel le robot sera ï¿½ nouveau disponible pour rï¿½aliser une action
+		this.positionApresAction = position; // position du robot une fois tous les ï¿½venement dï¿½jï¿½ definis terminï¿½s
+		this.adj = this.createGraph(carte);
+		
 	}
 	
 	
@@ -118,7 +123,7 @@ public abstract class Robot {
 	
 	
 	/**
-	 * renvoie si le robot peut se réaprovisionner en eau (il faut que de l'eau lui soit adjacente)
+	 * renvoie si le robot peut se rï¿½aprovisionner en eau (il faut que de l'eau lui soit adjacente)
 	 * @return
 	 */
 	public Boolean eauVoisine() {
@@ -139,7 +144,7 @@ public abstract class Robot {
 	
 	/**
 	 * vitesse du robot sur le terrain de nature "nature"
-	 * On considère que le robot bouge à la vitesse de sa case actuelle pour aller sur une autre case
+	 * On considï¿½re que le robot bouge ï¿½ la vitesse de sa case actuelle pour aller sur une autre case
 	 * @param nature
 	 * @return
 	 */
@@ -160,7 +165,7 @@ public abstract class Robot {
 	
 	
 	/**
-	 * vitesse du robot sur laquelle il est après toutes les actions
+	 * vitesse du robot sur laquelle il est aprï¿½s toutes les actions
 	 * permet d'avoir le temps pour bouger le robot 
 	 * @return
 	 */
@@ -185,7 +190,17 @@ public abstract class Robot {
 		return nbVolUbitaire;
 	}
 	
+	public Dijkstra getDijkstra() {
+		return dpq;
+	}
 	
+	public void setDijkstra(Dijkstra d) {
+		this.dpq = d;
+	}
+	
+	public List<List<Noeud>> getMadj() {
+		return adj;
+	}
 	
 	
 
@@ -252,8 +267,49 @@ public abstract class Robot {
 	    	Case newPosition = (this.getCarte()) . getVoisin(this.getPosition(), dir);
 	    	this.deplacer(newPosition);
 		} catch (Exception e) {
-			System.out.println("On ne peut pas dÃ©placer le robot par là : " + dir.toString() + this.toString());
+			System.out.println("On ne peut pas dÃ©placer le robot par lï¿½ : " + dir.toString() + this.toString());
 		}
+	}
+	
+	/**
+	 * 
+	 * @param c
+	 * CrÃ©e la matrice d'adjacence utile pour l'algorithme de Dijkstra
+	 */
+	
+	public List<List<Noeud>> createGraph(Carte c) {
+		
+		// V for vertex
+		int V = c.getNbColonnes()*c.getNbLignes(); 
+		
+		int distancecase = c.getTailleCases();
+        // Adjacency list representation of the  
+        // connected edges 
+        List<List<Noeud> > adj = new ArrayList<List<Noeud> >(); 
+  
+        // Initialize list for every Noeud 
+        for (int i = 0; i < V; i++) { 
+            List<Noeud> item = new ArrayList<Noeud>(); 
+            adj.add(item); 
+        } 
+		
+		for (int i = 0; i < c.getNbLignes(); i ++) {
+			for (int j = 0; j < c.getNbColonnes(); j++) {
+				Case currentcase = c.getCase(i, j);
+				int caseint = i * c.getNbColonnes() + j;
+				double vitessedanscase = this.getVitesse(currentcase.getNature());
+				if (vitessedanscase != 0) {
+					int temps = distancecase / (int) vitessedanscase;
+					for (Case e : c.getVoisins(currentcase)) {
+						int eint = e.getLigne() * c.getNbColonnes() + e.getColonne();
+						adj.get(caseint).add(new Noeud(temps, e, eint)); 
+					}
+				}
+				
+			}
+		}
+		
+		return adj;
 	}
 	
 	

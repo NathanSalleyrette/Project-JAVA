@@ -21,7 +21,7 @@ public class TestCarte {
 		//System.out.println("carte_1" + ct1);
 		NatureTerrain m[][] = {
 				{NatureTerrain.EAU, NatureTerrain.FORET, NatureTerrain.EAU},
-				{NatureTerrain.ROCHE, NatureTerrain.EAU, NatureTerrain.TERRAIN_LIBRE}
+				{NatureTerrain.ROCHE, NatureTerrain.HABITAT, NatureTerrain.TERRAIN_LIBRE}
 		};
 		Carte ct2 = new Carte(m);
 		//System.out.println("carte_2" + ct2);
@@ -106,9 +106,9 @@ public class TestCarte {
         adj.get(0).add(new Noeud(10, ct2.getCase(0, 1), 1)); 
         adj.get(0).add(new Noeud(10, ct2.getCase(1, 0), 3)); 
         
-        adj.get(1).add(new Noeud(20, ct2.getCase(0, 0), 0)); 
-        adj.get(1).add(new Noeud(20, ct2.getCase(1, 1), 4)); 
-        adj.get(1).add(new Noeud(20, ct2.getCase(0, 2), 2)); 
+        //adj.get(1).add(new Noeud(20, ct2.getCase(0, 0), 0)); 
+        //adj.get(1).add(new Noeud(20, ct2.getCase(1, 1), 4)); 
+        //adj.get(1).add(new Noeud(20, ct2.getCase(0, 2), 2)); 
        
         adj.get(2).add(new Noeud(Integer.MAX_VALUE, ct2.getCase(0, 1), 1)); 
         adj.get(2).add(new Noeud(Integer.MAX_VALUE, ct2.getCase(0, 1), 5)); 
@@ -120,17 +120,20 @@ public class TestCarte {
         adj.get(4).add(new Noeud(1, ct2.getCase(1, 0), 3)); 
         adj.get(4).add(new Noeud(1, ct2.getCase(1, 2), 5)); 
         
-        adj.get(5).add(new Noeud(100, ct2.getCase(0, 2), 2)); 
-        adj.get(5).add(new Noeud(100, ct2.getCase(1, 1), 4)); 
+        //adj.get(5).add(new Noeud(100, ct2.getCase(0, 2), 2)); 
+        //adj.get(5).add(new Noeud(100, ct2.getCase(1, 1), 4)); 
         
         // Calculate the single source shortest path 
-        Dijkstra dpq = new Dijkstra(new Noeud(0, ct2.getCase(1, 1), 4), adj, ct2); 
+        Dijkstra dpq = new Dijkstra(new Noeud(0, ct2.getCase(0, 0), 0), adj, ct2); 
         dpq.dijkstra(); 
   
         // Print the shortest path to all the Noeuds 
         // from the source Noeud 
         System.out.println("The shorted path from Noeud :"); 
         for (int i = 0; i < dpq.getDist().length; i++) {
+        	if (dpq.getDist()[i] == Integer.MAX_VALUE)
+        		System.out.println("Inatteignable");
+        	else
             System.out.println(source + " to " + i + " is "
                                + dpq.getDist()[i]); 
 			

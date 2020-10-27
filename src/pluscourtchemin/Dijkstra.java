@@ -3,6 +3,14 @@ import java.util.*;
 import briques.*;
 
 
+/**
+ * 
+ * Algorithme de Dijkstra, prend en argument une matrice d'adjacence
+ * dist contient les temps de déplacement du noeud de départ aux autres 
+ * noeuds
+ * 
+ */
+
 public class Dijkstra {
 
 	    private int dist[]; 
@@ -25,7 +33,11 @@ public class Dijkstra {
 	        this.graph = graph;
 	        //this.cases = new LinkedList<LinkedList<Case>>();
 	        parents = new int[graph.size()];
+	        for (int i = 0; i < parents.length; i++) 
+	        	parents[i] = -2;
+	        
 	        parents[depart.getNumberGraph()] = -1;
+	        
 	        this.carte = carte;
 	    } 
 	    
@@ -46,13 +58,19 @@ public class Dijkstra {
 	  
 	            // remove the minimum distance node  
 	            // from the priority queue  
+	            try {
 	            int u = pq.remove().getNumberGraph(); 
-	  
+	            settled.add(u); 
+	      	  
+	            e_Neighbours(u); 
+	            } catch (NoSuchElementException e) {
+	            	// Dans le cas où les sommets ne peuvent pas être atteint
+	            	break;
+	            }
+	            
 	            // adding the node whose distance is 
 	            // finalized 
-	            settled.add(u); 
-	  
-	            e_Neighbours(u); 
+	           
 	        } 
 	    } 
 	    
@@ -85,6 +103,10 @@ public class Dijkstra {
 	    
 	    public void printPath(int v, int[] parents) {
 	    	if (v == -1) return;
+	    	if (parents[v] == -2) {
+	    		System.out.println("La case " + v + " est inatteignable");
+	    		return;
+	    	}
 	    	printPath(parents[v], parents); 
 	        System.out.print(this.tranformeNombreCase(v) + " "); 
 	    }
