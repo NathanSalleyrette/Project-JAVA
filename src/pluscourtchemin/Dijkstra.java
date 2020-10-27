@@ -13,8 +13,9 @@ public class Dijkstra {
 	    private List<List<Noeud> > graph; 
 	    //private LinkedList<LinkedList<Case>> cases;
 	    private int parents[];
+	    private Carte carte;
 	  
-	    public Dijkstra(Noeud depart, List<List<Noeud>> graph) 
+	    public Dijkstra(Noeud depart, List<List<Noeud>> graph, Carte carte) 
 	    { 
 	        this.depart = depart;
 	        V = graph.size();
@@ -25,6 +26,7 @@ public class Dijkstra {
 	        //this.cases = new LinkedList<LinkedList<Case>>();
 	        parents = new int[graph.size()];
 	        parents[depart.getNumberGraph()] = -1;
+	        this.carte = carte;
 	    } 
 	    
 	    // Function for Dijkstra's Algorithm 
@@ -84,7 +86,17 @@ public class Dijkstra {
 	    public void printPath(int v, int[] parents) {
 	    	if (v == -1) return;
 	    	printPath(parents[v], parents); 
-	        System.out.print(v + " "); 
+	        System.out.print(this.tranformeNombreCase(v) + " "); 
+	    }
+	    
+	    public ArrayList<Case> trouvechemin(){
+	    	return new ArrayList<Case>();
+	    }
+	    
+	    public Case tranformeNombreCase(int n) {
+	    	int ligne = (int) n / this.carte.getNbColonnes();
+	    	int colonne = (int) n - ligne * this.carte.getNbColonnes();
+	    	return this.carte.getCase(ligne, colonne);
 	    }
 	    
 	    public int[] getDist() {

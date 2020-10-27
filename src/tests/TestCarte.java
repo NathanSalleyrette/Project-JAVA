@@ -124,7 +124,7 @@ public class TestCarte {
         adj.get(5).add(new Noeud(100, ct2.getCase(1, 1), 4)); 
         
         // Calculate the single source shortest path 
-        Dijkstra dpq = new Dijkstra(new Noeud(0, ct2.getCase(1, 1), 4), adj); 
+        Dijkstra dpq = new Dijkstra(new Noeud(0, ct2.getCase(1, 1), 4), adj, ct2); 
         dpq.dijkstra(); 
   
         // Print the shortest path to all the Noeuds 
