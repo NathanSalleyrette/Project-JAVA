@@ -3,6 +3,7 @@ package evenements;
 
 import briques.Incendie;
 import robots.Robot;
+import simulation.Simulateur;
 
 
 /**
@@ -22,15 +23,15 @@ public class EteindreIncendie extends EvenementRobot {
 	 * @param robot
 	 * @param vol
 	 */
-	public EteindreIncendie(long date, Incendie incendie, Robot robot, int vol) {
-		super(date, robot);
+	public EteindreIncendie(Incendie incendie, Robot robot, int vol, Simulateur simulateur) {
+		super(robot, simulateur);
 		this.incendie = incendie;
 		this.vol = vol;
 		super.setDateActionRobot();
 	}
 	
-	public EteindreIncendie(long date, Incendie incendie, Robot robot) {
-		this(date, incendie, robot, robot.getReserve());
+	public EteindreIncendie(Incendie incendie, Robot robot, Simulateur simulateur) {
+		this(incendie, robot, robot.getReserve(), simulateur);
 	} 
 	
 	

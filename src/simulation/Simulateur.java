@@ -4,7 +4,6 @@ package simulation;
 import java.awt.Color;
 
 import briques.*;
-import briques.DonneesSimulation;
 import gui.GUISimulator;
 import gui.Rectangle;
 import gui.Simulable;
@@ -12,7 +11,7 @@ import robots.Robot;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import evenements.Evenement;
+import evenements.*;
 
 
 
@@ -20,14 +19,13 @@ public class Simulateur implements Simulable {
 
 	/** L'interface graphique associée */
     private GUISimulator gui;	
-
     /** La couleur de dessin du contour */
-    private Color contourColor;	
-    
+    private Color contourColor;
     private DonneesSimulation donnees;
-    
     private long DateSimulation; 
     private LinkedList<Evenement> evenements;
+    
+    
     
 	public Simulateur(GUISimulator gui, Color contourColor, DonneesSimulation donnees) {
 		this.gui = gui;
@@ -43,6 +41,8 @@ public class Simulateur implements Simulable {
 	public DonneesSimulation getDonnees() {
 		return this.donnees;
 	}
+	
+	
 	
 	public void next() {
 		IncrementeDate();
@@ -79,6 +79,10 @@ public class Simulateur implements Simulable {
 		DateSimulation += 1;
 	}
 	
+	public long getDateSimulation() {
+		return DateSimulation;
+	}
+	
 	public Color getColorTerrain(NatureTerrain nature) {
 		switch (nature) {
 		case EAU: return Color.decode("#0a82f4");
@@ -97,6 +101,31 @@ public class Simulateur implements Simulable {
 		case PATTES: return Color.decode("#ffc5f0");
 		default: return Color.decode("#ecc5ff");
 		}
+	}
+	
+	public void BougerRobotUnitaire(Direction dir, Robot robot) {
+		this.ajouteEvenement(new BougerRobotUnitaire(dir, robot, this));
+	}
+	
+	public void BougerRobotUnitaire(Case positionCible, Robot robot) {
+		this.ajouteEvenement(new BougerRobotUnitaire(positionCible, robot, this));
+	}
+	
+	public void EteindreIncendie(Incendie incendie, Robot robot) {
+		this.ajouteEvenement(new EteindreIncendie(incendie, robot, this));
+	}
+	
+	
+	public void EteindreIncendie(Incendie incendie, Robot robot, int vol) {
+		this.ajouteEvenement(new EteindreIncendie(incendie, robot, vol, this));
+	}
+	
+	public void RemplirRobot(Robot robot) {
+		this.ajouteEvenement(new RemplirRobot(robot, this));
+	}
+	
+	public void SendMessage(String message) {
+		this.ajouteEvenement(new SendMessage(message, this));
 	}
 
 	

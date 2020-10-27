@@ -19,11 +19,11 @@ public class TestPINGPONG {
 		Simulateur simulateur = new Simulateur(gui, Color.decode("#ffffff"), donnees);
 		
 		for (int i = 2; i <=10; i+=2) {
-			simulateur.ajouteEvenement(new SendMessage(i, "[PING]"));
+			simulateur.SendMessage("[PING]");
 		}
 		
 		for (int i = 3; i <= 9; i+=3) {
-			simulateur.ajouteEvenement(new SendMessage(i, "[PONG]"));
+			simulateur.SendMessage("[PONG]");
 		}
 	}
 

@@ -152,21 +152,21 @@ public class TestCarte {
 		
 		
 		
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, drone));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, drone));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, drone));
+		simulateur.BougerRobotUnitaire(Direction.EST, drone);
+		simulateur.BougerRobotUnitaire(Direction.EST, drone);
+		simulateur.BougerRobotUnitaire(Direction.EST, drone);
 		//simulateur.ajouteEvenement(new BougerRobot(4, Direction.EST, drone, ct2));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.SUD, drone));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, drone));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, drone));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, drone));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, drone));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, drone));
+		simulateur.BougerRobotUnitaire(Direction.SUD, drone);
+		simulateur.BougerRobotUnitaire(Direction.OUEST, drone);
+		simulateur.BougerRobotUnitaire(Direction.OUEST, drone);
+		simulateur.BougerRobotUnitaire(Direction.NORD, drone);
+		simulateur.BougerRobotUnitaire(Direction.EST, drone);
+		simulateur.BougerRobotUnitaire(Direction.EST, drone);
 		//simulateur.ajouteEvenement(new BougerRobot(3, Direction.EST, drone, ct2));
 		//simulateur.ajouteEvenement(new BougerRobot(4, Direction.EST, drone, ct2));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.SUD, drone));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, drone));
-		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, drone));
+		simulateur.BougerRobotUnitaire(Direction.SUD, drone);
+		simulateur.BougerRobotUnitaire(Direction.OUEST, drone);
+		simulateur.BougerRobotUnitaire(Direction.OUEST, drone);
 		
 		
 		

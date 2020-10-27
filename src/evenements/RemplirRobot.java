@@ -1,6 +1,7 @@
 package evenements;
 
 import robots.Robot;
+import simulation.Simulateur;
 
 
 /**
@@ -10,8 +11,8 @@ import robots.Robot;
  */
 public class RemplirRobot extends EvenementRobot {
 
-	public RemplirRobot(long date, Robot robot) {
-		super(date, robot);
+	public RemplirRobot(Robot robot, Simulateur simulateur) {
+		super(robot, simulateur);
 		if (this.robot.eauVoisineApresAction()) {
 			super.setDateActionRobot();
 		} else {	

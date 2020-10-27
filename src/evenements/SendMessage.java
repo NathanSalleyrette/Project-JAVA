@@ -1,5 +1,7 @@
 package evenements;
 
+import simulation.Simulateur;
+
 /**
  * 
  * @author nicolas
@@ -9,8 +11,8 @@ package evenements;
 public class SendMessage extends Evenement {
 	private String message;
 	
-	public SendMessage(long date, String message) {
-		super(date);
+	public SendMessage(String message, Simulateur simulateur) {
+		super(simulateur);
 		this.message = message;
 	}
 
