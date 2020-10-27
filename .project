@@ -3,6 +3,7 @@
 	<name>codeEtudiants</name>
 	<comment></comment>
 	<projects>
+		<project>TP5_Zoo</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
