@@ -8,12 +8,12 @@ import robots.Robot;
 public class Carte {
 	private int nbLignes;
 	private int nbColonnes;
-	private int tailleCases; //distance à parcourir que représente une case
+	private int tailleCases; //distance ï¿½ parcourir que reprï¿½sente une case
 	private Case[][] m;
 	
 	//variables globales
 	
-	public static int tailleCasesDefault = 2;
+	public static int tailleCasesDefault = 10000;
 	//constructeurs
 	
 	public Carte() {
@@ -45,7 +45,7 @@ public class Carte {
 	
 	
 	/**
-	 * creer une carte avec nbLignes lignes, nbColonnes colonnes et coté par default, terrains libres
+	 * creer une carte avec nbLignes lignes, nbColonnes colonnes et cotï¿½ par default, terrains libres
 	 * @param nbLignes
 	 * @param nbColonnes
 	 */
@@ -55,7 +55,7 @@ public class Carte {
 	
 	
 	/**
-	 * creer une carte à partir d'une matrice de terrain (meme dim que la carte) , cote tailleCases
+	 * creer une carte ï¿½ partir d'une matrice de terrain (meme dim que la carte) , cote tailleCases
 	 * @param t
 	 * @param tailleCases
 	 */
@@ -74,7 +74,7 @@ public class Carte {
 	
 	
 	/**
-	 * creer une carte à partir d'une matrice de terrain (meme dim que la carte) , cote par defaut de 2
+	 * creer une carte ï¿½ partir d'une matrice de terrain (meme dim que la carte) , cote par defaut de 2
 	 * @param t
 	 */
 	public Carte(NatureTerrain t[][]) {
@@ -82,12 +82,12 @@ public class Carte {
 	}
 	
 	/**
-	 * remplace la matrice de terrain d'une carte dejà existante. OBSOLETE ?
+	 * remplace la matrice de terrain d'une carte dejï¿½ existante. OBSOLETE ?
 	 * @param t
 	 */
 	public void copie_terrain(NatureTerrain t[][]) {
 		if (t.length != this.m.length || t[0].length != this.m.length) {
-			throw new IllegalArgumentException("la matrice proposée n'a pas les bonne dimension");
+			throw new IllegalArgumentException("la matrice proposï¿½e n'a pas les bonne dimension");
 		}
 		for (int i = 0; i < m.length; i++) {
 			for(int j = 0; j <m[0].length; j++) {
@@ -97,7 +97,7 @@ public class Carte {
 	}
 	
 	
-	//accès aux données
+	//accï¿½s aux donnï¿½es
 	public int getNbLignes() {
 		return this.nbLignes;
 	}
@@ -111,16 +111,20 @@ public class Carte {
 	}
 
 	public Case getCase(int lig, int col) {
-		//copie légère
+		//copie lï¿½gï¿½re
 		return this.m[lig][col];
+	}
+	
+	public Case[][] getCarte() {
+		return m;
 	}
 	
 	
 	/**
-	 * renvoie true si la cases src possède un voisin dans la direction  dir
+	 * renvoie true si la cases src possï¿½de un voisin dans la direction  dir
 	 * @param src
 	 * @param dir
-	 * @return la case possède une voisin ?
+	 * @return la case possï¿½de une voisin ?
 	 */
 	public Boolean voisinExiste(Case src, Direction dir) {
 		switch (dir) {
@@ -144,7 +148,7 @@ public class Carte {
 	 * @return case voisine
 	 */
 	public Case getVoisin(Case src, Direction dir) {
-		//axe y inversé !!
+		//axe y inversï¿½ !!
 		if (!(this.voisinExiste(src, dir))) throw new IllegalArgumentException("pas de voisin dans la direction : "+ dir);
 		int x = 0;
 		int y = 0;
@@ -170,7 +174,7 @@ public class Carte {
 	
 	
 	/**
-	 * renvoie l'ensemble des cases adjacentes à la case src
+	 * renvoie l'ensemble des cases adjacentes ï¿½ la case src
 	 * @param src
 	 * @return
 	 */
@@ -193,7 +197,7 @@ public class Carte {
 	
 	
 	/**
-	 * dit si de l'eau est adjacente à la case
+	 * dit si de l'eau est adjacente ï¿½ la case
 	 * @param src
 	 * @return
 	 */
@@ -207,7 +211,7 @@ public class Carte {
 	}
 	
 	/**
-	 * On considère que le robot n'apparait pas sur une case qui n'est pas compatible avec lui, ie vitesse =0.0
+	 * On considï¿½re que le robot n'apparait pas sur une case qui n'est pas compatible avec lui, ie vitesse =0.0
 	 * @param robot
 	 * @param dir
 	 * @return
@@ -220,7 +224,7 @@ public int getTempsDeplacement(Robot robot, Direction dir){
 	
 	/**
 	 * exemple:
-	 * dim: 2x3, coté: 2
+	 * dim: 2x3, cotï¿½: 2
 	 * (
 	 * Libre, Libre, Libre,
 	 * Roche, Libre, Eau)
@@ -236,6 +240,6 @@ public int getTempsDeplacement(Robot robot, Direction dir){
 			}
 			stringJoiner2.add("\n"+ stringJoiner1.toString());
 		}
-		return "dim: " + this.nbLignes + "x" + this.nbColonnes + ", coté : " + this.tailleCases + "\n " + stringJoiner2.toString();
+		return "dim: " + this.nbLignes + "x" + this.nbColonnes + ", cotï¿½ : " + this.tailleCases + "\n " + stringJoiner2.toString();
 	}
 }
