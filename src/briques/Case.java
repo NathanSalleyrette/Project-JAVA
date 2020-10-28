@@ -68,6 +68,16 @@ public class Case{
 		return this.nature;
 	}
 	
+	public Boolean isVoisine(Case autre_case) {
+		Boolean voisinLateral = Math.abs(this.getLigne() - autre_case.getLigne()) == 1
+						   && 
+						   this.getColonne() - autre_case.getColonne() == 0;
+		Boolean voisinHorizontal = (Math.abs(this.getColonne() - autre_case.getColonne()) == 1) 
+							&& 
+							(this.getLigne() - autre_case.getLigne() == 0);
+		return voisinLateral || voisinHorizontal;
+	}
+	
 
 	
 	/**

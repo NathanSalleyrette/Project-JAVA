@@ -1,6 +1,7 @@
 package evenements;
 
 import robots.Robot;
+import simulation.Simulateur;
 
 
 /**
@@ -11,8 +12,8 @@ import robots.Robot;
 public abstract class EvenementRobot extends Evenement{
 	protected Robot robot;
 	
-	public EvenementRobot(long date, Robot robot) {
-		super(date);
+	public EvenementRobot(Robot robot, Simulateur simulateur) {
+		super(simulateur);
 		this.robot = robot;
 	}
 	

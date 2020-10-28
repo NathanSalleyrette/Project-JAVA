@@ -30,11 +30,20 @@ public class Drone extends Robot{
 	 * @param vitesse
 	 */
 	public Drone(Case position, int vitesse, Carte carte) {
-		super(position, 10000, 10000, Math.min(150, vitesse), 30, 30, 10000, carte);
+		super(position, 10000, Math.min(150, vitesse), 30, 30, 10000, carte);
 		super.setType(Type.DRONE);
 		
 	}
 	
+	
+	@Override
+	public Boolean eauAccessible() {
+		return this.getPosition().getNature() == NatureTerrain.EAU;
+	}
+	
+	public Boolean eauAccessibleApresAction() {
+		return this.getPositionApresAction().getNature() == NatureTerrain.EAU;
+	}
 	
 	/**
 	 * exemple:

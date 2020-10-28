@@ -31,7 +31,7 @@ public class Pattes extends Robot {
 	 * @param vitesse
 	 */
 	public Pattes(Case position, int vitesse, Carte carte) {
-		super(position, 42, 42, 30, 10, 5, 100, carte);	
+		super(position, 42, 30, 0, 1, 10, carte);	
 		super.setType(Type.PATTES);
 	}
 	
@@ -64,6 +64,13 @@ public class Pattes extends Robot {
 		}
 		return 0.0;
 	}
+	
+	public void remplirReserve() {} //le robot n'a pas besoin de se remplir
+	
+	public int deverserEau(int vol) { //le robot ne se vide pas
+		return vol;	
+	}
+	
 	
 	
 	/**

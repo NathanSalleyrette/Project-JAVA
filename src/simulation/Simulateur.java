@@ -4,7 +4,6 @@ package simulation;
 import java.awt.Color;
 
 import briques.*;
-import briques.DonneesSimulation;
 import gui.GUISimulator;
 import gui.Rectangle;
 import gui.Simulable;
@@ -12,7 +11,7 @@ import robots.Robot;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-import evenements.Evenement;
+import evenements.*;
 
 
 
@@ -20,14 +19,13 @@ public class Simulateur implements Simulable {
 
 	/** L'interface graphique associ√©e */
     private GUISimulator gui;	
-
     /** La couleur de dessin du contour */
-    private Color contourColor;	
-    
+    private Color contourColor;
     private DonneesSimulation donnees;
-    
     private long DateSimulation; 
     private LinkedList<Evenement> evenements;
+    
+    
     
 	public Simulateur(GUISimulator gui, Color contourColor, DonneesSimulation donnees) {
 		this.gui = gui;
@@ -44,20 +42,20 @@ public class Simulateur implements Simulable {
 		return this.donnees;
 	}
 	
+	
+	
 	public void next() {
 		IncrementeDate();
 		int flag = 0;
-		int index = 0;
-		Iterator<Evenement> it = evenements.iterator();
-		while (it.hasNext()) {
-			Evenement e = it.next();
+		LinkedList<Evenement> copieEvenement = (LinkedList<Evenement>)this.evenements.clone();
+		for (Evenement e : copieEvenement) {
 			if (e.getDate() == this.DateSimulation) {
 				flag = 1;
 				e.execute();
 				System.out.println(e);
+				this.evenements.remove(e);
 				
 			}
-			index += 1;
 		}
 		if (flag == 1) {
 			draw();
@@ -79,6 +77,10 @@ public class Simulateur implements Simulable {
 		DateSimulation += 1;
 	}
 	
+	public long getDateSimulation() {
+		return DateSimulation;
+	}
+	
 	public Color getColorTerrain(NatureTerrain nature) {
 		switch (nature) {
 		case EAU: return Color.decode("#0a82f4");
@@ -97,6 +99,38 @@ public class Simulateur implements Simulable {
 		case PATTES: return Color.decode("#ffc5f0");
 		default: return Color.decode("#ecc5ff");
 		}
+	}
+	
+	public void BougerRobotUnitaire(Direction dir, Robot robot) {
+		this.ajouteEvenement(new BougerRobotUnitaire(dir, robot, this));
+	}
+	
+	public void BougerRobotUnitaire(Case positionCible, Robot robot) {
+		this.ajouteEvenement(new BougerRobotUnitaire(positionCible, robot, this));
+	}
+	
+	public void BougerRobot(Robot robot, Case positionCible) {
+		LinkedList<Case> chemin = new LinkedList<Case>(); //fonction de Nicolas ‡ ajouter en fonction de positionCible
+		for (Case c : chemin) {
+			this.BougerRobotUnitaire(c, robot);
+		}
+	}
+	
+	public void EteindreIncendieUnitaire(Incendie incendie, Robot robot) {
+		this.ajouteEvenement(new EteindreIncendieUnitaire(incendie, robot, this));
+	}
+	
+	
+	public void EteindreIncendie(Incendie incendie, Robot robot) {
+		this.ajouteEvenement(new EteindreIncendieUnitaire(incendie, robot, this));
+	}
+	
+	public void RemplirRobot(Robot robot) {
+		this.ajouteEvenement(new RemplirRobot(robot, this));
+	}
+	
+	public void SendMessage(String message) {
+		this.ajouteEvenement(new SendMessage(message, this));
 	}
 
 	

@@ -29,18 +29,18 @@ public class TestLecteurDonnees {
             // cree la carte avec les incendies et les robots
             Simulateur simulateur = new Simulateur(gui, Color.decode("#ffffff"), LecteurDonnees.lire(args[0]));
     		
-    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
-    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
-    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
-    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().getFirst()));
-    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.NORD, simulateur.getDonnees().getRobots().get(1)));
-    		simulateur.ajouteEvenement(new EteindreIncendie(1, simulateur.getDonnees().getIncendies().get(4), simulateur.getDonnees().getRobots().get(1)));
-    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, simulateur.getDonnees().getRobots().get(1)));
-    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.OUEST, simulateur.getDonnees().getRobots().get(1)));
-    		simulateur.ajouteEvenement(new RemplirRobot(1, simulateur.getDonnees().getRobots().get(1)));
-    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, simulateur.getDonnees().getRobots().get(1)));
-    		simulateur.ajouteEvenement(new BougerRobot(1, Direction.EST, simulateur.getDonnees().getRobots().get(1)));
-    		simulateur.ajouteEvenement(new EteindreIncendie(1, simulateur.getDonnees().getIncendies().get(4), simulateur.getDonnees().getRobots().get(1)));
+    		simulateur.BougerRobotUnitaire(Direction.NORD, simulateur.getDonnees().getRobots().getFirst());
+    		simulateur.BougerRobotUnitaire(Direction.NORD, simulateur.getDonnees().getRobots().getFirst());
+    		simulateur.BougerRobotUnitaire(Direction.NORD, simulateur.getDonnees().getRobots().getFirst());
+    		simulateur.BougerRobotUnitaire(Direction.NORD, simulateur.getDonnees().getRobots().getFirst());
+    		simulateur.BougerRobotUnitaire(Direction.NORD, simulateur.getDonnees().getRobots().get(1));
+    		simulateur.EteindreIncendie(simulateur.getDonnees().getIncendies().get(4), simulateur.getDonnees().getRobots().get(1));
+    		simulateur.BougerRobotUnitaire(Direction.OUEST, simulateur.getDonnees().getRobots().get(1));
+    		simulateur.BougerRobotUnitaire(Direction.OUEST, simulateur.getDonnees().getRobots().get(1));
+    		simulateur.RemplirRobot(simulateur.getDonnees().getRobots().get(1));
+    		simulateur.BougerRobotUnitaire(Direction.EST, simulateur.getDonnees().getRobots().get(1));
+    		simulateur.BougerRobotUnitaire(Direction.EST, simulateur.getDonnees().getRobots().get(1));
+    		simulateur.EteindreIncendie(simulateur.getDonnees().getIncendies().get(4), simulateur.getDonnees().getRobots().get(1));
             
         } catch (FileNotFoundException e) {
             System.out.println("fichier " + args[0] + " inconnu ou illisible");

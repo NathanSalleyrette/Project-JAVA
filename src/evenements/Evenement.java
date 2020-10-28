@@ -1,5 +1,6 @@
 package evenements;
 
+import simulation.Simulateur;
 
 /**
  * 
@@ -9,9 +10,11 @@ package evenements;
  */
 public abstract class Evenement {
 	private long date;
+	private Simulateur simulateur;
 	
-	public Evenement(long date) {
-		this.date = date;
+	public Evenement(Simulateur simulateur) {
+		this.date = simulateur.getDateSimulation();
+		this.simulateur = simulateur;
 	}
 	
 	public abstract void execute();
@@ -22,6 +25,10 @@ public abstract class Evenement {
 	
 	public void setDate(long date) {
 		this.date = date;
+	}
+	
+	public Simulateur getSimulateur() {
+		return simulateur;
 	}
 	
 	public String toString() {
