@@ -3,6 +3,14 @@ import java.util.*;
 import briques.*;
 
 
+/**
+ * 
+ * Algorithme de Dijkstra, prend en argument une matrice d'adjacence
+ * dist contient les temps de déplacement du noeud de départ aux autres 
+ * noeuds
+ * 
+ */
+
 public class Dijkstra {
 
 	    private int dist[]; 
@@ -11,10 +19,13 @@ public class Dijkstra {
 	    private Noeud depart;
 	    private int V;
 	    private List<List<Noeud> > graph; 
-	    //private LinkedList<LinkedList<Case>> cases;
+	   
 	    private int parents[];
 	    private Carte carte;
-	  
+	    
+	    // Stockage des chemins
+	    private List<List<Case>> chemins;
+	    
 	    public Dijkstra(Noeud depart, List<List<Noeud>> graph, Carte carte) 
 	    { 
 	        this.depart = depart;
@@ -25,7 +36,17 @@ public class Dijkstra {
 	        this.graph = graph;
 	        //this.cases = new LinkedList<LinkedList<Case>>();
 	        parents = new int[graph.size()];
+	        chemins = new ArrayList<List<Case>>();
+	        for (int i = 0; i < parents.length; i++) {
+	        	parents[i] = -2;
+	        	chemins.add(new ArrayList<Case>());
+	        }
+	        
 	        parents[depart.getNumberGraph()] = -1;
+	        
+	        
+	        
+	        
 	        this.carte = carte;
 	    } 
 	    
@@ -46,14 +67,24 @@ public class Dijkstra {
 	  
 	            // remove the minimum distance node  
 	            // from the priority queue  
+	            try {
 	            int u = pq.remove().getNumberGraph(); 
-	  
+	            settled.add(u); 
+	      	  
+	            e_Neighbours(u); 
+	            } catch (NoSuchElementException e) {
+	            	// Dans le cas où les sommets ne peuvent pas être atteint
+	            	break;
+	            }
+	            
 	            // adding the node whose distance is 
 	            // finalized 
-	            settled.add(u); 
-	  
-	            e_Neighbours(u); 
+	           
 	        } 
+	        
+	        for (int i = 0; i < V; i++) {
+	        	this.stockchemin(chemins.get(i), i, this.parents);
+	        }
 	    } 
 	    
 	    private void e_Neighbours(int u) 
@@ -82,15 +113,23 @@ public class Dijkstra {
 	        } 
 	  
 	    } 
-	    
+	    // Fonction affiche chemin
 	    public void printPath(int v, int[] parents) {
 	    	if (v == -1) return;
+	    	if (parents[v] == -2) {
+	    		System.out.println("La case " + v + " est inatteignable");
+	    		return;
+	    	}
 	    	printPath(parents[v], parents); 
 	        System.out.print(this.tranformeNombreCase(v) + " "); 
 	    }
 	    
-	    public ArrayList<Case> trouvechemin(){
-	    	return new ArrayList<Case>();
+	    // Fonction stock chemin 
+	    public void stockchemin(List<Case> chemin, int v, int[] parents){
+	    	if (v == -1) return;
+	    	if (parents[v] == -2) return;
+	    	this.stockchemin(chemin, parents[v], parents);
+	    	chemin.add(this.tranformeNombreCase(v));
 	    }
 	    
 	    public Case tranformeNombreCase(int n) {
@@ -107,6 +146,9 @@ public class Dijkstra {
 	    	return parents;
 	    }
 	    
-
+	    public List<Case> getChemin(Case c) {
+	    	int num = this.carte.getNbColonnes() * c.getLigne() + c.getColonne();
+	    	return this.chemins.get(num);
+	    }
 	 
 }
