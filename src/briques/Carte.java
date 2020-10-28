@@ -210,14 +210,25 @@ public class Carte {
 		return false;
 	}
 	
+	
+	public Case tranformeNombreCase(int numeroCase) {
+    	int ligne = (int) numeroCase / this.getNbColonnes();
+    	int colonne = (int) numeroCase - ligne * this.getNbColonnes();
+    	return this.getCase(ligne, colonne);
+    }
+    
+    public int transformeNombreCase(Case c) {
+    	return this.getNbColonnes() * c.getLigne() + c.getColonne();
+    }
+	
 	/**
 	 * On consid�re que le robot n'apparait pas sur une case qui n'est pas compatible avec lui, ie vitesse =0.0
 	 * @param robot
 	 * @param dir
 	 * @return
 	 */
-public int getTempsDeplacement(Robot robot, Direction dir){
-	return (int)Math.ceil(this.getTailleCases()/robot.getVitesseCourante());
+	public int getTempsDeplacement(Robot robot, Direction dir){
+		return (int)Math.ceil(this.getTailleCases()/robot.getVitesseCourante());
 	}
 	
 	

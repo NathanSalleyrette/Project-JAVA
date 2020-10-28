@@ -17,7 +17,7 @@ public class EteindreIncendieUnitaire extends EvenementRobot {
 	
 	
 	/**
-	 * creation de l'vent : un incendie est eteint par un robot grâce à un certain vol d'eau
+	 * creation de l'event : un incendie est eteint par un robot grâce à un certain vol d'eau
 	 * hyp : robot et incendie sont sur la meme case
 	 * @param incendie
 	 * @param robot
