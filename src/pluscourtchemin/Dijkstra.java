@@ -146,8 +146,9 @@ public class Dijkstra {
 	    	return parents;
 	    }
 	    
-	    public List<List<Case>> getChemins() {
-	    	return chemins;
+	    public List<Case> getChemin(Case c) {
+	    	int num = this.carte.getNbColonnes() * c.getLigne() + c.getColonne();
+	    	return this.chemins.get(num);
 	    }
 	 
 }
