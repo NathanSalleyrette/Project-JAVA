@@ -17,7 +17,8 @@ public class EteindreIncendieUnitaire extends EvenementRobot {
 	
 	
 	/**
-	 * creation de l'event : un incendie est eteint par un robot grâce à un certain vol d'eau
+	 * creation de l'e
+	 * vent : un incendie est eteint par un robot grâce à un certain vol d'eau
 	 * hyp : robot et incendie sont sur la meme case
 	 * @param incendie
 	 * @param robot
@@ -37,7 +38,9 @@ public class EteindreIncendieUnitaire extends EvenementRobot {
 		this.incendie = incendie;
 		this.vol = robot.getInterventionUnitaire();
 		if (incendie.getIntensite() != 0 && robot.getReserve() !=0 && robot.getPositionApresAction() == incendie.getPosition()) {
-			super.setDateActionRobot();
+			int last = this.tempsActionRobot();
+			long nvlleDate = super.getDate() + last; //le robot est disponible car cet event est issu de l'appel d'un plus gros incendie
+			super.setDate(nvlleDate);
 			
 		} else {
 			super.setDateActionImpossible();
@@ -64,9 +67,11 @@ public class EteindreIncendieUnitaire extends EvenementRobot {
 	public void execute() {
 		this.eteindreIncendie();
 		if (this.incendie.getIntensite() != 0) {
-			System.out.println("hey");
+			System.out.println("again !");
 			this.getSimulateur().EteindreIncendieUnitaire(this.incendie, this.robot);
-		}	
+		} else {
+			this.robot.setDateDisponible(this.getDate()); //le robot est de nouveau disponible, peut-etre prematurement, on sait pas
+		}
 	}
 	
 	/*on peut mettre ce block dans incendie ou robot*/

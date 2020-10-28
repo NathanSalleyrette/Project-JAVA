@@ -11,6 +11,8 @@ import robots.Robot;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+
 import evenements.*;
 
 
@@ -110,7 +112,7 @@ public class Simulateur implements Simulable {
 	}
 	
 	public void BougerRobot(Robot robot, Case positionCible) {
-		LinkedList<Case> chemin = new LinkedList<Case>(); //fonction de Nicolas à ajouter en fonction de positionCible
+		List<Case> chemin = robot.getChemin(positionCible);
 		for (Case c : chemin) {
 			this.BougerRobotUnitaire(c, robot);
 		}
@@ -122,7 +124,7 @@ public class Simulateur implements Simulable {
 	
 	
 	public void EteindreIncendie(Incendie incendie, Robot robot) {
-		this.ajouteEvenement(new EteindreIncendieUnitaire(incendie, robot, this));
+		this.ajouteEvenement(new EteindreIncendie(incendie, robot, this));
 	}
 	
 	public void RemplirRobot(Robot robot) {

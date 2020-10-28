@@ -312,13 +312,13 @@ public abstract class Robot {
 		return adj;
 	}
 	
-	/*
+	
 	 public List<Case> getChemin(Case c) {
-		 	Noeud depart;
+		 	Noeud depart = new  Noeud(0, c, this.carte.transformeNombreCase(c));
 		 	this.dpq = new Dijkstra(depart, this.matriceAdjacence, this.carte);
-	    	int numCase = this.carte.transformeNombreCase(c);
-	    	return this.chemins.get(numCase);
-	    }*/
+		 	this.dpq.dijkstra();
+	    	return this.dpq.getChemin(c);
+	 }
 	
 	
 	//les robots print�s

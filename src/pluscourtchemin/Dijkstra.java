@@ -135,6 +135,7 @@ public class Dijkstra {
 	    	return parents;
 	    }
 	    
+	    
 	    public List<Case> getChemin(Case c) {
 	    	int numCase = this.carte.transformeNombreCase(c);
 	    	return this.chemins.get(numCase);
