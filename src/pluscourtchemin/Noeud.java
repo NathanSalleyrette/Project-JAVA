@@ -16,12 +16,12 @@ public class Noeud implements Comparable<Noeud>{
 		
 	private int time;
 	private Case c;
-	private int numbergraph;
+	private int numeroCase;
 	
-	public Noeud(int time, Case c, int numbergraph) {
+	public Noeud(int time, Case c, int numeroCase) {
 		this.time = time;
 		this.c = c;
-		this.numbergraph = numbergraph;
+		this.numeroCase = numeroCase;
 	}
 
 	public int getTime() {
@@ -32,8 +32,8 @@ public class Noeud implements Comparable<Noeud>{
 		return c;
 	}
 	
-	public int getNumberGraph() {
-		return numbergraph;
+	public int getNumeroCase() {
+		return numeroCase;
 	}
 	
 	@Override

@@ -20,8 +20,8 @@ public abstract class Robot {
 	private long dateDisponible;
 	private Carte carte;
 	private Case positionApresAction;
-	private List<List<Noeud>> adj;
-	private Dijkstra dpq;
+	private List<List<Noeud>> matriceAdjacence;
+	private Dijkstra dpq; // dijkstra associé au futur chemin du robot
 
 	
 	
@@ -43,20 +43,9 @@ public abstract class Robot {
 		this.carte = carte;
 		this.dateDisponible = 0; // date ï¿½ laquel le robot sera ï¿½ nouveau disponible pour rï¿½aliser une action
 		this.positionApresAction = position; // position du robot une fois tous les ï¿½venement dï¿½jï¿½ definis terminï¿½s
-		this.adj = this.createGraph(carte);
+		this.matriceAdjacence = this.createGraph(carte);
 		
 	}
-	
-	
-	/**
-	 * robot en (0,0) terrain libre, capacity de 0, vitesse 0
-	 */
-	/*
-	public Robot() {
-		this(new Case(), 0, 0, 0.0, 0.0, 0.0, 0);
-	}
-	 */
-	
 	
 	
 	//accï¿½s aux donnï¿½es du robot
@@ -210,7 +199,7 @@ public abstract class Robot {
 	}
 	
 	public List<List<Noeud>> getMadj() {
-		return adj;
+		return matriceAdjacence;
 	}
 	
 	
@@ -293,7 +282,7 @@ public abstract class Robot {
 		// V for vertex
 		int V = c.getNbColonnes()*c.getNbLignes(); 
 		
-		int distancecase = c.getTailleCases();
+		int distanceCase = c.getTailleCases();
         // Adjacency list representation of the  
         // connected edges 
         List<List<Noeud> > adj = new ArrayList<List<Noeud> >(); 
@@ -306,12 +295,12 @@ public abstract class Robot {
 		
 		for (int i = 0; i < c.getNbLignes(); i ++) {
 			for (int j = 0; j < c.getNbColonnes(); j++) {
-				Case currentcase = c.getCase(i, j);
+				Case currentCase = c.getCase(i, j);
 				int caseint = i * c.getNbColonnes() + j;
-				double vitessedanscase = this.getVitesse(currentcase.getNature());
-				if (vitessedanscase != 0) {
-					int temps = distancecase / (int) vitessedanscase;
-					for (Case e : c.getVoisins(currentcase)) {
+				double vitesseDansCase = this.getVitesse(currentCase.getNature());
+				if (vitesseDansCase != 0) {
+					int temps = distanceCase / (int) vitesseDansCase;
+					for (Case e : c.getVoisins(currentCase)) {
 						int eint = e.getLigne() * c.getNbColonnes() + e.getColonne();
 						adj.get(caseint).add(new Noeud(temps, e, eint)); 
 					}
@@ -323,36 +312,13 @@ public abstract class Robot {
 		return adj;
 	}
 	
-	
-	// les robots sont en listes
-/*	public Robot getSuivant() {
-		return this.suivant;
-	}
-	
-	private void setSuivant(Robot next) {
-		this.suivant = next;
-	}*/
-	
-	/**
-	 * met le nvxrobot en fin de liste dont this est la tete
-	 * @param nvxRobot
-	 */
-/*	public void pushQueue(Robot nvxRobot) {
-		//met le robot ï¿½ la fin de la liste de robot
-		Robot next = this.getSuivant();
-		Robot suiv;
-		if (next == null) this.setSuivant(nvxRobot); // un seul robot dans la liste
-		else {
-			suiv = next.getSuivant();
-			while (suiv != null) {
-				next = next.getSuivant();
-				suiv = suiv.getSuivant();
-			}
-			next.setSuivant(nvxRobot);
-		}
-		
-	
-	}*/
+	/*
+	 public List<Case> getChemin(Case c) {
+		 	Noeud depart;
+		 	this.dpq = new Dijkstra(depart, this.matriceAdjacence, this.carte);
+	    	int numCase = this.carte.transformeNombreCase(c);
+	    	return this.chemins.get(numCase);
+	    }*/
 	
 	
 	//les robots printï¿½s
@@ -364,17 +330,5 @@ public abstract class Robot {
 	public String toString() {
 		return this.position.toString() + ", " + reserve + "/" + capacity + " litres, vitesse " + this.vitesse;
 	}
-	
-	
-	/**
-	 * to string generalisï¿½ pour afficher toute la liste ï¿½ partir de this
-	 * exemple :
-	 * (0,9) ROCHE, 1/9 litres
-	 * (2,3) TERRAIN_LIBRE, 4/6 litres
-	 */
-/*	public String allToString() {
-		if (this.suivant != null) return this.toString() + "\n" + this.suivant.allToString();
-		return this.toString();
-	}*/
-
 }
+	
