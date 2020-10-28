@@ -10,6 +10,7 @@ import java.util.LinkedList;
 public class Incendie {
 	private Case position;
 	private int intensite;
+	private int intensiteApresAction;
 	private LinkedList<Incendie> incendies;
 	
 
@@ -86,6 +87,9 @@ public class Incendie {
 	 */
 	public void eteindre(int vol) {
 		this.setIntensite(Math.max(this.intensite - Math.max(0,vol),0)); //Math.max(0,vol) gere le cas ou vol est <0
+		if (this.getIntensite() == 0) {
+			this.getIncendies().remove(this);
+		}	
 	}
 	
 	

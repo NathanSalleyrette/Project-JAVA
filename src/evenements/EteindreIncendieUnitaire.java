@@ -11,7 +11,7 @@ import simulation.Simulateur;
  * @author Lucie
  *
  */
-public class EteindreIncendie extends EvenementRobot {
+public class EteindreIncendieUnitaire extends EvenementRobot {
 	private Incendie incendie;
 	private int vol;
 	
@@ -23,15 +23,26 @@ public class EteindreIncendie extends EvenementRobot {
 	 * @param robot
 	 * @param vol
 	 */
-	public EteindreIncendie(Incendie incendie, Robot robot, int vol, Simulateur simulateur) {
+	/*
+	public EteindreIncendieUnitaire(Incendie incendie, Robot robot, int vol, Simulateur simulateur) {
 		super(robot, simulateur);
 		this.incendie = incendie;
 		this.vol = vol;
 		super.setDateActionRobot();
 	}
+	*/
 	
-	public EteindreIncendie(Incendie incendie, Robot robot, Simulateur simulateur) {
-		this(incendie, robot, robot.getReserve(), simulateur);
+	public EteindreIncendieUnitaire(Incendie incendie, Robot robot, Simulateur simulateur) {
+		super(robot, simulateur);
+		this.incendie = incendie;
+		this.vol = robot.getInterventionUnitaire();
+		if (incendie.getIntensite() != 0 && robot.getReserve() !=0 && robot.getPositionApresAction() == incendie.getPosition()) {
+			super.setDateActionRobot();
+			
+		} else {
+			super.setDateActionImpossible();
+			System.out.println("l'incendie est deja eteint ou le robot et l'incendie ne sont pas sur la meme case ou le robot est vide");
+		}
 	} 
 	
 	
@@ -39,7 +50,7 @@ public class EteindreIncendie extends EvenementRobot {
 	 * temps pour réaliser l'action d'eteindre l'incendie d'une quantité vol (converti en intervention unitaire)
 	 */
 	public int tempsActionRobot() {
-		return this.robot.getTempsExtinction(this.vol);
+		return (int)Math.ceil(this.robot.getTempsExtinctionUnitaire());
 	}
 	
 	
@@ -51,11 +62,11 @@ public class EteindreIncendie extends EvenementRobot {
 	 * @param vol
 	 */
 	public void execute() {
-		if( this.robot.getPositionApresAction() == this.incendie.getPosition()) {
-			this.eteindreIncendie();
-		} else {
-			System.out.println("le robot et l'incendie ne sont pas sur la même case");
-		}
+		this.eteindreIncendie();
+		if (this.incendie.getIntensite() != 0) {
+			System.out.println("hey");
+			this.getSimulateur().EteindreIncendieUnitaire(this.incendie, this.robot);
+		}	
 	}
 	
 	/*on peut mettre ce block dans incendie ou robot*/
@@ -63,9 +74,8 @@ public class EteindreIncendie extends EvenementRobot {
 		this.vol = this.robot.deverserEau(this.vol);
 		this.incendie.eteindre(this.vol);
 		System.out.println(this.incendie);
-		if (this.incendie.getIntensite() == 0) {
-			this.incendie.getIncendies().remove(incendie);
-		}	
+ 
+
 	}
 	
 	public String toString() {

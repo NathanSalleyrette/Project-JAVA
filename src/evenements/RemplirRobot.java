@@ -13,7 +13,7 @@ public class RemplirRobot extends EvenementRobot {
 
 	public RemplirRobot(Robot robot, Simulateur simulateur) {
 		super(robot, simulateur);
-		if (this.robot.eauVoisineApresAction()) {
+		if (this.robot.eauAccessibleApresAction()) {
 			super.setDateActionRobot();
 		} else {	
 			super.setDateActionImpossible();

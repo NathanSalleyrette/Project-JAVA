@@ -29,10 +29,10 @@ public abstract class Robot {
 	 * @param capacity
 	 * @param reserve
 	 */
-	public Robot(Case position, int capacity, int reserve, double vitesse, double rempli, double vide, int interventionUnitaire, Carte carte) {
+	public Robot(Case position, int capacity, double vitesse, double rempli, double vide, int interventionUnitaire, Carte carte) {
 		this.position = position;
 		this.capacity = capacity;
-		this.reserve = reserve;
+		this.reserve = capacity;
 		this.vitesse = vitesse;
 		this.tempsRemplissage = rempli;
 		this.tempsExtinctionUnitaire = vide;
@@ -80,6 +80,10 @@ public abstract class Robot {
 		return this.reserve;
 	}
 	
+	public void setReserve(int reserve) {
+		this.reserve = reserve;
+	}
+	
 	public Type getType() {
 		return this.type;
 	}
@@ -111,8 +115,8 @@ public abstract class Robot {
 	 * @param vol
 	 */
 	public void remplirReserve() {
-		if (this.eauVoisine()) {
-		this.reserve = this.capacity;
+		if (this.eauAccessible()) {
+			this.reserve = this.capacity;
 		}
 	}
 	
@@ -121,18 +125,18 @@ public abstract class Robot {
 	 * renvoie si le robot peut se réaprovisionner en eau (il faut que de l'eau lui soit adjacente)
 	 * @return
 	 */
-	public Boolean eauVoisine() {
+	public Boolean eauAccessible() {
 		return this.getCarte().eauVoisine(this.getPosition());
 	}
 	
-	public Boolean eauVoisineApresAction() {
+	public Boolean eauAccessibleApresAction() {
 		return this.getCarte().eauVoisine(this.getPositionApresAction());
 	}
 	
 	/**
-	 * le robot deverse une partie de l'eau qu'il a en reserve sur le feu
+	 * le robot deverse une partie de l'eau qu'il a en reserve (on ne test pas si la case contient un feu, cela est testé plus haut)
 	 * @param vol
-	 * return volume dï¿½versï¿½ rï¿½ellement
+	 * return volume que l'on deverse reelement
 	 */
 	public int deverserEau(int vol) {
 		vol = Math.min(this.getReserve(), Math.max(0, vol)); // on ne peut pas deverser plus que ce su'il y a dans le rï¿½servoir
@@ -184,10 +188,13 @@ public abstract class Robot {
 		return this.tempsExtinctionUnitaire;
 	}
 	
+	
+	/*
 	public int getTempsExtinction(int vol) {
 		int nbVolUbitaire = (int)Math.ceil(vol/this.interventionUnitaire);
 		return nbVolUbitaire;
 	}
+	*/
 	
 	
 	

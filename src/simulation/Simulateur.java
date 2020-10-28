@@ -47,17 +47,15 @@ public class Simulateur implements Simulable {
 	public void next() {
 		IncrementeDate();
 		int flag = 0;
-		int index = 0;
-		Iterator<Evenement> it = evenements.iterator();
-		while (it.hasNext()) {
-			Evenement e = it.next();
+		LinkedList<Evenement> copieEvenement = (LinkedList<Evenement>)this.evenements.clone();
+		for (Evenement e : copieEvenement) {
 			if (e.getDate() == this.DateSimulation) {
 				flag = 1;
 				e.execute();
 				System.out.println(e);
+				this.evenements.remove(e);
 				
 			}
-			index += 1;
 		}
 		if (flag == 1) {
 			draw();
@@ -111,13 +109,20 @@ public class Simulateur implements Simulable {
 		this.ajouteEvenement(new BougerRobotUnitaire(positionCible, robot, this));
 	}
 	
-	public void EteindreIncendie(Incendie incendie, Robot robot) {
-		this.ajouteEvenement(new EteindreIncendie(incendie, robot, this));
+	public void BougerRobot(Robot robot, Case positionCible) {
+		LinkedList<Case> chemin = new LinkedList<Case>(); //fonction de Nicolas à ajouter en fonction de positionCible
+		for (Case c : chemin) {
+			this.BougerRobotUnitaire(c, robot);
+		}
+	}
+	
+	public void EteindreIncendieUnitaire(Incendie incendie, Robot robot) {
+		this.ajouteEvenement(new EteindreIncendieUnitaire(incendie, robot, this));
 	}
 	
 	
-	public void EteindreIncendie(Incendie incendie, Robot robot, int vol) {
-		this.ajouteEvenement(new EteindreIncendie(incendie, robot, vol, this));
+	public void EteindreIncendie(Incendie incendie, Robot robot) {
+		this.ajouteEvenement(new EteindreIncendieUnitaire(incendie, robot, this));
 	}
 	
 	public void RemplirRobot(Robot robot) {
