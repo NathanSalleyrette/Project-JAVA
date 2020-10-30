@@ -12,15 +12,13 @@ import java.util.*;
  * L'argument Case c n'est peut etre pas indispensable (a changer)
  */
 
-public class Noeud implements Comparable<Noeud>{
+public class Noeud{
 		
-	private int time;
-	private Case c;
+	private int time; // temps pour parcourir la case
 	private int numeroCase;
 	
-	public Noeud(int time, Case c, int numeroCase) {
+	public Noeud(int time, int numeroCase) {
 		this.time = time;
-		this.c = c;
 		this.numeroCase = numeroCase;
 	}
 
@@ -28,18 +26,17 @@ public class Noeud implements Comparable<Noeud>{
 		return time;
 	}
 	
-	public Case getCase() {
-		return c;
+	public void setTime(int time) { 
+		this.time = time;
 	}
 	
 	public int getNumeroCase() {
 		return numeroCase;
 	}
 	
-	@Override
-	public int compareTo(Noeud other) {
-		if (this.getTime() < other.getTime()) return -1;
-		if (this.getTime() > other.getTime()) return 1;
-		return 0;
+	public String toString() {
+		return "(" + time + ", num : " + numeroCase + ")";
 	}
+	
+	
 }

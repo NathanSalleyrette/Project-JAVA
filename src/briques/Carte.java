@@ -37,7 +37,7 @@ public class Carte {
 		this.m = new Case[nbLignes][nbColonnes];
 		for (int i = 0; i < m.length; i++) {
 			for(int j = 0; j <m[0].length; j++) {
-				this.m[i][j] = new Case(i, j, this);
+				this.m[i][j] = new Case(i, j);
 			}
 		}
 		//Case.setCarte(this);
@@ -242,7 +242,6 @@ public class Carte {
 	 */
 	public String toString() {
 		StringJoiner stringJoiner2 =  new StringJoiner(", ",  "(",  ")") ;
-		System.out.println(this.m.length + "x" + this.m[0].length);
 		for (int i=0; i<this.m.length; i++) {
 			StringJoiner stringJoiner1 =  new StringJoiner(", ",  "(",  ")") ;
 			for (int j=0; j<this.m[0].length; j++) {
