@@ -98,7 +98,7 @@ public class DonneesSimulation {
 	/* Ne pas oublier l'affichage des robots*/
 	public String toString() {
 		//return carte + "\n" + incendies.allToString() + robots.allToString();
-		return "coucou";
+		return "donneesSimuation";
 	}
 	
 	

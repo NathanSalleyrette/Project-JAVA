@@ -25,7 +25,7 @@ public class TestDeplacement {
             // cree la carte avec les incendies et les robots
             Simulateur simulateur = new Simulateur(gui, Color.decode("#ffffff"), LecteurDonnees.lire(args[0]));
             simulateur.BougerRobot(simulateur.getDonnees().getRobots().get(2), simulateur.getDonnees().getIncendies().getFirst().getPosition());
-            
+            System.out.println("fin");
         } catch (FileNotFoundException e) {
             System.out.println("fichier " + args[0] + " inconnu ou illisible");
         } catch (DataFormatException e) {

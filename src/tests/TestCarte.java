@@ -7,7 +7,6 @@ import briques.*;
 import gui.GUISimulator;
 import robots.*;
 import simulation.Simulateur;
-import java.util.LinkedList;
 import evenements.*;
 
 public class TestCarte {
@@ -41,8 +40,10 @@ public class TestCarte {
 		//c.setTerrain(NatureTerrain.EAU);
 		c = ct2.getCase(1, 0);
 		Roues roues = new Roues(c, ct2);
+		Pattes pattes = new Pattes(c, ct2);
 		robots.add(drone);
 		robots.add(roues);
+		robots.add(pattes);
 		//drone.pushQueue(roues);
 		//c.setTerrain(NatureTerrain.FORET);
 		roues.remplirReserve();
@@ -82,15 +83,14 @@ public class TestCarte {
 		GUISimulator gui = new GUISimulator(800, 600, Color.BLACK);
 		Simulateur simulateur = new Simulateur(gui, Color.decode("#ffffff"), donnees);
 		
-		/* ATTENTION : on ne peut pas definir plusieur bouger case pour un meme robot d'affili=�e : le robot n'a pas encore bouger au momem
-		 * ou le deuxi�me mouvement et defenit, ses voisins disponible ont changer
-		 * DONC le test suivant est faux, pour le faire marcher j'ai bidouill� les dates
-		 */
+	
 		
-		
-		
+        int destination = 1; 
+        
+   	 	System.out.println("chemin : " + pattes.getChemin(ct2.tranformeNombreCase(destination)));
+		/*
 		int V = 6; 
-        int source = 4; 
+
   
         // Adjacency list representation of the  
         // connected edges 
@@ -103,39 +103,41 @@ public class TestCarte {
         } 
   
         // Inputs for the DPQ graph 
-        adj.get(0).add(new Noeud(10, ct2.getCase(0, 1), 1)); 
-        adj.get(0).add(new Noeud(10, ct2.getCase(1, 0), 3)); 
+        adj.get(0).add(new Noeud(10, ct2.transformeNombreCase(ct2.getCase(0, 1)))); 
+        adj.get(0).add(new Noeud(10, ct2.transformeNombreCase(ct2.getCase(1, 0)))); 
         
         //adj.get(1).add(new Noeud(20, ct2.getCase(0, 0), 0)); 
         //adj.get(1).add(new Noeud(20, ct2.getCase(1, 1), 4)); 
         //adj.get(1).add(new Noeud(20, ct2.getCase(0, 2), 2)); 
        
-        adj.get(2).add(new Noeud(Integer.MAX_VALUE, ct2.getCase(0, 1), 1)); 
-        adj.get(2).add(new Noeud(Integer.MAX_VALUE, ct2.getCase(0, 1), 5)); 
+        adj.get(2).add(new Noeud(Integer.MAX_VALUE, ct2.transformeNombreCase(ct2.getCase(0, 1)))); 
+        adj.get(2).add(new Noeud(Integer.MAX_VALUE, ct2.transformeNombreCase(ct2.getCase(1, 0)))); 
         
-        adj.get(3).add(new Noeud(5, ct2.getCase(0, 0), 0)); 
-        adj.get(3).add(new Noeud(5, ct2.getCase(1, 1), 4)); 
+        adj.get(3).add(new Noeud(5, ct2.transformeNombreCase(ct2.getCase(0, 0)))); 
+        adj.get(3).add(new Noeud(5, ct2.transformeNombreCase(ct2.getCase(1, 1)))); 
         
-        adj.get(4).add(new Noeud(1, ct2.getCase(0, 1), 1)); 
-        adj.get(4).add(new Noeud(1, ct2.getCase(1, 0), 3)); 
-        adj.get(4).add(new Noeud(1, ct2.getCase(1, 2), 5)); 
+        adj.get(4).add(new Noeud(1, ct2.transformeNombreCase(ct2.getCase(0, 1)))); 
+        adj.get(4).add(new Noeud(1, ct2.transformeNombreCase(ct2.getCase(1, 0)))); 
+        adj.get(4).add(new Noeud(1, ct2.transformeNombreCase(ct2.getCase(1, 2)))); 
         
         //adj.get(5).add(new Noeud(100, ct2.getCase(0, 2), 2)); 
         //adj.get(5).add(new Noeud(100, ct2.getCase(1, 1), 4)); 
+         */
         
+        /*
         // Calculate the single source shortest path 
-        Dijkstra dpq = new Dijkstra(new Noeud(0, ct2.getCase(0, 0), 0), adj, ct2); 
+        Dijkstra dpq = new Dijkstra(new Noeud(0, ct2.transformeNombreCase(ct2.getCase(0, 0))), adj, ct2); 
         dpq.dijkstra(); 
   
         // Print the shortest path to all the Noeuds 
         // from the source Noeud 
         System.out.println("The shorted path from Noeud :"); 
         for (int i = 0; i < dpq.getDist().length; i++) {
-        	if (dpq.getDist()[i] == Integer.MAX_VALUE)
+        	if (dpq.getDistance()[i] == Integer.MAX_VALUE)
         		System.out.println("Inatteignable");
         	else
             System.out.println(source + " to " + i + " is "
-                               + dpq.getDist()[i]); 
+                               + dpq.getDistance()[i]); 
 			
             dpq.printPath(i, dpq.getparents());
             System.out.println("\n");
@@ -143,6 +145,7 @@ public class TestCarte {
         for (int e : dpq.getparents()) {
         	System.out.println(e + " ");
         }
+        */
        
 		
 		

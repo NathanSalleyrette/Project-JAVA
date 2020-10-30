@@ -1,5 +1,7 @@
 package briques;
 
+import pluscourtchemin.Noeud;
+
 /**
  * 
  * Une case est definie par sa position, ie sa ligne et sa colonne.
@@ -41,7 +43,7 @@ public class Case{
 	 * @param ligne
 	 * @param colonne
 	 */
-	public Case(int ligne, int colonne, Carte carte) {
+	public Case(int ligne, int colonne) {
 		this(ligne, colonne, NatureTerrain.TERRAIN_LIBRE);
 	}
 	

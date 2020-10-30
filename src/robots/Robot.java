@@ -20,7 +20,8 @@ public abstract class Robot {
 	private long dateDisponible;
 	private Carte carte;
 	private Case positionApresAction;
-	private List<List<Noeud>> matriceAdjacence;
+	private List<List<Noeud>> graphAdjacence;
+	private List<Noeud> graph;
 	private Dijkstra dpq; // dijkstra associé au futur chemin du robot
 
 	
@@ -43,7 +44,9 @@ public abstract class Robot {
 		this.carte = carte;
 		this.dateDisponible = 0; // date ï¿½ laquel le robot sera ï¿½ nouveau disponible pour rï¿½aliser une action
 		this.positionApresAction = position; // position du robot une fois tous les ï¿½venement dï¿½jï¿½ definis terminï¿½s
-		this.matriceAdjacence = this.createGraph(carte);
+		this.graph = this.createGraph();
+		this.graphAdjacence = this.createGraphAdjacence();
+		
 		
 	}
 	
@@ -199,8 +202,20 @@ public abstract class Robot {
 	}
 	
 	public List<List<Noeud>> getMadj() {
-		return matriceAdjacence;
+		return graphAdjacence;
 	}
+	
+	 public List<Case> getChemin(Case c) {
+		 	Noeud depart = graph.get(carte.transformeNombreCase(this.position));
+		 	int arrivee = this.carte.transformeNombreCase(c);
+		 	this.dpq = new Dijkstra(depart, arrivee, this.graphAdjacence, this.graph, this.carte);
+		 	this.dpq.dijkstra();
+		 	this.printGraph();
+		 	this.printGraphAdjacence();
+		 	this.dpq.printDistance();
+		 	this.dpq.printParents();
+	    	return this.dpq.getChemin();
+	 }
 	
 	
 
@@ -273,54 +288,79 @@ public abstract class Robot {
 	
 	/**
 	 * 
-	 * @param c
+	 * @param carte
 	 * CrÃ©e la matrice d'adjacence utile pour l'algorithme de Dijkstra
 	 */
 	
-	public List<List<Noeud>> createGraph(Carte c) {
+	public List<List<Noeud>> createGraphAdjacence() {
 		
-		// V for vertex
-		int V = c.getNbColonnes()*c.getNbLignes(); 
+		int nbNoeuds = carte.getNbColonnes()*carte.getNbLignes(); 
 		
-		int distanceCase = c.getTailleCases();
-        // Adjacency list representation of the  
-        // connected edges 
+        // Adjacency list representation of the connected edges 
         List<List<Noeud> > adj = new ArrayList<List<Noeud> >(); 
   
         // Initialize list for every Noeud 
-        for (int i = 0; i < V; i++) { 
+        for (int i = 0; i < nbNoeuds; i++) { 
             List<Noeud> item = new ArrayList<Noeud>(); 
             adj.add(item); 
         } 
 		
-		for (int i = 0; i < c.getNbLignes(); i ++) {
-			for (int j = 0; j < c.getNbColonnes(); j++) {
-				Case currentCase = c.getCase(i, j);
-				int caseint = i * c.getNbColonnes() + j;
-				double vitesseDansCase = this.getVitesse(currentCase.getNature());
+		for (int i = 0; i < carte.getNbLignes(); i ++) {
+			for (int j = 0; j < carte.getNbColonnes(); j++) {
+				Case currentCase = carte.getCase(i, j);
+				int numeroCase = i * carte.getNbColonnes() + j;
+				double vitesseDansCase = this.getVitesse(currentCase.getNature()); //redondance de calcul voir create graphe
 				if (vitesseDansCase != 0) {
-					int temps = distanceCase / (int) vitesseDansCase;
-					for (Case e : c.getVoisins(currentCase)) {
-						int eint = e.getLigne() * c.getNbColonnes() + e.getColonne();
-						adj.get(caseint).add(new Noeud(temps, e, eint)); 
+					for (Case c : carte.getVoisins(currentCase)) {
+						if (this.getVitesse(c.getNature()) != 0) {
+							adj.get(numeroCase).add(graph.get(this.carte.transformeNombreCase(c))); 
+						}
 					}
 				}
-				
 			}
 		}
-		
 		return adj;
 	}
 	
+	public List<Noeud> createGraph() {
+		List<Noeud> liste = new ArrayList<Noeud>();
+		for (int lig = 0; lig < carte.getNbLignes(); lig++) {
+			for (int col = 0; col < carte.getNbColonnes(); col++) {
+				Case c = carte.getCase(lig, col);
+				double vitesse = this.getVitesse(c.getNature());
+				int temps;
+				if (vitesse != 0) {
+					temps = (int) Math.ceil(this.carte.getTailleCases()/vitesse);
+				} else {
+					temps = Integer.MAX_VALUE;
+				}
+				liste.add(new Noeud(temps, carte.transformeNombreCase(c)));
+			}
+		}
+		return liste;
+	}
 	
-	 public List<Case> getChemin(Case c) {
-		 	Noeud depart = new  Noeud(0, c, this.carte.transformeNombreCase(c));
-		 	this.dpq = new Dijkstra(depart, this.matriceAdjacence, this.carte);
-		 	this.dpq.dijkstra();
-	    	return this.dpq.getChemin(c);
+
+	
+	
+	 public void printGraph() {
+		 for (Noeud noeud : this.graph) {
+			 System.out.println(noeud);
+		 }
 	 }
-	
-	
+	 
+	 public void printGraphAdjacence() {
+		 StringJoiner stringJoiner2 =  new StringJoiner(", ",  "(",  ")") ;
+		for (int i=0; i<this.graphAdjacence.size(); i++) {
+			StringJoiner stringJoiner1 =  new StringJoiner(", ",  "(",  ")") ;
+			for (int j=0; j<this.graphAdjacence.get(i).size(); j++) {
+				stringJoiner1.add(this.graphAdjacence.get(i).get(j).toString());
+			}
+			stringJoiner2.add("\n"+ stringJoiner1.toString());
+		}
+		System.out.println(stringJoiner2.toString());
+	 }
+	 
 	//les robots printï¿½s
 	/**
 	 * exemple: 

@@ -86,18 +86,23 @@ public class TestChemin {
 		 * ou le deuxi�me mouvement et defenit, ses voisins disponible ont changer
 		 * DONC le test suivant est faux, pour le faire marcher j'ai bidouill� les dates
 		 */
-		
-		roues.setDijkstra(new Dijkstra(new Noeud(0, roues.getPosition(), 3), roues.getMadj(), roues.getCarte())); 
-		roues.getDijkstra().dijkstra();
-  
+		Case destination = ct2.getCase(1, 2);
+		System.out.println("case : " + destination);
+		List<Case> chemin = roues.getChemin(destination);
+		System.out.println("chemin : " + chemin);
+		for (Case e : chemin) {
+        	System.out.println(e.toString());
+        }
+		System.out.println("fin");
         // Print the shortest path to all the Noeuds 
         // from the source Noeud 
+		/*
         System.out.println("The shorted path from Noeud :"); 
         for (int i = 0; i < roues.getDijkstra().getDist().length; i++) {
         	if (roues.getDijkstra().getDist()[i] == Integer.MAX_VALUE)
         		System.out.println("Inatteignable");
         	else
-            System.out.println(0 + " to " + i + " is "
+            System.out.println(depart + " to " + i + " is "
                                + roues.getDijkstra().getDist()[i]); 
 			
             roues.getDijkstra().printPath(i, roues.getDijkstra().getparents());
@@ -111,7 +116,7 @@ public class TestChemin {
         for (Case e : roues.getDijkstra().getChemin(ct2.getCase(0, 2))) {
         	System.out.println(e.toString());
         }
-        
+        */
 	}
 }
        
