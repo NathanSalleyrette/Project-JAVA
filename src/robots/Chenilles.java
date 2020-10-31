@@ -4,7 +4,7 @@ import briques.*;
 
 
 /**
- * class de robots à chenilles
+ * class de robots ï¿½ chenilles
  */
 public class Chenilles extends Robot {
 
@@ -31,7 +31,7 @@ public class Chenilles extends Robot {
 	 * @param vitesse
 	 */
 	public Chenilles(Case position, int vitesse, Carte carte) {
-		super(position, 2000, Math.min(80, vitesse), 5, 8, 100, carte);	
+		super(position, 2000, Math.min(80, vitesse), 10, 8, 100, carte);	
 		super.setType(Type.CHENILLES);
 	}
 	

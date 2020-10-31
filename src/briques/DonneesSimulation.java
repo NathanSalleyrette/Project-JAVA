@@ -19,6 +19,7 @@ public class DonneesSimulation {
 	
 	private Carte carte;
 	private LinkedList<Incendie> incendies;
+	private LinkedList<Incendie> incendiesEteint;
 	private LinkedList<Robot> robots;
 	
 	
@@ -26,6 +27,8 @@ public class DonneesSimulation {
 		this.carte = carte;
 		this.incendies = incendies;
 		this.robots = robots;
+		this.incendiesEteint = new LinkedList<Incendie>();
+		
 	
 	}
 	
@@ -65,6 +68,12 @@ public class DonneesSimulation {
 
 	}
 	
+	//restart
+	public void restartRobots() {
+		for (Robot r : this.robots) {
+			r.restartRobot();
+		}
+	}
 	
 	/**
 	 * si la nouvelle position est voisine de la case du robot, ainsi que compatible avec le 

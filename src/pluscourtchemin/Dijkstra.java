@@ -14,12 +14,13 @@ import briques.*;
 public class Dijkstra {
 
 	    private int distance[]; 
-	    private Set<Integer> optimaux; //sommet pour lequel on a trouvé le chemin avec le temps optimal
+	    private Set<Integer> optimaux; //sommet pour lequel on a trouvï¿½ le chemin avec le temps optimal
 	    private PriorityQueue<Noeud> fileAPriorite; 
 	    private Noeud depart;
 	    private int arrivee;
 	    private List<List<Noeud> > graphAdjacence; 
 	    private List<Noeud> graph;
+	    private Boolean eau;
 	   
 	    private int parents[];
 	    private Carte carte;  //=> liste noeud
@@ -52,7 +53,35 @@ public class Dijkstra {
 	        distance[depart.getNumeroCase()] = 0;
 	        
 	        this.carte = carte;
+	        this.eau = false;
 	    } 
+	    
+	    public Dijkstra(Noeud depart, List<List<Noeud>> graphAdjacence, List<Noeud> graph, Carte carte) { 
+	        this.depart = depart;
+	        this.graph = graph;
+	        this.graphAdjacence = graphAdjacence;
+	        distance = new int[graph.size()]; 
+	        optimaux = new HashSet<Integer>(); 
+	        fileAPriorite = new PriorityQueue<Noeud>();
+	        //this.cases = new LinkedList<LinkedList<Case>>();
+	        System.out.println("taille : " +graph.size());
+	        
+	        parents = new int[graph.size()];
+	        //chemins = new ArrayList<List<Case>>();
+	        chemin = new ArrayList<Case>();
+	        
+	        for (int i = 0; i < graph.size(); i++) {
+	        	parents[i] = -2;
+	        	distance[i] = Integer.MAX_VALUE;
+	        }
+	        
+	        parents[depart.getNumeroCase()] = -1;
+	        distance[depart.getNumeroCase()] = 0;
+	        
+	        this.carte = carte;
+	        this.eau = true;
+	    } 
+	    
 	    
 	    // Function for Dijkstra's Algorithm 
 	    public void dijkstra() { 
@@ -73,6 +102,15 @@ public class Dijkstra {
 		            }
 		        }
 		        optimaux.add(currentNode);
+		        if (! eau)  {
+		        if (currentNode.getNumeroCase() == this.arrivee) break;
+		        }
+		        else {
+		        	if (currentNode.getEau()) {
+		        		this.arrivee = currentNode.getNumeroCase();
+		        		break;
+		        	}
+		        }
 		    }
 	    /*
 	        for (int sommet = 0; sommet < nbSommets; sommet++) {
@@ -137,7 +175,7 @@ public class Dijkstra {
 		}
 		
 		
-		//ATTENTION, ce serait mieux d'utiliser des int dès le debut
+		//ATTENTION, ce serait mieux d'utiliser des int dï¿½s le debut
 		private void updateDistance(Noeud evaluationNode, Noeud sourceNode) {
 				    int sourceDistance = distance[sourceNode.getNumeroCase()];
 				    if (sourceDistance + sourceNode.getTime() < distance[evaluationNode.getNumeroCase()]) {

@@ -67,10 +67,10 @@ public class BougerRobotUnitaire extends EvenementRobot {
 	
 	public void execute() {
 		this.robot.deplacer(this.position);
-		System.out.println(robot.getPosition() + " " + this.getDate());
+		// System.out.println(robot.getPosition() + " " + this.getDate());
 	}
 	
-	
+	@Override
 	public String toString() {
 		return this.getDate() + " bouger robot vers : " + this.position;
 	}

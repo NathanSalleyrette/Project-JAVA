@@ -7,7 +7,7 @@ import simulation.Simulateur;
 /**
  * 
  * @author Lucie
- *le robot se rempli près d'une case d'eau adjacente à lui
+ *le robot se rempli prï¿½s d'une case d'eau adjacente ï¿½ lui
  */
 public class RemplirRobot extends EvenementRobot {
 
@@ -15,6 +15,7 @@ public class RemplirRobot extends EvenementRobot {
 		super(robot, simulateur);
 		if (this.robot.eauAccessibleApresAction()) {
 			super.setDateActionRobot();
+			this.robot.setReserveApresAction(this.robot.getCapacity());
 		} else {	
 			super.setDateActionImpossible();
 		}
@@ -31,9 +32,9 @@ public class RemplirRobot extends EvenementRobot {
 	}
 	
 	public void execute() {
-		System.out.println(this.robot);
+		//System.out.println(this.robot);
 		this.robot.remplirReserve();
-		System.out.println(this.robot);
+		//System.out.println(this.robot);
 	}
 	
 	public String toString() {

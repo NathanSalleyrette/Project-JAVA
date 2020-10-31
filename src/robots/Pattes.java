@@ -5,7 +5,7 @@ import briques.*;
 
 
 /**
- * classe de robots à pattes
+ * classe de robots ï¿½ pattes
  */
 public class Pattes extends Robot {
 	/*
@@ -15,7 +15,7 @@ public class Pattes extends Robot {
 	*/
 	
 	/**
-	 * fonction inutile mais notée par soucis d'harmonisation avec les autres classes de robots
+	 * fonction inutile mais notï¿½e par soucis d'harmonisation avec les autres classes de robots
 	 * vitesse de base 30km/h
 	 * appelle du consutructeur plus complet
 	 * @param position
@@ -25,7 +25,7 @@ public class Pattes extends Robot {
 	}
 
 	/**
-	 * reservoir 42 litres (normalement infini mais gérer autrepart, remplissage en 5min
+	 * reservoir 42 litres (normalement infini mais gï¿½rer autrepart, remplissage en 5min
 	 * intervention unitaire 100 litres en 5sec
 	 * @param position
 	 * @param vitesse
@@ -37,7 +37,7 @@ public class Pattes extends Robot {
 	
 	
 	/**
-	 * le robot à pattes ne se deplace pas sur
+	 * le robot ï¿½ pattes ne se deplace pas sur
 	 * eau
 	 */
 	@Override
@@ -50,7 +50,7 @@ public class Pattes extends Robot {
 	
 	
 	/**
-	 * la vitesse du robot à pattes est de 10 sur les rochets
+	 * la vitesse du robot ï¿½ pattes est de 10 sur les rochets
 	 * vitesse de base qur les autres terrains (compatibles)
 	 * 0.0 sinon
 	 */
@@ -67,6 +67,7 @@ public class Pattes extends Robot {
 	
 	public void remplirReserve() {} //le robot n'a pas besoin de se remplir
 	
+	@Override
 	public int deverserEau(int vol) { //le robot ne se vide pas
 		return vol;	
 	}
