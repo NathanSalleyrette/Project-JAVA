@@ -12,6 +12,7 @@ public class Incendie {
 	private int intensite;
 	private int intensiteApresAction;
 	private LinkedList<Incendie> incendies;
+	private LinkedList<Incendie> incendiesEteint;
 	
 
 	
@@ -37,6 +38,7 @@ public class Incendie {
 		// pas de suivant
 		this.position = position;
 		this.incendies = incendies;
+		this.intensiteApresAction = intensite;
 		this.setIntensite(intensite);
 		incendies.add(this);
 	}
@@ -51,8 +53,20 @@ public class Incendie {
 		return this.intensite;
 	}
 	
+	public int getIntensiteApresAction() {
+		return this.intensiteApresAction;
+	}
+	
+	public void setIntensiteApresAction(int intensite) {
+		this.intensiteApresAction = Math.max(0, intensite);
+		//if (this.intensiteApresAction == 0) {
+		//	this.incendies.remove(this);
+		//}
+	}
+	
 	public void setIntensite(int intensite) {
 		this.intensite = Math.max(0, intensite);
+		
 	}
 	
 	public LinkedList<Incendie> getIncendies(){

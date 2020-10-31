@@ -2,12 +2,13 @@ package evenements;
 
 
 import briques.Incendie;
+import briques.Type;
 import robots.Robot;
 import simulation.Simulateur;
 
 
 /**
- * évenement pour éteindre les incendies
+ * ï¿½venement pour ï¿½teindre les incendies
  * @author Lucie
  *
  */
@@ -18,7 +19,7 @@ public class EteindreIncendieUnitaire extends EvenementRobot {
 	
 	/**
 	 * creation de l'e
-	 * vent : un incendie est eteint par un robot grâce à un certain vol d'eau
+	 * vent : un incendie est eteint par un robot grï¿½ce ï¿½ un certain vol d'eau
 	 * hyp : robot et incendie sont sur la meme case
 	 * @param incendie
 	 * @param robot
@@ -37,12 +38,20 @@ public class EteindreIncendieUnitaire extends EvenementRobot {
 		super(robot, simulateur);
 		this.incendie = incendie;
 		this.vol = robot.getInterventionUnitaire();
-		if (incendie.getIntensite() != 0 && robot.getReserve() !=0 && robot.getPositionApresAction() == incendie.getPosition()) {
+		if (incendie.getIntensite() != 0 && robot.getReserve() !=0 && robot.getPosition() == incendie.getPosition()) {
 			int last = this.tempsActionRobot();
+			// la reserve aprÃ¨s l'execution sera la reserve - l'intervention unitaire
+			// si le robot est de type PATTES, la reserve ne change jamais
+			if (robot.getType() != Type.PATTES)
+				robot.setReserveApresAction(Math.max(0, robot.getReserveApresAction() - robot.getInterventionUnitaire()));
 			long nvlleDate = super.getDate() + last; //le robot est disponible car cet event est issu de l'appel d'un plus gros incendie
 			super.setDate(nvlleDate);
 			
 		} else {
+			System.out.println(incendie.getIntensite());
+			System.out.println(robot.getPositionApresAction().toString());
+			System.out.println(incendie.getPosition().toString());
+			System.out.println(robot.getReserve());
 			super.setDateActionImpossible();
 			System.out.println("l'incendie est deja eteint ou le robot et l'incendie ne sont pas sur la meme case ou le robot est vide");
 		}
@@ -50,7 +59,7 @@ public class EteindreIncendieUnitaire extends EvenementRobot {
 	
 	
 	/**
-	 * temps pour réaliser l'action d'eteindre l'incendie d'une quantité vol (converti en intervention unitaire)
+	 * temps pour rï¿½aliser l'action d'eteindre l'incendie d'une quantitï¿½ vol (converti en intervention unitaire)
 	 */
 	public int tempsActionRobot() {
 		return (int)Math.ceil(this.robot.getTempsExtinctionUnitaire());
@@ -66,13 +75,21 @@ public class EteindreIncendieUnitaire extends EvenementRobot {
 	 */
 	public void execute() {
 		this.eteindreIncendie();
-		if (this.incendie.getIntensite() != 0) {
+		// Lignes de code assez bizarre, si on dÃ©finit un chemin aprÃ¨s avoir verser de l'eau
+		// le fait que le robot soit liberer et meme le fait de rÃ© Ã©teindre l'incendie est bizarre
+		if (this.robot.getReserve() != 0 && this.incendie.getIntensite() != 0) {
+			this.getSimulateur().EteindreIncendieUnitaire(this.incendie, this.robot);
+		} else {
+			this.robot.setDateDisponible(this.getDate());
+		}
+	}
+		/**	if (this.incendie.getIntensite() != 0) {
 			System.out.println("again !");
 			this.getSimulateur().EteindreIncendieUnitaire(this.incendie, this.robot);
 		} else {
 			this.robot.setDateDisponible(this.getDate()); //le robot est de nouveau disponible, peut-etre prematurement, on sait pas
-		}
-	}
+		}*/
+	
 	
 	/*on peut mettre ce block dans incendie ou robot*/
 	public void eteindreIncendie() {

@@ -16,10 +16,12 @@ public class Noeud{
 		
 	private int time; // temps pour parcourir la case
 	private int numeroCase;
+	private Boolean eau;
 	
-	public Noeud(int time, int numeroCase) {
+	public Noeud(int time, int numeroCase, Boolean eau) {
 		this.time = time;
 		this.numeroCase = numeroCase;
+		this.eau = eau;
 	}
 
 	public int getTime() {
@@ -34,8 +36,12 @@ public class Noeud{
 		return numeroCase;
 	}
 	
+	public Boolean getEau() {
+		return eau;
+	}
+	
 	public String toString() {
-		return "(" + time + ", num : " + numeroCase + ")";
+		return "(" + time + ", num : " + numeroCase + "eau : " + eau + ")" ;
 	}
 	
 	

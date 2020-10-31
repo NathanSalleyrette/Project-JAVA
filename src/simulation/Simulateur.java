@@ -64,9 +64,20 @@ public class Simulateur implements Simulable {
 		}
 	}
 	
+	public Boolean EvenementsRealises() {
+		return this.evenements.isEmpty();
+	}
+	
+	public void simuwait() {
+		while (!this.EvenementsRealises());
+		System.out.println("c'est bon");
+	}
+	
 	// Restart pas encore fini, il faut réinitialiser la map
 	public void restart() {
 		this.DateSimulation = 0;
+		this.donnees.restartRobots();
+		draw();
 	}
 	
 	public void ajouteEvenement(Evenement e) {
@@ -77,6 +88,9 @@ public class Simulateur implements Simulable {
 	
 	public void IncrementeDate() {
 		DateSimulation += 1;
+		if (DateSimulation % 100 == 0) {
+			System.out.println(DateSimulation);
+		}
 	}
 	
 	public long getDateSimulation() {
@@ -111,10 +125,29 @@ public class Simulateur implements Simulable {
 		this.ajouteEvenement(new BougerRobotUnitaire(positionCible, robot, this));
 	}
 	
+	public void BougerRobotFeu(Robot robot, Incendie incendie) {
+		if (incendie.getIntensite() > 0) {
+			Case positionCible = incendie.getPosition();
+			List<Case> chemin = robot.getChemin(positionCible);
+			for (Case c : chemin) {
+				this.BougerRobotUnitaire(c, robot);
+			}
+		}
+	}
+	
 	public void BougerRobot(Robot robot, Case positionCible) {
 		List<Case> chemin = robot.getChemin(positionCible);
 		for (Case c : chemin) {
 			this.BougerRobotUnitaire(c, robot);
+		}
+	}
+	
+	public void BougerRobotEau(Robot robot) {
+		if (robot.getReserve() == 0) {
+		List<Case> chemin = robot.getCheminEau();
+		for (Case c : chemin) {
+			this.BougerRobotUnitaire(c, robot);
+		}
 		}
 	}
 	
@@ -190,6 +223,14 @@ public class Simulateur implements Simulable {
 					taille/3));
         }
         //System.out.println("DONNEES : "+this.donnees.getRobots().allToString());
+	}
+	
+	
+	// Fonctions vérifications
+	public void printEvenements() {
+		for (Evenement e : this.evenements) {
+			System.out.println(e.toString());
+		}
 	}
 }
 

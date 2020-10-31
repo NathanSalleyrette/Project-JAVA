@@ -40,7 +40,12 @@ public class Drone extends Robot{
 	public Boolean eauAccessible() {
 		return this.getPosition().getNature() == NatureTerrain.EAU;
 	}
+	@Override
+	public Boolean eauAccessible(Case c) {
+		return c.getNature() == NatureTerrain.EAU;
+	}
 	
+	@Override
 	public Boolean eauAccessibleApresAction() {
 		return this.getPositionApresAction().getNature() == NatureTerrain.EAU;
 	}

@@ -13,6 +13,7 @@ public abstract class Robot {
 	private Case position;
 	private int capacity; // quantit� qu'il peut porter au max
 	private int reserve; // quantit� courante
+	private int reserveApresAction;
 	private double vitesse; //vitesse par default en km/h
 	private double tempsRemplissage; // en minute
 	private double tempsExtinctionUnitaire; // en seconde
@@ -22,9 +23,10 @@ public abstract class Robot {
 	private Case positionApresAction;
 	private List<List<Noeud>> graphAdjacence;
 	private List<Noeud> graph;
-	private Dijkstra dpq; // dijkstra associ� au futur chemin du robot
+	private Dijkstra dpq; // dijkstra associ� au futur chemin du robot
 
-	
+	// Dans le cas d'un restart
+	private Case positionDépart;
 	
 	//Constructeurs du robot
 	/**
@@ -35,8 +37,10 @@ public abstract class Robot {
 	 */
 	public Robot(Case position, int capacity, double vitesse, double rempli, double vide, int interventionUnitaire, Carte carte) {
 		this.position = position;
+		this.positionDépart = position;
 		this.capacity = capacity;
 		this.reserve = capacity;
+		this.reserveApresAction = this.reserve;
 		this.vitesse = vitesse;
 		this.tempsRemplissage = rempli;
 		this.tempsExtinctionUnitaire = vide;
@@ -50,6 +54,12 @@ public abstract class Robot {
 		
 	}
 	
+	public void restartRobot() {
+		this.position = this.positionDépart;
+		this.dateDisponible = 0;
+		this.positionApresAction = this.positionDépart;
+		this.reserve = this.capacity;
+	}
 	
 	//acc�s aux donn�es du robot
 	public Case getPosition() {
@@ -77,8 +87,16 @@ public abstract class Robot {
 		return this.reserve;
 	}
 	
+	public int getReserveApresAction() {
+		return this.reserveApresAction;
+	}
+	
 	public void setReserve(int reserve) {
 		this.reserve = reserve;
+	}
+	
+	public void setReserveApresAction(int reserve) {
+		this.reserveApresAction = reserve;
 	}
 	
 	public Type getType() {
@@ -105,6 +123,9 @@ public abstract class Robot {
 		return this.carte;
 	}
 	
+	public Case getCaseDepart() {
+		return this.positionDépart;
+	}
 	
 	
 	/**
@@ -126,18 +147,23 @@ public abstract class Robot {
 		return this.getCarte().eauVoisine(this.getPosition());
 	}
 	
+	public Boolean eauAccessible(Case c) {
+		return this.getCarte().eauVoisine(c);
+	}
+	
 	public Boolean eauAccessibleApresAction() {
 		return this.getCarte().eauVoisine(this.getPositionApresAction());
 	}
 	
 	/**
-	 * le robot deverse une partie de l'eau qu'il a en reserve (on ne test pas si la case contient un feu, cela est test� plus haut)
+	 * le robot deverse une partie de l'eau qu'il a en reserve (on ne test pas si la case contient un feu, cela est test� plus haut)
 	 * @param vol
 	 * return volume que l'on deverse reelement
 	 */
 	public int deverserEau(int vol) {
 		vol = Math.min(this.getReserve(), Math.max(0, vol)); // on ne peut pas deverser plus que ce su'il y a dans le r�servoir
 		this.reserve = this.reserve - vol ;
+		this.reserveApresAction = reserve;
 		return vol;
 		
 	}
@@ -206,18 +232,27 @@ public abstract class Robot {
 	}
 	
 	 public List<Case> getChemin(Case c) {
-		 	Noeud depart = graph.get(carte.transformeNombreCase(this.position));
+		 	Noeud depart = graph.get(carte.transformeNombreCase(this.positionApresAction));
 		 	int arrivee = this.carte.transformeNombreCase(c);
 		 	this.dpq = new Dijkstra(depart, arrivee, this.graphAdjacence, this.graph, this.carte);
 		 	this.dpq.dijkstra();
-		 	this.printGraph();
-		 	this.printGraphAdjacence();
-		 	this.dpq.printDistance();
-		 	this.dpq.printParents();
+		 	//this.printGraph();
+		 	//this.printGraphAdjacence();
+		 	//this.dpq.printDistance();
+		 	//this.dpq.printParents();
 	    	return this.dpq.getChemin();
 	 }
 	
-	
+	public List<Case> getCheminEau() {
+		Noeud depart = graph.get(carte.transformeNombreCase(this.positionApresAction));
+	 	this.dpq = new Dijkstra(depart, this.graphAdjacence, this.graph, this.carte);
+	 	this.dpq.dijkstra();
+	 	//this.printGraph();
+	 	//this.printGraphAdjacence();
+	 	//this.dpq.printDistance();
+	 	//this.dpq.printParents();
+    	return this.dpq.getChemin();
+	}
 
 	
 	
@@ -334,7 +369,7 @@ public abstract class Robot {
 				} else {
 					temps = Integer.MAX_VALUE;
 				}
-				liste.add(new Noeud(temps, carte.transformeNombreCase(c)));
+				liste.add(new Noeud(temps, carte.transformeNombreCase(c), this.eauAccessible(c)));
 			}
 		}
 		return liste;
